@@ -20,7 +20,7 @@ export function addNewGroup(favoritesProvider: FavoritesProvider) {
 
     vscode.window
       .showQuickPick(
-        ['Input new group name'].concat(!isGitUsed ? [] : ['Create group with current branch name'])
+        ['Input new group name'].concat(!isGitUsed ? [] : ['Create group with current branch name', 'Delete current group'])
       )
       .then((label) => {
         if (label == 'Input new group name') {
@@ -31,9 +31,25 @@ export function addNewGroup(favoritesProvider: FavoritesProvider) {
           })
         } else if (label == 'Create group with current branch name') {
           addNewGroupInConfig(branchName, previousGroups)
+        } else if (label == 'Delete current group') {
+          deleteCurrentGroup(previousGroups);
         }
       })
   })
+}
+
+function deleteCurrentGroup(previousGroups) {
+  const currentGroup = configMgr.get('currentGroup')
+  const index = previousGroups.indexOf(currentGroup)
+  if (currentGroup === 'Default') {
+    vscode.window.showErrorMessage(`The default Group cannot be deleted.`);
+  } else if (index !== -1) {
+    previousGroups.splice(index, 1)
+    configMgr.save('groups', previousGroups);
+    configMgr.save('currentGroup', "Default");
+  } else {
+    vscode.window.showErrorMessage(`The group "${currentGroup}" does not exist.`);
+  }
 }
 
 function addNewGroupInConfig(name: string, previousGroups: Array<string>) {
