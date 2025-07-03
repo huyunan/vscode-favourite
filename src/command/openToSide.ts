@@ -1,6 +1,6 @@
 import * as vscode from 'vscode'
 
-import { Resource } from '../provider/FavoritesProvider'
+import { Resource } from '../provider/FavouriteProvider'
 
 export function openToSide() {
   return vscode.commands.registerCommand('favourite.openToSide', async function (value: Resource) {

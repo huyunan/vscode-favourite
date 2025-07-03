@@ -1,5 +1,5 @@
-export { addToFavorites } from './addToFavorites'
-export { deleteFavorite } from './deleteFavorite'
+export { addToFavourite } from './addToFavourite'
+export { deleteFavourite } from './deleteFavourite'
 export { moveUp } from './moveUp'
 export { moveDown } from './moveDown'
 export { moveToTop } from './moveToTop'

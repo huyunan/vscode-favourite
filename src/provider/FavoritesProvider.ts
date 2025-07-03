@@ -8,7 +8,7 @@ import configMgr from '../helper/configMgr'
 import { DEFAULT_GROUP, FileStat } from '../enum'
 import { Item, ItemInSettingsJson } from '../model'
 
-export class FavoritesProvider implements vscode.TreeDataProvider<Resource> {
+export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
   private _onDidChangeTreeData = new vscode.EventEmitter<Resource | void>()
   readonly onDidChangeTreeData: vscode.Event<Resource | void> = this._onDidChangeTreeData.event
 
@@ -24,7 +24,7 @@ export class FavoritesProvider implements vscode.TreeDataProvider<Resource> {
   }
 
   getChildren(element?: Resource): Thenable<Resource[]> {
-    return this.getSortedFavoriteResources().then((resources) => {
+    return this.getSortedFavouriteResources().then((resources) => {
       if (!resources || !resources.length) {
         return []
       }
@@ -79,7 +79,7 @@ export class FavoritesProvider implements vscode.TreeDataProvider<Resource> {
     })
   }
 
-  private getSortedFavoriteResources(): Thenable<Array<ItemInSettingsJson>> {
+  private getSortedFavouriteResources(): Thenable<Array<ItemInSettingsJson>> {
     const resources = getCurrentResources()
     const sort = <string>vscode.workspace.getConfiguration('favourite').get('sortOrder')
 
@@ -186,7 +186,7 @@ export class FavoritesProvider implements vscode.TreeDataProvider<Resource> {
   private data2Resource(data: Array<Item>, contextValue: string): Array<Resource> {
     const enablePreview = <boolean>vscode.workspace.getConfiguration('workbench.editor').get('enablePreview')
 
-    // contextValue set on Resource gets a 'uri.' prefix if the favorite is specified as a uri,
+    // contextValue set on Resource gets a 'uri.' prefix if the favourite is specified as a uri,
     //   and a '.dir' suffix if it represents a directory rather than a file.
     // The when-clauses on our contributions to the 'view/item/context' menu use these modifiers
     //   to be smarter about which commands to offer.

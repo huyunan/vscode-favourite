@@ -1,6 +1,6 @@
 import * as vscode from 'vscode'
 
-import { Resource } from '../provider/FavoritesProvider'
+import { Resource } from '../provider/FavouriteProvider'
 
 export function revealInOS_mac() {
   return vscode.commands.registerCommand('favourite.revealInOS.mac', async function (value: Resource) {

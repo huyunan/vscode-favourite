@@ -28,7 +28,7 @@
     "url": "https://github.com/huyunan/vscode-favourite.git"
   },
   "activationEvents": [
-    "onCommand:favourite.addToFavorites",
+    "onCommand:favourite.addToFavourite",
     "onView:favourite",
     "onView:favourite-full-view"
   ],
@@ -37,7 +37,7 @@
   "contributes": {
     "configuration": {
       "type": "object",
-      "title": "Favorites",
+      "title": "Favourite",
       "properties": {
         "favourite.resources": {
           "type": "array",
@@ -69,7 +69,7 @@
         "favourite.saveSeparated": {
           "type": "boolean",
           "default": false,
-          "description": "Whether to save marked resources in separate .vscfavoriterc"
+          "description": "Whether to save marked resources in separate .vscfavouriterc"
         }
       }
     },
@@ -99,91 +99,91 @@
     "menus": {
       "editor/context": [
         {
-          "command": "favourite.addToFavorites",
+          "command": "favourite.addToFavourite",
           "group": "favourite"
         },
         {
-          "command": "favourite.deleteFavorite",
+          "command": "favourite.deleteFavourite",
           "group": "favourite"
         }
       ],
       "explorer/context": [
         {
-          "command": "favourite.addToFavorites",
+          "command": "favourite.addToFavourite",
           "group": "favourite"
         }
       ],
       "view/title": [
         {
           "command": "favourite.nav.refresh",
-          "when": "view in ext:allFavoriteViews",
+          "when": "view in ext:allFavouriteViews",
           "group": "navigation"
         },
         {
           "command": "favourite.nav.sort",
-          "when": "view in ext:allFavoriteViews",
+          "when": "view in ext:allFavouriteViews",
           "group": "navigation"
         },
         {
           "command": "favourite.group.changeGroup",
-          "when": "view in ext:allFavoriteViews",
+          "when": "view in ext:allFavouriteViews",
           "group": "navigation"
         },
         {
           "command": "favourite.group.newGroup",
-          "when": "view in ext:allFavoriteViews",
+          "when": "view in ext:allFavouriteViews",
           "group": "navigation"
         }
       ],
       "view/item/context": [
         {
           "command": "favourite.revealInOS.mac",
-          "when": "isMac && view in ext:allFavoriteViews && viewItem =~ /^resource/",
+          "when": "isMac && view in ext:allFavouriteViews && viewItem =~ /^resource/",
           "group": "navigation"
         },
         {
           "command": "favourite.revealInOS.windows",
-          "when": "isWindows && view in ext:allFavoriteViews && viewItem =~ /^resource/",
+          "when": "isWindows && view in ext:allFavouriteViews && viewItem =~ /^resource/",
           "group": "navigation"
         },
         {
           "command": "favourite.revealInOS.other",
-          "when": "!isMac && !isWindows && view in ext:allFavoriteViews && viewItem =~ /^resource/",
+          "when": "!isMac && !isWindows && view in ext:allFavouriteViews && viewItem =~ /^resource/",
           "group": "navigation"
         },
         {
           "command": "favourite.revealInSideBar",
-          "when": "view in ext:allFavoriteViews",
+          "when": "view in ext:allFavouriteViews",
           "group": "navigation"
         },
         {
           "command": "favourite.openToSide",
-          "when": "view in ext:allFavoriteViews && viewItem =~ /^resource(Child)?$|^uri\\.resource(Child)?$/",
+          "when": "view in ext:allFavouriteViews && viewItem =~ /^resource(Child)?$|^uri\\.resource(Child)?$/",
           "group": "navigation"
         },
         {
-          "command": "favourite.deleteFavorite",
-          "when": "view in ext:allFavoriteViews && viewItem =~ /resource(\\.dir)?$/",
+          "command": "favourite.deleteFavourite",
+          "when": "view in ext:allFavouriteViews && viewItem =~ /resource(\\.dir)?$/",
           "group": "operation"
         },
         {
           "command": "favourite.moveToTop",
-          "when": "view in ext:allFavoriteViews && viewItem =~ /resource(\\.dir)?$/",
+          "when": "view in ext:allFavouriteViews && viewItem =~ /resource(\\.dir)?$/",
           "group": "sort@1"
         },
         {
           "command": "favourite.moveUp",
-          "when": "view in ext:allFavoriteViews && viewItem =~ /resource(\\.dir)?$/",
+          "when": "view in ext:allFavouriteViews && viewItem =~ /resource(\\.dir)?$/",
           "group": "sort@2"
         },
         {
           "command": "favourite.moveDown",
-          "when": "view in ext:allFavoriteViews && viewItem =~ /resource(\\.dir)?$/",
+          "when": "view in ext:allFavouriteViews && viewItem =~ /resource(\\.dir)?$/",
           "group": "sort@3"
         },
         {
           "command": "favourite.moveToBottom",
-          "when": "view in ext:allFavoriteViews && viewItem =~ /resource(\\.dir)?$/",
+          "when": "view in ext:allFavouriteViews && viewItem =~ /resource(\\.dir)?$/",
           "group": "sort@4"
         }
       ],
@@ -265,12 +265,12 @@
         }
       },
       {
-        "command": "favourite.addToFavorites",
-        "title": "%command.favourite.addtofavorites%"
+        "command": "favourite.addToFavourite",
+        "title": "%command.favourite.addtofavourite%"
       },
       {
-        "command": "favourite.deleteFavorite",
-        "title": "%command.favourite.deletefavorite%"
+        "command": "favourite.deleteFavourite",
+        "title": "%command.favourite.deletefavourite%"
       },
       {
         "command": "favourite.moveUp",

@@ -1,9 +1,9 @@
 import * as vscode from 'vscode'
 
-import { Resource, FavoritesProvider } from '../provider/FavoritesProvider'
+import { Resource, FavouriteProvider } from '../provider/FavouriteProvider'
 
-export function refresh(favoritesProvider: FavoritesProvider) {
+export function refresh(favouriteProvider: FavouriteProvider) {
   return vscode.commands.registerCommand('favourite.nav.refresh', async function () {
-    favoritesProvider.refresh()
+    favouriteProvider.refresh()
   })
 }

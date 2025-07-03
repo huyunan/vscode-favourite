@@ -16,7 +16,7 @@ class ConfigMgr {
       return <Array<ItemInSettingsJson>>config.get(key)
     }
 
-    nconf.file({ file: path.resolve(getSingleRootPath(), '.vscfavoriterc') })
+    nconf.file({ file: path.resolve(getSingleRootPath(), '.vscfavouriterc') })
 
     return nconf.get(key)
   }
@@ -30,7 +30,7 @@ class ConfigMgr {
       return Promise.resolve()
     }
 
-    nconf.file({ file: path.resolve(getSingleRootPath(), '.vscfavoriterc') })
+    nconf.file({ file: path.resolve(getSingleRootPath(), '.vscfavouriterc') })
     nconf.set(key, value)
 
     return new Promise<void>((resolve, reject) => {

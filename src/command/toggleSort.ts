@@ -1,9 +1,9 @@
 import * as vscode from 'vscode'
 
-import { Resource, FavoritesProvider } from '../provider/FavoritesProvider'
+import { Resource, FavouriteProvider } from '../provider/FavouriteProvider'
 import configMgr from '../helper/configMgr'
 
-export function toggleSort(favoritesProvider: FavoritesProvider) {
+export function toggleSort(favouriteProvider: FavouriteProvider) {
   return vscode.commands.registerCommand('favourite.nav.sort', async function(value: Resource) {
     const config = vscode.workspace.getConfiguration('favourite')
 

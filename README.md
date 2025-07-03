@@ -19,7 +19,7 @@ ext install yunan-hu.vscode-favourite
 
 ## Usage
 
-An **Add to Favorites** command in Explorer's context menu saves links to your favorite files or folders into your _*`XYZ`*_`.code-workspace` file if you are using one, else into the `.vscode/settings.json` file of your root folder.
+An **Add to Favourite** command in Explorer's context menu saves links to your favourite files or folders into your _*`XYZ`*_`.code-workspace` file if you are using one, else into the `.vscode/settings.json` file of your root folder.
 
 Your favourite are listed in a separate view and can be quickly accessed from there.
 

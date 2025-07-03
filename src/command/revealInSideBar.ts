@@ -1,6 +1,6 @@
 import * as vscode from 'vscode'
 
-import { Resource } from '../provider/FavoritesProvider'
+import { Resource } from '../provider/FavouriteProvider'
 
 export function revealInSideBar() {
   return vscode.commands.registerCommand('favourite.revealInSideBar', async function (value: Resource) {

@@ -1,13 +1,13 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode'
-import { FavoritesProvider } from './provider/FavoritesProvider'
+import { FavouriteProvider } from './provider/FavouriteProvider'
 import configMgr from './helper/configMgr'
 
 import {
-  addToFavorites,
+  addToFavourite,
   addNewGroup,
-  deleteFavorite,
+  deleteFavourite,
   moveUp,
   moveDown,
   moveToTop,
@@ -30,17 +30,17 @@ export function activate(context: vscode.ExtensionContext) {
   // This line of code will only be executed once when your extension is activated
   console.log('Congratulations, your extension "favourite" is now active!')
 
-  vscode.commands.executeCommand('setContext', 'ext:allFavoriteViews', ['favourite', 'favourite-full-view'])
+  vscode.commands.executeCommand('setContext', 'ext:allFavouriteViews', ['favourite', 'favourite-full-view'])
 
   configMgr.onConfigChange(() => {
-    favoritesProvider.refresh()
+    favouriteProvider.refresh()
   })
 
-  const favoritesProvider = new FavoritesProvider()
+  const favouriteProvider = new FavouriteProvider()
 
-  vscode.window.createTreeView('favourite', { treeDataProvider: favoritesProvider, showCollapseAll: true })
+  vscode.window.createTreeView('favourite', { treeDataProvider: favouriteProvider, showCollapseAll: true })
   const tree = vscode.window.createTreeView('favourite-full-view', {
-    treeDataProvider: favoritesProvider,
+    treeDataProvider: favouriteProvider,
     showCollapseAll: true,
   })
 
@@ -51,28 +51,28 @@ export function activate(context: vscode.ExtensionContext) {
     () => {
       const currentGroup = configMgr.get('currentGroup')
       tree.message = `Current Group: ${currentGroup}`
-      favoritesProvider.refresh()
+      favouriteProvider.refresh()
     },
     this,
     context.subscriptions
   )
 
-  context.subscriptions.push(addToFavorites())
-  context.subscriptions.push(deleteFavorite())
+  context.subscriptions.push(addToFavourite())
+  context.subscriptions.push(deleteFavourite())
   context.subscriptions.push(revealInOS_mac())
   context.subscriptions.push(revealInOS_windows())
   context.subscriptions.push(revealInOS_other())
   context.subscriptions.push(revealInSideBar())
   context.subscriptions.push(openToSide())
-  context.subscriptions.push(open(favoritesProvider))
-  context.subscriptions.push(moveUp(favoritesProvider))
-  context.subscriptions.push(moveDown(favoritesProvider))
-  context.subscriptions.push(moveToTop(favoritesProvider))
-  context.subscriptions.push(moveToBottom(favoritesProvider))
-  context.subscriptions.push(refresh(favoritesProvider))
-  context.subscriptions.push(toggleSort(favoritesProvider))
-  context.subscriptions.push(changeGroup(favoritesProvider))
-  context.subscriptions.push(addNewGroup(favoritesProvider))
+  context.subscriptions.push(open(favouriteProvider))
+  context.subscriptions.push(moveUp(favouriteProvider))
+  context.subscriptions.push(moveDown(favouriteProvider))
+  context.subscriptions.push(moveToTop(favouriteProvider))
+  context.subscriptions.push(moveToBottom(favouriteProvider))
+  context.subscriptions.push(refresh(favouriteProvider))
+  context.subscriptions.push(toggleSort(favouriteProvider))
+  context.subscriptions.push(changeGroup(favouriteProvider))
+  context.subscriptions.push(addNewGroup(favouriteProvider))
 }
 
 // this method is called when your extension is deactivated

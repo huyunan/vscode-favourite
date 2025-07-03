@@ -1,6 +1,6 @@
 {
-  "command.favourite.addtofavorites": "Add to Favorites",
-  "command.favourite.deletefavorite": "Remove from Favorites",
+  "command.favourite.addtofavourite": "Add to Favourite",
+  "command.favourite.deletefavourite": "Remove from Favourite",
   "command.favourite.moveup": "Move Up",
   "command.favourite.movedown": "Move Down",
   "command.favourite.movetotop": "Move to Top",
@@ -14,5 +14,5 @@
   "command.favourite.openToSide": "Open to the Side",
   "command.favourite.changeGroup": "Change Current Group",
   "command.favourite.newGroup": "Create New Group",
-  "view.favourite.title": "Favorites"
+  "view.favourite.title": "Favourite"
 }

@@ -1,11 +1,11 @@
 import * as vscode from 'vscode'
 
-import { Resource, FavoritesProvider } from '../provider/FavoritesProvider'
+import { Resource, FavouriteProvider } from '../provider/FavouriteProvider'
 import configMgr from '../helper/configMgr'
 import { getFirstGitRepository, getGitBranchName } from '../helper/util'
 import { DEFAULT_GROUP } from '../enum'
 
-export function changeGroup(favoritesProvider: FavoritesProvider) {
+export function changeGroup(favouriteProvider: FavouriteProvider) {
   return vscode.commands.registerCommand('favourite.group.changeGroup', async function (value: Resource) {
     const isGitUsed = !!getFirstGitRepository()
 
