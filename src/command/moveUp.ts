@@ -5,8 +5,8 @@ import configMgr from '../helper/configMgr'
 import { getCurrentResources, replaceArrayElements } from '../helper/util'
 
 export function moveUp(favoritesProvider: FavoritesProvider) {
-  return vscode.commands.registerCommand('favorites.moveUp', async function(value: Resource) {
-    const config = vscode.workspace.getConfiguration('favorites')
+  return vscode.commands.registerCommand('favourite.moveUp', async function(value: Resource) {
+    const config = vscode.workspace.getConfiguration('favourite')
     const currentGroup = configMgr.get('currentGroup') as string
 
     const items = await getCurrentResources()

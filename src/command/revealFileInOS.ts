@@ -3,19 +3,19 @@ import * as vscode from 'vscode'
 import { Resource } from '../provider/FavoritesProvider'
 
 export function revealInOS_mac() {
-  return vscode.commands.registerCommand('favorites.revealInOS.mac', async function (value: Resource) {
+  return vscode.commands.registerCommand('favourite.revealInOS.mac', async function (value: Resource) {
     revealFileInOS(value)
   })
 }
 
 export function revealInOS_windows() {
-  return vscode.commands.registerCommand('favorites.revealInOS.windows', async function (value: Resource) {
+  return vscode.commands.registerCommand('favourite.revealInOS.windows', async function (value: Resource) {
     revealFileInOS(value)
   })
 }
 
 export function revealInOS_other() {
-  return vscode.commands.registerCommand('favorites.revealInOS.other', async function (value: Resource) {
+  return vscode.commands.registerCommand('favourite.revealInOS.other', async function (value: Resource) {
     revealFileInOS(value)
   })
 }

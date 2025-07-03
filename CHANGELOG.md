@@ -31,11 +31,11 @@
 ### 2018-03-19
 
 1. Add sort button at navigation bar
-2. Refactor sort func to fix [sort issue](https://github.com/leftstick/vscode-favorites/issues/3#issuecomment-373995913)
+2. Refactor sort func to fix [sort issue](https://github.com/huyunan/vscode-favourite/issues/3#issuecomment-373995913)
 
 ### 2018-03-17
 
-1. Sort favorites for directories and files separately
+1. Sort favourite for directories and files separately
 2. Add tooltip
 
 ### 2018-02-23

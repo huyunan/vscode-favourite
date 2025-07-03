@@ -9,7 +9,7 @@ class ConfigMgr {
   eventEmitter: vscode.EventEmitter<void> = new vscode.EventEmitter<void>()
 
   get(key): Array<ItemInSettingsJson | string> | string {
-    const config = vscode.workspace.getConfiguration('favorites')
+    const config = vscode.workspace.getConfiguration('favourite')
     const useSeparate = <boolean>config.get('saveSeparated')
 
     if (isMultiRoots() || !useSeparate) {
@@ -22,7 +22,7 @@ class ConfigMgr {
   }
 
   save(key: string, value: any): Promise<void> {
-    const config = vscode.workspace.getConfiguration('favorites')
+    const config = vscode.workspace.getConfiguration('favourite')
     const useSeparate = <boolean>config.get('saveSeparated')
 
     if (isMultiRoots() || !useSeparate) {

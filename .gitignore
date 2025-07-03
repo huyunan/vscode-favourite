@@ -1,6 +1,6 @@
 out
 node_modules
-favorites-localization
+favourite-localization
 
 package.nls.*.json
 package-lock.json

@@ -1,9 +1,9 @@
 {
-  "name": "vscode-favorites",
-  "displayName": "favorites",
-  "description": "Mark resources (files or folders, local and remote) as favorites, so they can be easily accessed.",
-  "version": "1.11.0",
-  "publisher": "howardzuo",
+  "name": "vscode-favourite",
+  "displayName": "favourite",
+  "description": "Mark resources (files or folders, local and remote) as favourite, so they can be easily accessed.",
+  "version": "1.0.0",
+  "publisher": "yunan-hu",
   "engines": {
     "vscode": "^1.68.0"
   },
@@ -17,20 +17,20 @@
   "categories": [
     "Other"
   ],
-  "icon": "images/favorites.png",
+  "icon": "img/favourite.png",
   "bugs": {
-    "url": "https://github.com/leftstick/vscode-favorites/issues",
-    "email": "leftstick@qq.com"
+    "url": "https://github.com/huyunan/vscode-favourite/issues",
+    "email": "18842920976@163.com"
   },
-  "homepage": "https://github.com/leftstick/vscode-favorites/blob/master/README.md",
+  "homepage": "https://github.com/huyunan/vscode-favourite/blob/master/README.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/leftstick/vscode-favorites.git"
+    "url": "https://github.com/huyunan/vscode-favourite.git"
   },
   "activationEvents": [
-    "onCommand:favorites.addToFavorites",
-    "onView:favorites",
-    "onView:favorites-full-view"
+    "onCommand:favourite.addToFavorites",
+    "onView:favourite",
+    "onView:favourite-full-view"
   ],
   "license": "GPL-3.0",
   "main": "./out/index.js",
@@ -39,12 +39,12 @@
       "type": "object",
       "title": "Favorites",
       "properties": {
-        "favorites.resources": {
+        "favourite.resources": {
           "type": "array",
           "default": [],
-          "description": "Resources marked as favorites"
+          "description": "Resources marked as favourite"
         },
-        "favorites.sortOrder": {
+        "favourite.sortOrder": {
           "type": "string",
           "enum": [
             "ASC",
@@ -52,21 +52,21 @@
             "MANUAL"
           ],
           "default": "ASC",
-          "description": "Specify an order for all favorites"
+          "description": "Specify an order for all favourite"
         },
-        "favorites.currentGroup": {
+        "favourite.currentGroup": {
           "type": "string",
           "default": "Default",
           "description": "The name of current group"
         },
-        "favorites.groups": {
+        "favourite.groups": {
           "type": "array",
           "default": [
             "Default"
           ],
           "description": "The names of all groups in the workspace"
         },
-        "favorites.saveSeparated": {
+        "favourite.saveSeparated": {
           "type": "boolean",
           "default": false,
           "description": "Whether to save marked resources in separate .vscfavoriterc"
@@ -76,237 +76,237 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "favorites-explorer",
-          "title": "%view.favorites.title%",
+          "id": "favourite-explorer",
+          "title": "%view.favourite.title%",
           "icon": "$(heart)"
         }
       ]
     },
     "views": {
-      "favorites-explorer": [
+      "favourite-explorer": [
         {
-          "id": "favorites-full-view",
-          "name": "%view.favorites.title%"
+          "id": "favourite-full-view",
+          "name": "%view.favourite.title%"
         }
       ],
       "explorer": [
         {
-          "id": "favorites",
-          "name": "%view.favorites.title%"
+          "id": "favourite",
+          "name": "%view.favourite.title%"
         }
       ]
     },
     "menus": {
       "editor/context": [
         {
-          "command": "favorites.addToFavorites",
-          "group": "favorites"
+          "command": "favourite.addToFavorites",
+          "group": "favourite"
         },
         {
-          "command": "favorites.deleteFavorite",
-          "group": "favorites"
+          "command": "favourite.deleteFavorite",
+          "group": "favourite"
         }
       ],
       "explorer/context": [
         {
-          "command": "favorites.addToFavorites",
-          "group": "favorites"
+          "command": "favourite.addToFavorites",
+          "group": "favourite"
         }
       ],
       "view/title": [
         {
-          "command": "favorites.nav.refresh",
+          "command": "favourite.nav.refresh",
           "when": "view in ext:allFavoriteViews",
           "group": "navigation"
         },
         {
-          "command": "favorites.nav.sort",
+          "command": "favourite.nav.sort",
           "when": "view in ext:allFavoriteViews",
           "group": "navigation"
         },
         {
-          "command": "favorites.group.changeGroup",
+          "command": "favourite.group.changeGroup",
           "when": "view in ext:allFavoriteViews",
           "group": "navigation"
         },
         {
-          "command": "favorites.group.newGroup",
+          "command": "favourite.group.newGroup",
           "when": "view in ext:allFavoriteViews",
           "group": "navigation"
         }
       ],
       "view/item/context": [
         {
-          "command": "favorites.revealInOS.mac",
+          "command": "favourite.revealInOS.mac",
           "when": "isMac && view in ext:allFavoriteViews && viewItem =~ /^resource/",
           "group": "navigation"
         },
         {
-          "command": "favorites.revealInOS.windows",
+          "command": "favourite.revealInOS.windows",
           "when": "isWindows && view in ext:allFavoriteViews && viewItem =~ /^resource/",
           "group": "navigation"
         },
         {
-          "command": "favorites.revealInOS.other",
+          "command": "favourite.revealInOS.other",
           "when": "!isMac && !isWindows && view in ext:allFavoriteViews && viewItem =~ /^resource/",
           "group": "navigation"
         },
         {
-          "command": "favorites.revealInSideBar",
+          "command": "favourite.revealInSideBar",
           "when": "view in ext:allFavoriteViews",
           "group": "navigation"
         },
         {
-          "command": "favorites.openToSide",
+          "command": "favourite.openToSide",
           "when": "view in ext:allFavoriteViews && viewItem =~ /^resource(Child)?$|^uri\\.resource(Child)?$/",
           "group": "navigation"
         },
         {
-          "command": "favorites.deleteFavorite",
+          "command": "favourite.deleteFavorite",
           "when": "view in ext:allFavoriteViews && viewItem =~ /resource(\\.dir)?$/",
           "group": "operation"
         },
         {
-          "command": "favorites.moveToTop",
+          "command": "favourite.moveToTop",
           "when": "view in ext:allFavoriteViews && viewItem =~ /resource(\\.dir)?$/",
           "group": "sort@1"
         },
         {
-          "command": "favorites.moveUp",
+          "command": "favourite.moveUp",
           "when": "view in ext:allFavoriteViews && viewItem =~ /resource(\\.dir)?$/",
           "group": "sort@2"
         },
         {
-          "command": "favorites.moveDown",
+          "command": "favourite.moveDown",
           "when": "view in ext:allFavoriteViews && viewItem =~ /resource(\\.dir)?$/",
           "group": "sort@3"
         },
         {
-          "command": "favorites.moveToBottom",
+          "command": "favourite.moveToBottom",
           "when": "view in ext:allFavoriteViews && viewItem =~ /resource(\\.dir)?$/",
           "group": "sort@4"
         }
       ],
       "commandPalette": [
         {
-          "command": "favorites.nav.refresh",
+          "command": "favourite.nav.refresh",
           "when": "false"
         },
         {
-          "command": "favorites.nav.sort",
+          "command": "favourite.nav.sort",
           "when": "false"
         },
         {
-          "command": "favorites.revealInOS.mac",
+          "command": "favourite.revealInOS.mac",
           "when": "false"
         },
         {
-          "command": "favorites.revealInOS.windows",
+          "command": "favourite.revealInOS.windows",
           "when": "false"
         },
         {
-          "command": "favorites.revealInOS.other",
+          "command": "favourite.revealInOS.other",
           "when": "false"
         },
         {
-          "command": "favorites.revealInSideBar",
+          "command": "favourite.revealInSideBar",
           "when": "false"
         },
         {
-          "command": "favorites.openToSide",
+          "command": "favourite.openToSide",
           "when": "false"
         },
         {
-          "command": "favorites.moveToTop",
+          "command": "favourite.moveToTop",
           "when": "false"
         },
         {
-          "command": "favorites.moveUp",
+          "command": "favourite.moveUp",
           "when": "false"
         },
         {
-          "command": "favorites.moveDown",
+          "command": "favourite.moveDown",
           "when": "false"
         },
         {
-          "command": "favorites.moveToBottom",
+          "command": "favourite.moveToBottom",
           "when": "false"
         }
       ]
     },
     "commands": [
       {
-        "command": "favorites.nav.refresh",
-        "title": "%command.favorites.refresh%",
+        "command": "favourite.nav.refresh",
+        "title": "%command.favourite.refresh%",
         "icon": "$(refresh)"
       },
       {
-        "command": "favorites.nav.sort",
-        "title": "%command.favorites.sort%",
+        "command": "favourite.nav.sort",
+        "title": "%command.favourite.sort%",
         "icon": {
-          "dark": "images/sort_black.svg",
-          "light": "images/sort_light.svg"
+          "dark": "img/sort_black.svg",
+          "light": "img/sort_light.svg"
         }
       },
       {
-        "command": "favorites.group.changeGroup",
-        "title": "%command.favorites.changeGroup%",
+        "command": "favourite.group.changeGroup",
+        "title": "%command.favourite.changeGroup%",
         "icon": {
-          "dark": "images/switch_group_black.svg",
-          "light": "images/switch_group_light.svg"
+          "dark": "img/switch_group_black.svg",
+          "light": "img/switch_group_light.svg"
         }
       },
       {
-        "command": "favorites.group.newGroup",
-        "title": "%command.favorites.newGroup%",
+        "command": "favourite.group.newGroup",
+        "title": "%command.favourite.newGroup%",
         "icon": {
-          "dark": "images/new_group_black.svg",
-          "light": "images/new_group_light.svg"
+          "dark": "img/new_group_black.svg",
+          "light": "img/new_group_light.svg"
         }
       },
       {
-        "command": "favorites.addToFavorites",
-        "title": "%command.favorites.addtofavorites%"
+        "command": "favourite.addToFavorites",
+        "title": "%command.favourite.addtofavorites%"
       },
       {
-        "command": "favorites.deleteFavorite",
-        "title": "%command.favorites.deletefavorite%"
+        "command": "favourite.deleteFavorite",
+        "title": "%command.favourite.deletefavorite%"
       },
       {
-        "command": "favorites.moveUp",
-        "title": "%command.favorites.moveup%"
+        "command": "favourite.moveUp",
+        "title": "%command.favourite.moveup%"
       },
       {
-        "command": "favorites.moveDown",
-        "title": "%command.favorites.movedown%"
+        "command": "favourite.moveDown",
+        "title": "%command.favourite.movedown%"
       },
       {
-        "command": "favorites.moveToTop",
-        "title": "%command.favorites.movetotop%"
+        "command": "favourite.moveToTop",
+        "title": "%command.favourite.movetotop%"
       },
       {
-        "command": "favorites.moveToBottom",
-        "title": "%command.favorites.movetobottom%"
+        "command": "favourite.moveToBottom",
+        "title": "%command.favourite.movetobottom%"
       },
       {
-        "command": "favorites.revealInOS.mac",
-        "title": "%command.favorites.revealInOS.mac%"
+        "command": "favourite.revealInOS.mac",
+        "title": "%command.favourite.revealInOS.mac%"
       },
       {
-        "command": "favorites.revealInOS.windows",
-        "title": "%command.favorites.revealInOS.windows%"
+        "command": "favourite.revealInOS.windows",
+        "title": "%command.favourite.revealInOS.windows%"
       },
       {
-        "command": "favorites.revealInOS.other",
-        "title": "%command.favorites.revealInOS.other%"
+        "command": "favourite.revealInOS.other",
+        "title": "%command.favourite.revealInOS.other%"
       },
       {
-        "command": "favorites.revealInSideBar",
-        "title": "%command.favorites.revealInSideBar%"
+        "command": "favourite.revealInSideBar",
+        "title": "%command.favourite.revealInSideBar%"
       },
       {
-        "command": "favorites.openToSide",
-        "title": "%command.favorites.openToSide%"
+        "command": "favourite.openToSide",
+        "title": "%command.favourite.openToSide%"
       }
     ]
   },

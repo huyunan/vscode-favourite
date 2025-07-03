@@ -28,9 +28,9 @@ import {
 export function activate(context: vscode.ExtensionContext) {
   // Use the console to output diagnostic information (console.log) and errors (console.error)
   // This line of code will only be executed once when your extension is activated
-  console.log('Congratulations, your extension "favorites" is now active!')
+  console.log('Congratulations, your extension "favourite" is now active!')
 
-  vscode.commands.executeCommand('setContext', 'ext:allFavoriteViews', ['favorites', 'favorites-full-view'])
+  vscode.commands.executeCommand('setContext', 'ext:allFavoriteViews', ['favourite', 'favourite-full-view'])
 
   configMgr.onConfigChange(() => {
     favoritesProvider.refresh()
@@ -38,8 +38,8 @@ export function activate(context: vscode.ExtensionContext) {
 
   const favoritesProvider = new FavoritesProvider()
 
-  vscode.window.createTreeView('favorites', { treeDataProvider: favoritesProvider, showCollapseAll: true })
-  const tree = vscode.window.createTreeView('favorites-full-view', {
+  vscode.window.createTreeView('favourite', { treeDataProvider: favoritesProvider, showCollapseAll: true })
+  const tree = vscode.window.createTreeView('favourite-full-view', {
     treeDataProvider: favoritesProvider,
     showCollapseAll: true,
   })

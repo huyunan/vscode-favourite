@@ -6,7 +6,7 @@ import { getFirstGitRepository, getGitBranchName } from '../helper/util'
 import { DEFAULT_GROUP } from '../enum'
 
 export function changeGroup(favoritesProvider: FavoritesProvider) {
-  return vscode.commands.registerCommand('favorites.group.changeGroup', async function (value: Resource) {
+  return vscode.commands.registerCommand('favourite.group.changeGroup', async function (value: Resource) {
     const isGitUsed = !!getFirstGitRepository()
 
     let branchName: string = 'no_git_master'

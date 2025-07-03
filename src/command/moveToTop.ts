@@ -5,8 +5,8 @@ import configMgr from '../helper/configMgr'
 import { getCurrentResources } from '../helper/util'
 
 export function moveToTop(favoritesProvider: FavoritesProvider) {
-  return vscode.commands.registerCommand('favorites.moveToTop', async function (value: Resource) {
-    const config = vscode.workspace.getConfiguration('favorites')
+  return vscode.commands.registerCommand('favourite.moveToTop', async function (value: Resource) {
+    const config = vscode.workspace.getConfiguration('favourite')
     const currentGroup = configMgr.get('currentGroup') as string
 
     const items = await getCurrentResources()

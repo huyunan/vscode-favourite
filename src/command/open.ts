@@ -2,12 +2,12 @@ import * as vscode from 'vscode'
 
 import { Resource, FavoritesProvider } from '../provider/FavoritesProvider'
 
-// The favorites.open command is not listed in settings.json as a contribution because it only gets invoked
+// The favourite.open command is not listed in settings.json as a contribution because it only gets invoked
 //  from the user's click on an item in the FavoritesProvider tree.
 // It serves as a proxy for the vscode.open command, detecting two opens of the same item in quick succession
 //  and treating the second of these as a non-preview open.
 export function open(favoritesProvider: FavoritesProvider) {
-  return vscode.commands.registerCommand('favorites.open', async function (uri: vscode.Uri) {
+  return vscode.commands.registerCommand('favourite.open', async function (uri: vscode.Uri) {
     let usePreview = <boolean>vscode.workspace.getConfiguration('workbench.editor').get('enablePreview')
 
     if (usePreview) {
