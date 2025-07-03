@@ -78,7 +78,7 @@
         {
           "id": "favourite-explorer",
           "title": "%view.favourite.title%",
-          "icon": "$(heart)"
+          "icon": "img/favourite.png"
         }
       ]
     },
