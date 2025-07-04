@@ -3,6 +3,7 @@
 import * as vscode from 'vscode'
 import { FavouriteProvider } from './provider/FavouriteProvider'
 import configMgr from './helper/configMgr'
+import localize from './helper/localize'
 
 import {
   addToFavourite,
@@ -45,12 +46,12 @@ export function activate(context: vscode.ExtensionContext) {
   })
 
   const currentGroup = configMgr.get('currentGroup')
-  tree.message = `Current Group: ${currentGroup}`
+  tree.message = `${localize('ext.current.group')}${currentGroup}`
 
   vscode.workspace.onDidChangeConfiguration(
     () => {
       const currentGroup = configMgr.get('currentGroup')
-      tree.message = `Current Group: ${currentGroup}`
+      tree.message = `${localize('ext.current.group')}${currentGroup}`
       favouriteProvider.refresh()
     },
     this,

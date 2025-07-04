@@ -2,6 +2,7 @@ import * as vscode from 'vscode'
 
 import { Resource, FavouriteProvider } from '../provider/FavouriteProvider'
 import configMgr from '../helper/configMgr'
+import localize from '../helper/localize'
 import { getFirstGitRepository, getGitBranchName } from '../helper/util'
 import { DEFAULT_GROUP } from '../enum'
 
@@ -25,14 +26,14 @@ export function changeGroup(favouriteProvider: FavouriteProvider) {
     vscode.window
       .showQuickPick(
         isGitUsed && doesCurrentBranchNameGroupExist && !isInCurrentBranchGroup
-          ? ['Switch to current branch group'].concat(
+          ? [localize('ext.switch.current.group')].concat(
               groups.filter((item) => item !== branchName && item !== currentGroup)
             )
           : groups.filter((item) => item !== branchName && item !== currentGroup),
-        { title: 'Choose a group you want to switch to' }
+        { title: localize('title.choose.switch.group') }
       )
       .then((selectedCommand) => {
-        if (selectedCommand === 'Switch to current branch group') {
+        if (selectedCommand === localize('ext.switch.current.group')) {
           configMgr.save('currentGroup', branchName)
         } else if (selectedCommand != undefined) {
           configMgr.save('currentGroup', selectedCommand)

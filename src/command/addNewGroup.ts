@@ -3,6 +3,7 @@ import * as vscode from 'vscode'
 import { Resource, FavouriteProvider } from '../provider/FavouriteProvider'
 import configMgr from '../helper/configMgr'
 import { DEFAULT_GROUP } from '../enum'
+import localize from '../helper/localize'
 import { getFirstGitRepository, getGitBranchName } from '../helper/util'
 
 export function addNewGroup(favouriteProvider: FavouriteProvider) {
@@ -20,18 +21,18 @@ export function addNewGroup(favouriteProvider: FavouriteProvider) {
 
     vscode.window
       .showQuickPick(
-        ['Input new group name'].concat(!isGitUsed ? [] : ['Create group with current branch name', 'Delete current group'])
+        [localize('ext.new.group.name')].concat(!isGitUsed ? [] : [localize('ext.new.group.current.name'), localize('ext.delete.current.group')])
       )
       .then((label) => {
-        if (label == 'Input new group name') {
-          vscode.window.showInputBox({ title: 'Input a name for new group' }).then((input) => {
+        if (label == localize('ext.new.group.name')) {
+          vscode.window.showInputBox({ title: localize('title.new.group.name') }).then((input) => {
             if (input) {
               addNewGroupInConfig(input, previousGroups)
             }
           })
-        } else if (label == 'Create group with current branch name') {
+        } else if (label == localize('ext.new.group.current.name')) {
           addNewGroupInConfig(branchName, previousGroups)
-        } else if (label == 'Delete current group') {
+        } else if (label == localize('ext.delete.current.group')) {
           deleteCurrentGroup(previousGroups);
         }
       })
@@ -41,14 +42,14 @@ export function addNewGroup(favouriteProvider: FavouriteProvider) {
 function deleteCurrentGroup(previousGroups) {
   const currentGroup = configMgr.get('currentGroup')
   const index = previousGroups.indexOf(currentGroup)
-  if (currentGroup === 'Default') {
-    vscode.window.showErrorMessage(`The default Group cannot be deleted.`);
+  if (currentGroup === localize('ext.default')) {
+    vscode.window.showErrorMessage(localize('msg.delete.default.group'));
   } else if (index !== -1) {
     previousGroups.splice(index, 1)
     configMgr.save('groups', previousGroups);
-    configMgr.save('currentGroup', "Default");
+    configMgr.save('currentGroup', localize('ext.default'));
   } else {
-    vscode.window.showErrorMessage(`The group "${currentGroup}" does not exist.`);
+    vscode.window.showErrorMessage(`${localize('msg.group.not.exist.left')} "${currentGroup}" ${localize('msg.group.not.exist.right')}`);
   }
 }
 
@@ -57,6 +58,6 @@ function addNewGroupInConfig(name: string, previousGroups: Array<string>) {
     configMgr.save('groups', previousGroups.concat([name]))
     configMgr.save('currentGroup', name)
   } else {
-    vscode.window.showErrorMessage(`The group "${name}" already exists.`)
+    vscode.window.showErrorMessage(`${localize('msg.group.exist.left')} "${name}" ${localize('msg.group.exist.right')}`)
   }
 }

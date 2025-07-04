@@ -2,7 +2,6 @@ out
 node_modules
 favourite-localization
 
-package.nls.*.json
 package-lock.json
 vscode-favourite-*
 

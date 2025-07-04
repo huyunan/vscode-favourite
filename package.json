@@ -1,7 +1,7 @@
 {
   "name": "vscode-favourite",
-  "displayName": "favourite",
-  "description": "Mark resources (files or folders, local and remote) as favourite, so they can be easily accessed.",
+  "displayName": "%ext.displayName%",
+  "description": "%ext.description%",
   "version": "1.0.0",
   "publisher": "yunan-hu",
   "engines": {
@@ -37,12 +37,12 @@
   "contributes": {
     "configuration": {
       "type": "object",
-      "title": "Favourite",
+      "title": "%ext.contributes.title%",
       "properties": {
         "favourite.resources": {
           "type": "array",
           "default": [],
-          "description": "Resources marked as favourite"
+          "description": "%ext.resources.description%"
         },
         "favourite.sortOrder": {
           "type": "string",
@@ -52,24 +52,24 @@
             "MANUAL"
           ],
           "default": "ASC",
-          "description": "Specify an order for all favourite"
+          "description": "%ext.sortOrder.description%"
         },
         "favourite.currentGroup": {
           "type": "string",
-          "default": "Default",
-          "description": "The name of current group"
+          "default": "%ext.default%",
+          "description": "%ext.currentGroup.description%"
         },
         "favourite.groups": {
           "type": "array",
           "default": [
-            "Default"
+            "%ext.default%"
           ],
-          "description": "The names of all groups in the workspace"
+          "description": "%ext.groups.description%"
         },
         "favourite.saveSeparated": {
           "type": "boolean",
           "default": false,
-          "description": "Whether to save marked resources in separate .vscfavouriterc"
+          "description": "%ext.saveSeparated.description%"
         }
       }
     },

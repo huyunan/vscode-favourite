@@ -2,13 +2,14 @@ import * as vscode from 'vscode'
 import { isMultiRoots, getSingleRootPath, getCurrentResources } from '../helper/util'
 import configMgr from '../helper/configMgr'
 import { DEFAULT_GROUP } from '../enum'
+import localize from '../helper/localize'
 import { ItemInSettingsJson } from '../model'
 
 export function addToFavourite() {
   return vscode.commands.registerCommand('favourite.addToFavourite', async (fileUri?: vscode.Uri) => {
     if (!fileUri) {
       if (!vscode.window.activeTextEditor) {
-        return vscode.window.showWarningMessage('You have to choose a resource first')
+        return vscode.window.showWarningMessage(localize('msg.add.choose.require'))
       }
       fileUri = vscode.window.activeTextEditor.document.uri
     }
