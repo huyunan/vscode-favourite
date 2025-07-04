@@ -238,7 +238,10 @@
       {
         "command": "favourite.nav.refresh",
         "title": "%command.favourite.refresh%",
-        "icon": "$(refresh)"
+        "icon": {
+          "dark": "img/refresh_black.svg",
+          "light": "img/refresh_light.svg"
+        }
       },
       {
         "command": "favourite.nav.sort",

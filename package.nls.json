@@ -12,7 +12,7 @@
   "command.favourite.revealInOS.other": "Open Containing Folder",
   "command.favourite.revealInSideBar": "Reveal in Side Bar",
   "command.favourite.openToSide": "Open to the Side",
-  "command.favourite.changeGroup": "Change Current Group",
+  "command.favourite.changeGroup": "Change Group",
   "command.favourite.newGroup": "Create New Group",
   "view.favourite.title": "Favourite"
 }
