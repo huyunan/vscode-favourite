@@ -17,6 +17,11 @@ export function toggleSort(favouriteProvider: FavouriteProvider) {
       return
     }
 
+    if (sort === 'DESC') {
+      configMgr.save([{key: 'sortOrder', value: 'MANUAL'}])
+      return
+    }
+
     configMgr.save([{key: 'sortOrder', value: 'ASC'}])
   })
 }

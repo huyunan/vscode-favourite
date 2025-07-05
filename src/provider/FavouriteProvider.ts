@@ -46,7 +46,7 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
   }
 
   private getChildrenResources(item: ItemInSettingsJson): Thenable<Array<Resource>> {
-    const sort = <string>vscode.workspace.getConfiguration('favourite').get('sortOrder')
+    const sort = configMgr.get('sortOrder') as string
 
     if (item.filePath.match(/^[A-Za-z][A-Za-z0-9+-.]*:\/\//)) {
       // filePath is a uri string
@@ -82,7 +82,7 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
 
   private getSortedFavouriteResources(): Thenable<Array<ItemInSettingsJson>> {
     const resources = getCurrentResources()
-    const sort = <string>vscode.workspace.getConfiguration('favourite').get('sortOrder')
+    const sort = configMgr.get('sortOrder') as string
 
     if (sort === 'MANUAL') {
       return Promise.resolve(resources)

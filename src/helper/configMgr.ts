@@ -12,7 +12,7 @@ class ConfigMgr {
     const configValue = <Array<ItemInSettingsJson>>config.get(key)
 
     // 如果 vscode 工作区没有文件夹
-    if (!vscode.workspace.workspaceFolders) {
+    if (!vscode.workspace.workspaceFolders || vscode.workspace.workspaceFolders.length == 0) {
       return configValue
     }
 
@@ -24,7 +24,7 @@ class ConfigMgr {
     let nconfValue  = nconf.get(key)
 
     if ((['groups', 'resources'].includes(key) && nconfValue && Array.isArray(nconfValue) && nconfValue.length == 0)
-      || (key == 'currentGroup' && !nconfValue)) {
+      || (['sortOrder', 'refreshTime', 'currentGroup'].includes(key) && !nconfValue)) {
       nconfValue = configValue
     }
     return nconfValue
@@ -34,7 +34,7 @@ class ConfigMgr {
     const config = vscode.workspace.getConfiguration('favourite')
 
     // 如果 vscode 工作区没有文件夹
-    if (!vscode.workspace.workspaceFolders) {
+    if (!vscode.workspace.workspaceFolders || vscode.workspace.workspaceFolders.length == 0) {
       vscode.window.showErrorMessage(localize('msg.workspace.no.folder'));
       return Promise.reject()
     }
