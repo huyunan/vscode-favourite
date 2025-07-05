@@ -53,6 +53,11 @@ class ConfigMgr {
     return new Promise<void>((resolve, reject) => {
       nconf.save((err) => {
         if (err) {
+          let message = err.message
+          if (err.message.indexOf("permission denied") && err.message.indexOf(".vsfavourite")) {
+            message += localize('msg.access.deny.chmod')
+          }
+          vscode.window.showErrorMessage(message)
           return reject(err)
         }
         resolve()
