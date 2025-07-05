@@ -51,7 +51,7 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
     if (item.filePath.match(/^[A-Za-z][A-Za-z0-9+-.]*:\/\//)) {
       // filePath is a uri string
       // const uri = vscode.Uri.parse(item.filePath)
-        const uri = vscode.Uri.file(item.filePath);
+      const uri = vscode.Uri.file(item.filePath);
       return vscode.workspace.fs
         .readDirectory(uri)
         .then((entries) =>

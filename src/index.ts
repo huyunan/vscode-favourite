@@ -4,6 +4,8 @@ import * as vscode from 'vscode'
 import { FavouriteProvider } from './provider/FavouriteProvider'
 import configMgr from './helper/configMgr'
 import localize from './helper/localize'
+import { pathResolve } from './helper/util'
+import * as fs from 'fs'
 
 import {
   addToFavourite,
@@ -51,17 +53,26 @@ export function activate(context: vscode.ExtensionContext) {
     this,
     context.subscriptions
   )
-  const fileWatcher = vscode.workspace.createFileSystemWatcher("**/.vsfavourite", false, false, false);
-  fileWatcher.onDidCreate(() => {
-    onFileChange(favouriteProvider)
-  })
-  fileWatcher.onDidChange(() => {
-    onFileChange(favouriteProvider)
-  })
-  fileWatcher.onDidDelete(() => {
-    onFileChange(favouriteProvider)
-  })
-  
+  const path = pathResolve('.vsfavourite')
+  const pUri = vscode.Uri.file(path)
+
+  if (pUri.authority == 'wsl.localhost') {
+    fs.watchFile(path, {persistent: true }, () => {
+      onFileChange(favouriteProvider)
+    });
+  } else {
+    const fileWatcher = vscode.workspace.createFileSystemWatcher(path, false, false, false);
+    fileWatcher.onDidCreate(() => {
+      onFileChange(favouriteProvider)
+    })
+    fileWatcher.onDidChange(() => {
+      onFileChange(favouriteProvider)
+    })
+    fileWatcher.onDidDelete(() => {
+      onFileChange(favouriteProvider)
+    })
+  }
+
   function onFileChange(favouriteProvider: FavouriteProvider) {
     const currentGroup = configMgr.get('currentGroup')
     tree.message = `${localize('ext.current.group')}${currentGroup}`
