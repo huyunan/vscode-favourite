@@ -1,21 +1,22 @@
 import * as vscode from 'vscode'
 
 import { Resource, FavouriteProvider } from '../provider/FavouriteProvider'
+import configMgr from '../helper/configMgr'
 
 export function toggleSort(favouriteProvider: FavouriteProvider) {
   return vscode.commands.registerCommand('favourite.nav.sort', async function(value: Resource) {
-    const config = vscode.workspace.getConfiguration('favourite')
-
-    const sort = <string>config.get('sortOrder')
+    const sort = configMgr.get('sortOrder')
 
     if (sort === 'MANUAL') {
-      return config.update('sortOrder', 'ASC', false)
+      configMgr.save([{key: 'sortOrder', value: 'ASC'}])
+      return
     }
 
     if (sort === 'ASC') {
-      return config.update('sortOrder', 'DESC', false)
+      configMgr.save([{key: 'sortOrder', value: 'DESC'}])
+      return
     }
 
-    config.update('sortOrder', 'ASC', false)
+    configMgr.save([{key: 'sortOrder', value: 'ASC'}])
   })
 }

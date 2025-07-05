@@ -46,8 +46,7 @@ function deleteCurrentGroup(previousGroups) {
     vscode.window.showErrorMessage(localize('msg.delete.default.group'));
   } else if (index !== -1) {
     previousGroups.splice(index, 1)
-    configMgr.save('groups', previousGroups);
-    configMgr.save('currentGroup', localize('ext.default'));
+    configMgr.save([{key: 'groups', value: previousGroups}, {key: 'currentGroup', value: localize('ext.default')}]);
   } else {
     vscode.window.showErrorMessage(`${localize('msg.group.not.exist.left')} "${currentGroup}" ${localize('msg.group.not.exist.right')}`);
   }
@@ -55,8 +54,7 @@ function deleteCurrentGroup(previousGroups) {
 
 function addNewGroupInConfig(name: string, previousGroups: Array<string>) {
   if (previousGroups.indexOf(name) === -1) {
-    configMgr.save('groups', previousGroups.concat([name]))
-    configMgr.save('currentGroup', name)
+    configMgr.save([{key: 'groups', value: previousGroups.concat([name])}, {key: 'currentGroup', value: name}]);
   } else {
     vscode.window.showErrorMessage(`${localize('msg.group.exist.left')} "${name}" ${localize('msg.group.exist.right')}`)
   }

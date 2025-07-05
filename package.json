@@ -14,6 +14,15 @@
     "clean": "gulp clean",
     "pk": "gulp package"
   },
+  "keywords": [
+    "favourite",
+    "add to favourite",
+    "add to favorites",
+    "favorites",
+    "收藏",
+    "收藏夹",
+    "添加到收藏夹"
+  ],
   "categories": [
     "Other"
   ],
@@ -66,10 +75,10 @@
           ],
           "description": "%ext.groups.description%"
         },
-        "favourite.saveSeparated": {
+        "favourite.refreshTime": {
           "type": "boolean",
           "default": false,
-          "description": "%ext.saveSeparated.description%"
+          "description": "%ext.refreshTime.description%"
         }
       }
     },

@@ -1,51 +1,63 @@
 import * as vscode from 'vscode'
 import * as nconf from 'nconf'
 import * as path from 'path'
+import localize from '../helper/localize'
 
 import { isMultiRoots, getSingleRootPath } from './util'
 import { ItemInSettingsJson } from '../model'
 
 class ConfigMgr {
-  eventEmitter: vscode.EventEmitter<void> = new vscode.EventEmitter<void>()
-
   get(key): Array<ItemInSettingsJson | string> | string {
     const config = vscode.workspace.getConfiguration('favourite')
-    const useSeparate = <boolean>config.get('saveSeparated')
+    const configValue = <Array<ItemInSettingsJson>>config.get(key)
 
-    if (isMultiRoots() || !useSeparate) {
-      return <Array<ItemInSettingsJson>>config.get(key)
+    // 如果 vscode 工作区没有文件夹
+    if (!vscode.workspace.workspaceFolders) {
+      return configValue
     }
 
-    nconf.file({ file: path.resolve(getSingleRootPath(), '.vscfavouriterc') })
+    if (isMultiRoots()) {
+      return configValue
+    }
 
-    return nconf.get(key)
+    nconf.file({ file: path.resolve(getSingleRootPath(), '.vsfavourite') })
+    let nconfValue  = nconf.get(key)
+
+    if ((['groups', 'resources'].includes(key) && nconfValue && Array.isArray(nconfValue) && nconfValue.length == 0)
+      || (key == 'currentGroup' && !nconfValue)) {
+      nconfValue = configValue
+    }
+    return nconfValue
   }
 
-  save(key: string, value: any): Promise<void> {
+  save(items: { key: string; value: any; }[]): Promise<void> {
     const config = vscode.workspace.getConfiguration('favourite')
-    const useSeparate = <boolean>config.get('saveSeparated')
 
-    if (isMultiRoots() || !useSeparate) {
-      config.update(key, value, false)
+    // 如果 vscode 工作区没有文件夹
+    if (!vscode.workspace.workspaceFolders) {
+      vscode.window.showErrorMessage(localize('msg.workspace.no.folder'));
+      return Promise.reject()
+    }
+
+    if (isMultiRoots()) {
+      items.forEach(({key, value}) => {
+        config.update(key, value, false)
+      })
       return Promise.resolve()
     }
 
-    nconf.file({ file: path.resolve(getSingleRootPath(), '.vscfavouriterc') })
-    nconf.set(key, value)
-
+    nconf.file({ file: path.resolve(getSingleRootPath(), '.vsfavourite') })
+    items.forEach(({key, value}) => {
+      nconf.set(key, value)
+    })
     return new Promise<void>((resolve, reject) => {
       nconf.save((err) => {
         if (err) {
           return reject(err)
         }
-        this.eventEmitter.fire()
         resolve()
       })
     })
-  }
-
-  get onConfigChange(): vscode.Event<void> {
-    return this.eventEmitter.event
   }
 }
 

@@ -33,7 +33,6 @@ export function moveDown(favouriteProvider: FavouriteProvider) {
 
     let resources = replaceArrayElements(items, currentIndex, nextIndex)
 
-    config.update('sortOrder', 'MANUAL', false)
-    configMgr.save('resources', resources).catch(console.warn)
+    configMgr.save([{key: 'resources', value: resources}, {key: 'sortOrder', value: 'MANUAL'}]).catch(console.warn)
   })
 }

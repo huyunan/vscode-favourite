@@ -31,7 +31,6 @@ export function moveToTop(favouriteProvider: FavouriteProvider) {
     items.unshift(items[currentIndex])
     items.splice(currentIndex + 1, 1)
 
-    config.update('sortOrder', 'MANUAL', false)
-    configMgr.save('resources', items).catch(console.warn)
+    configMgr.save([{key: 'resources', value: items}, {key: 'sortOrder', value: 'MANUAL'}]).catch(console.warn)
   })
 }

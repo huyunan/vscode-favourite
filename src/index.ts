@@ -33,10 +33,6 @@ export function activate(context: vscode.ExtensionContext) {
 
   vscode.commands.executeCommand('setContext', 'ext:allFavouriteViews', ['favourite', 'favourite-full-view'])
 
-  configMgr.onConfigChange(() => {
-    favouriteProvider.refresh()
-  })
-
   const favouriteProvider = new FavouriteProvider()
 
   vscode.window.createTreeView('favourite', { treeDataProvider: favouriteProvider, showCollapseAll: true })
@@ -50,13 +46,27 @@ export function activate(context: vscode.ExtensionContext) {
 
   vscode.workspace.onDidChangeConfiguration(
     () => {
-      const currentGroup = configMgr.get('currentGroup')
-      tree.message = `${localize('ext.current.group')}${currentGroup}`
-      favouriteProvider.refresh()
+      onFileChange(favouriteProvider)
     },
     this,
     context.subscriptions
   )
+  const fileWatcher = vscode.workspace.createFileSystemWatcher("**/.vsfavourite", false, false, false);
+  fileWatcher.onDidCreate(() => {
+    onFileChange(favouriteProvider)
+  })
+  fileWatcher.onDidChange(() => {
+    onFileChange(favouriteProvider)
+  })
+  fileWatcher.onDidDelete(() => {
+    onFileChange(favouriteProvider)
+  })
+  
+  function onFileChange(favouriteProvider: FavouriteProvider) {
+    const currentGroup = configMgr.get('currentGroup')
+    tree.message = `${localize('ext.current.group')}${currentGroup}`
+    favouriteProvider.refresh()
+  }
 
   context.subscriptions.push(addToFavourite())
   context.subscriptions.push(deleteFavourite())

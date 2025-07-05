@@ -50,7 +50,8 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
 
     if (item.filePath.match(/^[A-Za-z][A-Za-z0-9+-.]*:\/\//)) {
       // filePath is a uri string
-      const uri = vscode.Uri.parse(item.filePath)
+      // const uri = vscode.Uri.parse(item.filePath)
+        const uri = vscode.Uri.file(item.filePath);
       return vscode.workspace.fs
         .readDirectory(uri)
         .then((entries) =>
@@ -122,7 +123,8 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
     return new Promise((resolve) => {
       if (item.filePath.match(/^[A-Za-z][A-Za-z0-9+-.]*:\/\//)) {
         // filePath is a uri string
-        const uri = vscode.Uri.parse(item.filePath)
+        // const uri = vscode.Uri.parse(item.filePath)
+        const uri = vscode.Uri.file(item.filePath);
         resolve(
           vscode.workspace.fs.stat(uri).then((fileStat) => {
             if (fileStat.type === vscode.FileType.File) {
@@ -193,10 +195,11 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
 
     return data.map((i) => {
       if (!i.uri) {
-        let uri = vscode.Uri.parse(`file://${pathResolve(i.filePath)}`)
-        if (os.platform().startsWith('win')) {
-          uri = vscode.Uri.parse(`file:///${pathResolve(i.filePath)}`.replace(/\\/g, '/'))
-        }
+        const uri = vscode.Uri.file(pathResolve(i.filePath));
+        // let uri = vscode.Uri.parse(`file://${pathResolve(i.filePath)}`)
+        // if (os.platform().startsWith('win')) {
+        //   uri = vscode.Uri.parse(`file:///${pathResolve(i.filePath)}`.replace(/\\/g, '/'))
+        // }
         if (i.stat === FileStat.DIRECTORY) {
           return new Resource(
             path.basename(i.filePath),

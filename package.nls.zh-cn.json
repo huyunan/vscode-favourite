@@ -24,7 +24,7 @@
   "ext.sortOrder.description": "为所有收藏指定一个顺序",
   "ext.currentGroup.description": "当前分组的名称",
   "ext.groups.description": "工作区中所有分组的名称",
-  "ext.saveSeparated.description": "是否将标记的资源保存在单独的.vscfavoriterc文件中",
+  "ext.refreshTime.description": "配置文件刷新时间",
   "ext.new.group.name": "输入新分组名称",
   "ext.new.group.current.name": "使用当前分支名称创建分组",
   "ext.delete.current.group": "删除当前分组",
@@ -35,6 +35,7 @@
   "msg.group.not.exist.left": "这个分组",
   "msg.group.not.exist.right": "不存在。",
   "msg.add.choose.require": "您必须先选择一个资源文件",
+  "msg.workspace.no.folder": "没有打开任何工作区，因此无法写入 工作区设置。请先打开一个工作区，然后重试。",
   "title.choose.switch.group": "选择要切换到的分组",
   "title.new.group.name": "输入新分组的名称"
 }

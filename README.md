@@ -29,7 +29,7 @@ Your favourite are listed in a separate view and can be quickly accessed from th
 {
     "favourite.resources": [], // resources path you prefer to mark
     "favourite.sortOrder": "ASC", // DESC, MANUAL
-    "favourite.saveSeparated": false // whether to use an extra config file
+    "favourite.refreshTime": "" // whether to use an extra config file
     "favourite.groups": ["Default"], // the groups you have created
     "favourite.currentGroup": "Default" // determine the current using group
 }

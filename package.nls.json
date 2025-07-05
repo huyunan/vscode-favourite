@@ -24,7 +24,7 @@
   "ext.sortOrder.description": "Specify an order for all favourite",
   "ext.currentGroup.description": "The name of current group",
   "ext.groups.description": "The names of all groups in the workspace",
-  "ext.saveSeparated.description": "Whether to save marked resources in separate .vscfavouriterc",
+  "ext.refreshTime.description": "Refresh time of the configuration file",
   "ext.new.group.name": "input new group name",
   "ext.new.group.current.name": "Create group with current branch name",
   "ext.delete.current.group": "Delete current group",
@@ -35,6 +35,7 @@
   "msg.group.not.exist.left": "The group",
   "msg.group.not.exist.right": "does not exist.",
   "msg.add.choose.require": "You have to choose a resource first",
+  "msg.workspace.no.folder": "No workspace has been opened, so the workspace Settings cannot be written. Please open a workspace first and then try again.",
   "title.choose.switch.group": "Choose a group you want to switch to",
   "title.new.group.name": "Input a name for new group"
 }

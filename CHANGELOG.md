@@ -42,10 +42,6 @@
 
 1. Add file icon support
 
-### 2018-01-29
-
-1. Add new configuration `saveSeparated`
-
 ### 2017-07-24
 
 1. Arrange menu items in natural order

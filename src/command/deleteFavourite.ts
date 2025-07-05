@@ -23,30 +23,32 @@ export function deleteFavourite() {
 
       const currentGroup = configMgr.get('currentGroup')
 
-      configMgr
-        .save(
-          'resources',
-          previousResources.filter((r) => {
+      configMgr.save(
+        [{
+          key: 'resources',
+          value: previousResources.filter((r) => {
             if ((r.filePath !== fsPath && pathResolve(r.filePath) !== fsPath )|| r.group !== currentGroup) {
               return true
             }
             return false
           })
-        )
-        .catch(console.warn)
+        }]
+      )
+      .catch(console.warn)
     } else {
       // Not a file, so remove the stringified uri
-      configMgr
-        .save(
-          'resources',
-          previousResources.filter((r) => {
+      configMgr.save(
+        [{
+          key: 'resources',
+          value: previousResources.filter((r) => {
             if (r.filePath !== uri.toString()) {
               return true
             }
             return false
           })
-        )
-        .catch(console.warn)
+        }]
+      )
+      .catch(console.warn)
     }
   })
 }

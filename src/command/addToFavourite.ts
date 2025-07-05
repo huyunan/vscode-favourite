@@ -32,17 +32,15 @@ export function addToFavourite() {
       return
     }
 
-    await configMgr
-      .save(
-        'resources',
-        previousResources.concat([
+    await configMgr.save(
+        [{key: 'resources', value: previousResources.concat([
           { filePath: newResource, group: currentGroup },
-        ] as Array<ItemInSettingsJson>)
+        ] as Array<ItemInSettingsJson>)}]
       )
       .catch(console.warn)
 
     if (configMgr.get('groups') == undefined || configMgr.get('groups').length == 0) {
-      configMgr.save('groups', [DEFAULT_GROUP]).catch(console.warn)
+      configMgr.save([{key: 'groups', value: [DEFAULT_GROUP]}]).catch(console.warn);
     }
   })
 }

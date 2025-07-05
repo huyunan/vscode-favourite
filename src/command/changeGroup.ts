@@ -34,9 +34,9 @@ export function changeGroup(favouriteProvider: FavouriteProvider) {
       )
       .then((selectedCommand) => {
         if (selectedCommand === localize('ext.switch.current.group')) {
-          configMgr.save('currentGroup', branchName)
+          configMgr.save([{key: 'currentGroup', value: branchName}])
         } else if (selectedCommand != undefined) {
-          configMgr.save('currentGroup', selectedCommand)
+          configMgr.save([{key: 'currentGroup', value: selectedCommand}])
         }
       })
   })
