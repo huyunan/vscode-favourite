@@ -1,4 +1,7 @@
 <!--Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.-->
+### 2025-07-06
+
+1. Support wsl and delete group (by [@huyunan](https://github.com/huyunan/vscode-favourite))
 
 ### 2021-10-19
 
