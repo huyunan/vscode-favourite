@@ -23,6 +23,7 @@ export function addNewGroup(favouriteProvider: FavouriteProvider) {
     vscode.window
       .showQuickPick(
         [localize('ext.new.group.name')].concat(!isGitUsed ? [] : [localize('ext.new.group.current.name')]).concat([localize('ext.delete.current.group')])
+        , { title: localize('title.choose.one.option') }
       )
       .then((label) => {
         if (label == localize('ext.new.group.name')) {

@@ -38,5 +38,6 @@
   "msg.workspace.no.folder": "没有打开任何工作区，因此无法写入 工作区设置。请先打开一个工作区，然后重试。",
   "msg.access.deny.chmod": "，favourite 没有生成 .vsfavourite 文件权限，请执行 sudo chmod 77 folder 赋予文件夹权限。",
   "title.choose.switch.group": "选择要切换到的分组",
+  "title.choose.one.option": "请选择一个选项",
   "title.new.group.name": "输入新分组的名称"
 }
