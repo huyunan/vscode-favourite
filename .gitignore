@@ -1,9 +1,7 @@
 out
 node_modules
-favourite-localization
 
 package-lock.json
-vscode-favourite-*
 
 .DS_Store
 .vsfavourite
