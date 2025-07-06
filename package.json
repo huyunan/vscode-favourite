@@ -197,6 +197,7 @@
         },
         {
           "command": "favourite.deleteAllFavourite",
+          "when": "view in ext:allFavouriteViews && viewItem =~ /resource(\\.dir)?$/",
           "group": "zbottom"
         }
       ],
