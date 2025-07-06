@@ -194,6 +194,10 @@
           "command": "favourite.moveToBottom",
           "when": "view in ext:allFavouriteViews && viewItem =~ /resource(\\.dir)?$/",
           "group": "sort@4"
+        },
+        {
+          "command": "favourite.deleteAllFavourite",
+          "group": "zbottom"
         }
       ],
       "commandPalette": [
@@ -299,6 +303,10 @@
       {
         "command": "favourite.moveToBottom",
         "title": "%command.favourite.movetobottom%"
+      },
+      {
+        "command": "favourite.deleteAllFavourite",
+        "title": "%command.favourite.deleteAllFavourite%"
       },
       {
         "command": "favourite.revealInOS.mac",

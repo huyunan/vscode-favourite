@@ -1,6 +1,7 @@
 {
   "command.favourite.addtofavourite": "Add to Favourite",
   "command.favourite.deletefavourite": "Remove from Favourite",
+  "command.favourite.deleteAllFavourite": "Clear the Favourite",
   "command.favourite.moveup": "Move Up",
   "command.favourite.movedown": "Move Down",
   "command.favourite.movetotop": "Move to Top",

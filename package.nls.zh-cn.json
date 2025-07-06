@@ -1,6 +1,7 @@
 {
   "command.favourite.addtofavourite": "添加到收藏夹",
   "command.favourite.deletefavourite": "从收藏夹中删除",
+  "command.favourite.deleteAllFavourite": "清空收藏夹",
   "command.favourite.moveup": "上移",
   "command.favourite.movedown": "下移",
   "command.favourite.movetotop": "上移至顶",

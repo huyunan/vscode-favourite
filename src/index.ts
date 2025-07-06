@@ -15,6 +15,7 @@ import {
   moveDown,
   moveToTop,
   moveToBottom,
+  deleteAllFavourite,
   refresh,
   toggleSort,
   changeGroup,
@@ -91,6 +92,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(moveDown(favouriteProvider))
   context.subscriptions.push(moveToTop(favouriteProvider))
   context.subscriptions.push(moveToBottom(favouriteProvider))
+  context.subscriptions.push(deleteAllFavourite())
   context.subscriptions.push(refresh(favouriteProvider))
   context.subscriptions.push(toggleSort(favouriteProvider))
   context.subscriptions.push(changeGroup(favouriteProvider))
