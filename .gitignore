@@ -4,5 +4,5 @@ node_modules
 package-lock.json
 
 .DS_Store
-.favorite
+.vsfavorite
 vscode-favourite-*

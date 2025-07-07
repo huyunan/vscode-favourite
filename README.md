@@ -1,4 +1,4 @@
-# favourite
+# favorite
 
 [![vscode version][vs-image]][vs-url]
 ![][install-url]
@@ -19,7 +19,7 @@ ext install yunan-hu.vscode-favourite
 
 ## Usage
 
-An **Add to Favourite** command in Explorer's context menu saves links to your favourite files or folders into the `.vsfavorite` file of your root folder.
+An **Add to Favorite** command in Explorer's context menu saves links to your favourite files or folders into the `.vsfavorite` file of your root folder.
 
 Your favourite are listed in a separate view and can be quickly accessed from there.
 
@@ -27,10 +27,10 @@ Your favourite are listed in a separate view and can be quickly accessed from th
 
 ```javascript
 {
-    "favourite.resources": [], // resources path you prefer to mark
-    "favourite.sortOrder": "ASC", // DESC, MANUAL
-    "favourite.groups": ["Default"], // the groups you have created
-    "favourite.currentGroup": "Default" // determine the current using group
+    "resources": [], // resources path you prefer to mark
+    "sortOrder": "ASC", // DESC, MANUAL
+    "groups": ["Default"], // the groups you have created
+    "currentGroup": "Default" // determine the current using group
 }
 ```
 
