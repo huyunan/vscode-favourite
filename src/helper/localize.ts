@@ -35,7 +35,7 @@ export class Localize {
     const languageFormat = 'package.nls{0}.json'
     const defaultLanguage = languageFormat.replace('{0}', '')
 
-    const rootPath = extensions.getExtension('yunan-hu.vscode-favorite').extensionPath
+    const rootPath = extensions.getExtension('yunan-hu.favourite').extensionPath
 
     const resolvedLanguage = this.recurseCandidates(rootPath, languageFormat, this.options.locale)
 
