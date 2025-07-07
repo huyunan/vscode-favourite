@@ -14,7 +14,7 @@ An extension that lets the developer mark resources (files or folders) as favour
 Launch VS Code Quick Open (`cmd`/`ctrl` + `p`), paste the following command, and press Enter.
 
 ```
-ext install yunan-hu.favourite
+ext install yunan-hu.vscode-favourite
 ```
 
 ## Usage
@@ -38,14 +38,14 @@ Your favourite are listed in a separate view and can be quickly accessed from th
 
 ## Changelog
 
-[Changelog on Marketplace](https://marketplace.visualstudio.com/items/yunan-hu.favourite/changelog)
+[Changelog on Marketplace](https://marketplace.visualstudio.com/items/yunan-hu.vscode-favourite/changelog)
 
 ## LICENSE
 
 [GPL v3 License](https://github.com/huyunan/vscode-favourite/blob/main/LICENSE)
 
-[vs-url]: https://marketplace.visualstudio.com/items?itemName=yunan-hu.favourite
-[vs-image]: https://img.shields.io/visual-studio-marketplace/v/yunan-hu.favourite
-[install-url]: https://img.shields.io/visual-studio-marketplace/i/yunan-hu.favourite
-[rate-url]: https://img.shields.io/visual-studio-marketplace/r/yunan-hu.favourite
+[vs-url]: https://marketplace.visualstudio.com/items?itemName=yunan-hu.vscode-favourite
+[vs-image]: https://img.shields.io/visual-studio-marketplace/v/yunan-hu.vscode-favourite
+[install-url]: https://img.shields.io/visual-studio-marketplace/i/yunan-hu.vscode-favourite
+[rate-url]: https://img.shields.io/visual-studio-marketplace/r/yunan-hu.vscode-favourite
 [license-url]: https://img.shields.io/github/license/leftstick/favourite
