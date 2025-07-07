@@ -7,7 +7,7 @@
 
 An extension that lets the developer mark resources (files or folders) as favourite, so they can be easily accessed.
 
-![](https://github.com/huyunan/vscode-favourite/blob/main/img/preview.gif)
+![](./img/preview.gif)
 
 ## Install
 
@@ -44,3 +44,9 @@ Your favourite are listed in a separate view and can be quickly accessed from th
 ## LICENSE
 
 [GPL v3 License](https://github.com/huyunan/vscode-favourite/blob/main/LICENSE)
+
+[vs-url]: https://marketplace.visualstudio.com/items?itemName=yunan-hu.vscode-favourite
+[vs-image]: https://img.shields.io/visual-studio-marketplace/v/yunan-hu.vscode-favourite
+[install-url]: https://img.shields.io/visual-studio-marketplace/i/yunan-hu.vscode-favourite
+[rate-url]: https://img.shields.io/visual-studio-marketplace/r/yunan-hu.vscode-favourite
+[license-url]: https://img.shields.io/github/license/leftstick/vscode-favourite

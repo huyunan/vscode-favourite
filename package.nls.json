@@ -17,7 +17,7 @@
   "command.favourite.newGroup": "Create New Group",
   "view.favourite.title": "Favourite",
   "ext.default": "Default",
-  "ext.displayName": "favourite",
+  "ext.displayName": "favorite",
   "ext.current.group": "Current Group: ",
   "ext.description": "Mark resources (files or folders, local and remote) as favourite, so they can be easily accessed.",
   "ext.contributes.title": "Favourite",
