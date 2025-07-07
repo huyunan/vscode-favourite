@@ -38,7 +38,7 @@
 
 ### 2018-03-17
 
-1. Sort favourite for directories and files separately
+1. Sort favorite for directories and files separately
 2. Add tooltip
 
 ### 2018-02-23

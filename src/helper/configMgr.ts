@@ -20,7 +20,7 @@ class ConfigMgr {
       return configValue
     }
 
-    nconf.file({ file: path.resolve(getSingleRootPath(), '.vsfavourite') })
+    nconf.file({ file: path.resolve(getSingleRootPath(), '.vsfavorite') })
     let nconfValue  = nconf.get(key)
 
     if ((['groups', 'resources'].includes(key) && nconfValue && Array.isArray(nconfValue) && nconfValue.length == 0)
@@ -46,7 +46,7 @@ class ConfigMgr {
       return Promise.resolve()
     }
 
-    nconf.file({ file: path.resolve(getSingleRootPath(), '.vsfavourite') })
+    nconf.file({ file: path.resolve(getSingleRootPath(), '.vsfavorite') })
     items.forEach(({key, value}) => {
       nconf.set(key, value)
     })
@@ -54,7 +54,7 @@ class ConfigMgr {
       nconf.save((err) => {
         if (err) {
           let message = err.message
-          if (err.message.indexOf("permission denied") && err.message.indexOf(".vsfavourite")) {
+          if (err.message.indexOf("permission denied") && err.message.indexOf(".vsfavorite")) {
             message += localize('msg.access.deny.chmod')
           }
           vscode.window.showErrorMessage(message)

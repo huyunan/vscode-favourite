@@ -54,7 +54,7 @@ export function activate(context: vscode.ExtensionContext) {
     this,
     context.subscriptions
   )
-  const path = pathResolve('.vsfavourite')
+  const path = pathResolve('.vsfavorite')
   const pUri = vscode.Uri.file(path)
 
   if (pUri.authority == 'wsl.localhost') {

@@ -1,8 +1,8 @@
 {
-  "name": "vscode-favourite",
+  "name": "vscode-favorite",
   "displayName": "%ext.displayName%",
   "description": "%ext.description%",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "publisher": "yunan-hu",
   "engines": {
     "vscode": "^1.68.0"
@@ -15,8 +15,8 @@
     "pk": "gulp package"
   },
   "keywords": [
-    "favourite",
-    "add to favourite",
+    "favorite",
+    "add to favorite",
     "add to favorites",
     "favorites",
     "收藏",
