@@ -7,7 +7,7 @@
 
 An extension that lets the developer mark resources (files or folders) as favourite, so they can be easily accessed.
 
-![](https://raw.githubusercontent.com/leftstick/vscode-favourite/master/img/preview.gif)
+![](https://github.com/huyunan/vscode-favourite/blob/main/img/preview.gif)
 
 ## Install
 
@@ -19,7 +19,7 @@ ext install yunan-hu.vscode-favourite
 
 ## Usage
 
-An **Add to Favourite** command in Explorer's context menu saves links to your favourite files or folders into your _*`XYZ`*_`.code-workspace` file if you are using one, else into the `.vscode/settings.json` file of your root folder.
+An **Add to Favourite** command in Explorer's context menu saves links to your favourite files or folders into your _*`XYZ`*_`.code-workspace` file if you are using one, else into the `./.vsfavourite` file of your root folder.
 
 Your favourite are listed in a separate view and can be quickly accessed from there.
 
@@ -43,10 +43,4 @@ Your favourite are listed in a separate view and can be quickly accessed from th
 
 ## LICENSE
 
-[GPL v3 License](https://raw.githubusercontent.com/leftstick/vscode-favourite/master/LICENSE)
-
-[vs-url]: https://marketplace.visualstudio.com/items?itemName=yunan-hu.vscode-favourite
-[vs-image]: https://img.shields.io/visual-studio-marketplace/v/yunan-hu.vscode-favourite
-[install-url]: https://img.shields.io/visual-studio-marketplace/i/yunan-hu.vscode-favourite
-[rate-url]: https://img.shields.io/visual-studio-marketplace/r/yunan-hu.vscode-favourite
-[license-url]: https://img.shields.io/github/license/leftstick/vscode-favourite
+[GPL v3 License](https://github.com/huyunan/vscode-favourite/blob/main/LICENSE)
