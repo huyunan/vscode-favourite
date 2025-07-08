@@ -78,8 +78,8 @@
           "description": "%ext.groups.description%"
         },
         "favourite.refreshTime": {
-          "type": "boolean",
-          "default": false,
+          "type": "string",
+          "default": "",
           "description": "%ext.refreshTime.description%"
         }
       }
