@@ -16,6 +16,7 @@
   "command.favourite.changeGroup": "切换当前分组",
   "command.favourite.newGroup": "创建新分组",
   "view.favourite.title": "收藏夹",
+  "ext.setting.file.name": ".vsfavorite",
   "ext.default": "默认",
   "ext.displayName": "收藏夹",
   "ext.current.group": "当前分组：",

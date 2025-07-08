@@ -16,6 +16,7 @@
   "command.favourite.changeGroup": "Change Group",
   "command.favourite.newGroup": "Create New Group",
   "view.favourite.title": "Favorite",
+  "ext.setting.file.name": ".vsfavorite",
   "ext.default": "Default",
   "ext.displayName": "favorite",
   "ext.current.group": "Current Group: ",
@@ -37,7 +38,7 @@
   "msg.group.not.exist.right": "does not exist.",
   "msg.add.choose.require": "You have to choose a resource first",
   "msg.workspace.no.folder": "No workspace has been opened, so the workspace Settings cannot be written. Please open a workspace first and then try again.",
-  "msg.access.deny.chmod": ", favorite does not generate.vsfavorite file permissions, please execute sudo chmod 77 folder to grant folder permissions.",
+  "msg.access.deny.chmod": ", favorite does not generate .vsfavorite file permissions, please execute sudo chmod 77 folder to grant folder permissions.",
   "title.choose.switch.group": "Choose a group you want to switch to",
   "title.choose.one.option": "Please select an option",
   "title.new.group.name": "Input a name for new group"
