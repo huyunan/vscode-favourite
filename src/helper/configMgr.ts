@@ -9,7 +9,15 @@ import { ItemInSettingsJson } from '../model'
 class ConfigMgr {
   get(key): Array<ItemInSettingsJson | string> | string {
     const config = vscode.workspace.getConfiguration('favourite')
-    const configValue = <Array<ItemInSettingsJson>>config.get(key)
+    let configValue = <Array<ItemInSettingsJson>>config.get(key)
+    
+    // 因为 package.json 里的配置不支持多语言，所以初次安装特殊处理
+    const Default = localize('ext.default')
+    if (key === 'currentGroup' && configValue === null) {
+      configValue = Default
+    } else if (key === 'groups' && configValue && configValue.length === 0) {
+      configValue = [Default]
+    }
 
     // 如果 vscode 工作区没有文件夹
     if (!vscode.workspace.workspaceFolders || vscode.workspace.workspaceFolders.length == 0) {
