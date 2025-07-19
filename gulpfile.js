@@ -17,7 +17,7 @@ const outDest = 'out'
 const cleanTask = function () {
   return import('del')
     .then((res) => {
-      return res.deleteAsync(['out', '*.vsix'])
+      return res.deleteAsync(['out', '*.vsix', '.vsfavorite'])
     })
     .then(() => {
       console.log('del finished')
