@@ -2,6 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode'
 import { FavouriteProvider } from './provider/FavouriteProvider'
+import { ItemInSettingsJson } from './model'
 import configMgr from './helper/configMgr'
 import localize from './helper/localize'
 import { pathResolve } from './helper/util'
@@ -35,7 +36,7 @@ export function activate(context: vscode.ExtensionContext) {
   console.log('Congratulations, your extension "favourite" is now active!')
 
   vscode.commands.executeCommand('setContext', 'ext:allFavouriteViews', ['favourite', 'favourite-full-view'])
-
+  changeWindowState()
   const favouriteProvider = new FavouriteProvider()
 
   vscode.window.createTreeView('favourite', { treeDataProvider: favouriteProvider, showCollapseAll: true })
@@ -74,9 +75,18 @@ export function activate(context: vscode.ExtensionContext) {
     })
   }
 
+  function changeWindowState() {
+    const currentGroup = configMgr.get('currentGroup')
+    const resources = (configMgr.get('resources') as Array<ItemInSettingsJson>) || []
+    const currentResources: Array<ItemInSettingsJson> = resources.filter(item => item.group == currentGroup)
+    const filePaths = currentResources.map(item => pathResolve(item.filePath))
+    vscode.commands.executeCommand('setContext', 'ext:favorite.filePaths', filePaths);
+  }
+  
   function onFileChange(favouriteProvider: FavouriteProvider) {
     const currentGroup = configMgr.get('currentGroup')
     tree.message = `${localize('ext.current.group')}${currentGroup}`
+    changeWindowState()
     favouriteProvider.refresh()
   }
 
