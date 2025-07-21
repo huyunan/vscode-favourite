@@ -41,7 +41,8 @@
   "activationEvents": [
     "onCommand:favourite.addToFavourite",
     "onView:favourite",
-    "onView:favourite-full-view"
+    "onView:favourite-full-view",
+    "onStartupFinished"
   ],
   "license": "GPL-3.0",
   "main": "./out/index.js",
