@@ -3,7 +3,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import * as os from 'os'
 
-import { getCurrentResources, isMultiRoots, pathResolve } from '../helper/util'
+import { getCurrentResources, isMultiRoots, pathResolve, getSingleRootPath } from '../helper/util'
 import configMgr from '../helper/configMgr'
 import { DEFAULT_GROUP, FileStat } from '../enum'
 import { Item, ItemInSettingsJson } from '../model'
@@ -17,6 +17,29 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
 
   refresh(): void {
     this._onDidChangeTreeData.fire()
+  }
+
+  getParent(element: Resource): Resource  {
+    let ele = element.value
+    const idx = ele.lastIndexOf('\\')
+    const currentGroup = configMgr.get('currentGroup')
+    const resources = (configMgr.get('resources') as Array<ItemInSettingsJson>) || []
+    const index = resources.findIndex(item => item.group == currentGroup && ele == item.filePath)
+    if (index != -1) {
+      return undefined
+    } else if (index == -1 && idx != -1) {
+      ele = ele.substring(0, idx)
+    }
+    const contextValue = 'resource'
+    
+    if (index != -1 && idx != -1 ) {
+      const openFilePath = resources[index].filePath
+      const pUri = vscode.Uri.file(pathResolve(openFilePath))
+      const resource = new Resource(path.basename(pathResolve(openFilePath)), vscode.TreeItemCollapsibleState.Expanded, resources[index].filePath, null)
+      return resource
+    } else {
+      return undefined
+    }
   }
 
   getTreeItem(element: Resource): vscode.TreeItem {
@@ -74,7 +97,10 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
           files.map((f) => ({ filePath: path.join(item.filePath, f), group: '' })),
           sort === 'MANUAL' ? 'ASC' : sort
         )
-          .then((data) => this.data2Resource(data, 'resourceChild'))
+          .then((data) => {
+            const data2 = this.data2Resource(data, 'resourceChild')
+            return data2;
+          })
           .then(resolve)
       })
     })

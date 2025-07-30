@@ -128,24 +128,29 @@
       ],
       "view/title": [
         {
+          "command": "favourite.file.reveal",
+          "when": "view in ext:allFavouriteViews",
+          "group": "navigation@1"
+        },
+        {
           "command": "favourite.nav.refresh",
           "when": "view in ext:allFavouriteViews",
-          "group": "navigation"
+          "group": "navigation@4"
         },
         {
           "command": "favourite.nav.sort",
           "when": "view in ext:allFavouriteViews",
-          "group": "navigation"
+          "group": "navigation@5"
         },
         {
           "command": "favourite.group.changeGroup",
           "when": "view in ext:allFavouriteViews",
-          "group": "navigation"
+          "group": "navigation@2"
         },
         {
           "command": "favourite.group.newGroup",
           "when": "view in ext:allFavouriteViews",
-          "group": "navigation"
+          "group": "navigation@3"
         }
       ],
       "view/item/context": [
@@ -253,6 +258,14 @@
       ]
     },
     "commands": [
+      {
+        "command": "favourite.file.reveal",
+        "title": "%command.favourite.file.reveal%",
+        "icon": {
+          "dark": "img/reveal_black.svg",
+          "light": "img/reveal_light.svg"
+        }
+      },
       {
         "command": "favourite.nav.refresh",
         "title": "%command.favourite.refresh%",
