@@ -30,57 +30,53 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
 			}
 		}
 	}
-
   getParent(element: Resource): Resource  {
     let filePath = element.value
-    const parentPath = element.parentPath
-    if (filePath === parentPath) return undefined
-    // 如果没有 parentPath 肯定不能展开目录，去获取数据
-    if (!this.itemMap.has(parentPath)) {
-      const element2 = new Resource(null, vscode.TreeItemCollapsibleState.Collapsed, parentPath, 'resourceChild.dir', undefined, null)
-      element2.parentPath = parentPath
-      this.getChildren(element2) //需要改成同步
-      this.setExpanded(element2, true)
-      return undefined // 应返回 element 暂时返回 undefined
-    }
-// this.setExpanded(this.itemMap.get(parentPath).value, true)
-// return null
-    return this.getNode(filePath, parentPath)
-  }
-
-  private getNode(filePath: string, parentPath: string): Resource {
     const idx = filePath.lastIndexOf('\\')
-    let parentKey = undefined
-    if (idx != -1) {
-      parentKey = filePath.substring(0, idx)
-    } else {
+    if (idx == -1) {
       return undefined
     }
-    if (parentKey == parentPath) return undefined
+    const parentKey = filePath.substring(0, idx)
+    return this.itemMap.get(parentKey)?.value
+  }
 
-    // 如果没有 parentPath 肯定不能展开目录，去获取数据
-    if (!this.itemMap.has(parentKey)) {
-      const uri = vscode.Uri.file(pathResolve(parentKey));
-      const element = new Resource(path.basename(pathResolve(parentKey)), vscode.TreeItemCollapsibleState.Collapsed, parentKey, 'resourceChild.dir', undefined, uri)
-      element.parentPath = parentPath
-      this.getChildren(element) //需要改成同步
-      return undefined // 应返回 element 暂时返回 undefined
+  getExpandElement({ filePath, parentPath }) {
+    if (this.itemMap.has(filePath)) {
+      this.setExpanded(this.itemMap.get(filePath).value, true)
+      return
     }
 
-    if (this.itemMap.has(filePath) && this.itemMap.has(parentKey)) {
-      const element = this.itemMap.get(parentKey).value
-      element.parentPath = parentPath
-      return element
+    // 结束循环用
+    let flag = true
+    let filePathForWhile = filePath
+    while(flag) {
+      const idx = filePathForWhile.lastIndexOf('\\')
+      // 查不到就是根目录下的
+      if (idx == -1 || filePathForWhile === parentPath) {
+        const resource = this.itemMap.get(undefined).resource.find(item => item.value === filePathForWhile)
+        if (!resource?.value) break
+        this.itemMap.set(resource?.value, {value: resource, resource: []})
+        flag = false
+        break
+      }
+      const parentKey = filePathForWhile.substring(0, idx)
+      // 如果没有 parentPath 肯定不能展开目录，去获取数据
+      if (!this.itemMap.has(parentKey)) {
+        const uri = vscode.Uri.file(pathResolve(parentKey));
+        const element = new Resource(path.basename(pathResolve(parentKey)), vscode.TreeItemCollapsibleState.Collapsed, parentKey, 'resourceChild.dir', undefined, uri)
+        this.getChildren(element) //需要改成同步
+      }
+      filePathForWhile = parentKey
     }
-
-    if (this.itemMap.has(parentKey)) {
-      const resource = this.itemMap.get(parentKey).resource.find(item => item.value === filePath)
-      this.itemMap.set(resource?.value, {value: resource, resource: []})
-      const element = this.itemMap.get(parentKey).value
-      element.parentPath = parentPath
-      return element
+    const index = filePath.lastIndexOf('\\')
+    if (index == -1) {
+      this.setExpanded(this.itemMap.get(filePath).value, true)
+      return
     }
-    return undefined
+    const parent = filePath.substring(0, index)
+    const resource = this.itemMap.get(parent).resource.find(item => item.value === filePath)
+    this.itemMap.set(resource?.value, {value: resource, resource: []})
+    this.setExpanded(this.itemMap.get(filePath).value, true)
   }
 
   getTreeItem(element: Resource): vscode.TreeItem {

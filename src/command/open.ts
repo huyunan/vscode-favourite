@@ -46,7 +46,7 @@ export function reveal(favouriteProvider: FavouriteProvider) {
         console.log(args)
         configMgr.tree.reveal(args, { select: true, focus: true, expand: true })
       })
-      favouriteProvider.getParent(resource)
+      favouriteProvider.getExpandElement({ filePath, parentPath })
       // configMgr.tree.reveal(resource, { select: true, focus: true, expand: true })
     }
   })
