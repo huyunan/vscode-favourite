@@ -1,7 +1,7 @@
 import * as vscode from 'vscode'
 
-import { Resource, FavouriteProvider } from '../provider/FavouriteProvider'
-import { isMultiRoots, getSingleRootPath, pathResolve } from '../helper/util'
+import { FavouriteProvider } from '../provider/FavouriteProvider'
+import { isMultiRoots, getSingleRootPath } from '../helper/util'
 import configMgr from '../helper/configMgr'
 import { ItemInSettingsJson } from '../model'
 

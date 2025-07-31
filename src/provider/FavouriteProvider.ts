@@ -2,7 +2,7 @@ import * as vscode from 'vscode'
 import * as fs from 'fs'
 import * as path from 'path'
 
-import { getCurrentResources, isMultiRoots, pathResolve, getSingleRootPath } from '../helper/util'
+import { getCurrentResources, pathResolve } from '../helper/util'
 import configMgr from '../helper/configMgr'
 import { DEFAULT_GROUP, FileStat } from '../enum'
 import { Item, ItemInSettingsJson } from '../model'
