@@ -7,6 +7,7 @@ import { isMultiRoots, getSingleRootPath } from './util'
 import { ItemInSettingsJson } from '../model'
 
 class ConfigMgr {
+  public explorerTree: vscode.TreeView<any>;
   public tree: vscode.TreeView<any>;
 
   get(key): Array<ItemInSettingsJson | string> | string {

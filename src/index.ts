@@ -40,11 +40,12 @@ export function activate(context: vscode.ExtensionContext) {
   changeWindowState()
   const favouriteProvider = new FavouriteProvider()
 
-  vscode.window.createTreeView('favourite', { treeDataProvider: favouriteProvider, showCollapseAll: true })
+  const explorerTree = vscode.window.createTreeView('favourite', { treeDataProvider: favouriteProvider, showCollapseAll: true })
   const tree = vscode.window.createTreeView('favourite-full-view', {
     treeDataProvider: favouriteProvider,
     showCollapseAll: true,
   })
+  configMgr.explorerTree = explorerTree
   configMgr.tree = tree
 
   const currentGroup = configMgr.get('currentGroup')
