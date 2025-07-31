@@ -54,14 +54,14 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
       if (parentKey == '.' || filePathForWhile === parentPath) {
         const resource = this.itemMap.get(undefined)?.resource.find(item => item.value === filePathForWhile)
         if (!resource?.value) break
-        this.itemMap.set(resource?.value, {value: resource, resource: []})
+        this.getChildren(resource, true)
         flag = false
         break
       }
       if (parentKey == parentPath) {
         const resource = this.itemMap.get(undefined)?.resource.find(item => item.value === parentKey)
         if (!resource?.value) break
-        this.itemMap.set(resource?.value, {value: resource, resource: []})
+        this.getChildren(resource, true)
         flag = false
         break
       }
@@ -69,7 +69,7 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
       if (!this.itemMap.has(parentKey)) {
         const uri = vscode.Uri.file(pathResolve(parentKey));
         const element = new Resource(path.basename(pathResolve(parentKey)), vscode.TreeItemCollapsibleState.Collapsed, parentKey, 'resourceChild.dir', undefined, uri)
-        this.getChildren(element, true) //需要改成同步
+        this.getChildren(element, true)
       }
       filePathForWhile = parentKey
     }
@@ -79,7 +79,7 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
       return
     }
     const resource = this.itemMap.get(parent)?.resource.find(item => item.value === filePath)
-    this.itemMap.set(resource?.value, {value: resource, resource: []})
+    this.getChildren(resource, true)
     this.setExpanded(this.itemMap.get(filePath).value, true)
   }
 
@@ -122,6 +122,7 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
       return childResources;
     } catch (error) {
       console.log(error)
+      this.itemMap.set(element?.value, {value: element, resource: []})
       return []
     }
   }
