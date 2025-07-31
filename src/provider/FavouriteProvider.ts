@@ -10,6 +10,8 @@ import { Item, ItemInSettingsJson } from '../model'
 export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
   private _onDidChangeTreeData = new vscode.EventEmitter<Resource | void>()
   readonly onDidChangeTreeData: vscode.Event<Resource | void> = this._onDidChangeTreeData.event
+  private _onDidExpandElement = new vscode.EventEmitter<Resource | void>()
+  readonly onDidExpandElement: vscode.Event<Resource | void> = this._onDidExpandElement.event
 
   // Use for detecting doubleclick
   public lastOpened: { uri: vscode.Uri; date: Date }
@@ -19,41 +21,66 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
     this._onDidChangeTreeData.fire()
   }
 
+  setExpanded(element: Resource, expanded: boolean): void {
+		if (element) {
+			if (expanded) {
+				this._onDidExpandElement.fire(element);
+			} else {
+				// this._onDidCollapseElement.fire(Object.freeze({ element }));
+			}
+		}
+	}
+
   getParent(element: Resource): Resource  {
     let filePath = element.value
     const parentPath = element.parentPath
-    if (filePath === parentPath) return null
-    if (this.itemMap.has(filePath) && this.itemMap.has(parentPath)) {
-      return this.itemMap.get(parentPath).value
-    } else {
-      return this.getNode(filePath, parentPath)
+    if (filePath === parentPath) return undefined
+    // 如果没有 parentPath 肯定不能展开目录，去获取数据
+    if (!this.itemMap.has(parentPath)) {
+      const element2 = new Resource(null, vscode.TreeItemCollapsibleState.Collapsed, parentPath, 'resourceChild.dir', undefined, null)
+      element2.parentPath = parentPath
+      this.getChildren(element2) //需要改成同步
+      this.setExpanded(element2, true)
+      return undefined // 应返回 element 暂时返回 undefined
     }
+// this.setExpanded(this.itemMap.get(parentPath).value, true)
+// return null
+    return this.getNode(filePath, parentPath)
   }
 
   private getNode(filePath: string, parentPath: string): Resource {
-    if (this.itemMap.has(filePath)) {
-      return this.itemMap.get(filePath).value
-    }
     const idx = filePath.lastIndexOf('\\')
-    let parentKey = null
+    let parentKey = undefined
     if (idx != -1) {
       parentKey = filePath.substring(0, idx)
     } else {
-      return null
+      return undefined
+    }
+    if (parentKey == parentPath) return undefined
+
+    // 如果没有 parentPath 肯定不能展开目录，去获取数据
+    if (!this.itemMap.has(parentKey)) {
+      const uri = vscode.Uri.file(pathResolve(parentKey));
+      const element = new Resource(path.basename(pathResolve(parentKey)), vscode.TreeItemCollapsibleState.Collapsed, parentKey, 'resourceChild.dir', undefined, uri)
+      element.parentPath = parentPath
+      this.getChildren(element) //需要改成同步
+      return undefined // 应返回 element 暂时返回 undefined
     }
 
-    if (parentKey == parentPath) return
+    if (this.itemMap.has(filePath) && this.itemMap.has(parentKey)) {
+      const element = this.itemMap.get(parentKey).value
+      element.parentPath = parentPath
+      return element
+    }
 
     if (this.itemMap.has(parentKey)) {
       const resource = this.itemMap.get(parentKey).resource.find(item => item.value === filePath)
       this.itemMap.set(resource?.value, {value: resource, resource: []})
-      return this.itemMap.get(parentKey).value
+      const element = this.itemMap.get(parentKey).value
+      element.parentPath = parentPath
+      return element
     }
-    const uri = vscode.Uri.file(pathResolve(parentKey));
-    const element = new Resource(path.basename(pathResolve(parentKey)), vscode.TreeItemCollapsibleState.Collapsed, parentKey, 'resourceChild.dir', undefined, uri)
-    this.getChildren(element)
-    // this.getNode(filePath, parentPath)
-    return null
+    return undefined
   }
 
   getTreeItem(element: Resource): vscode.TreeItem {
@@ -72,7 +99,7 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
           .then((data: Array<Item>) => {
             const filterData = data.filter((i) => i.stat !== FileStat.NEITHER && i.group === currentGroup)
             const rootResources = this.data2Resource(filterData, 'resource')
-            this.itemMap.set(element?.value, {value: null, resource: rootResources})
+            this.itemMap.set(element?.value, {value: undefined, resource: rootResources})
             return rootResources
           })
       }

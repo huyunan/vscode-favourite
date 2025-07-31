@@ -40,9 +40,14 @@ export function reveal(favouriteProvider: FavouriteProvider) {
     if (index != -1) {
       const parentPath = resources[index].filePath
       const pUri = vscode.Uri.file(pathResolve(parentPath))
-      const resource = new Resource(null, vscode.TreeItemCollapsibleState.Expanded, filePath, null)
+      const resource = new Resource(undefined, vscode.TreeItemCollapsibleState.Collapsed, filePath, undefined)
       resource.parentPath = parentPath
-      await configMgr.tree.reveal(resource, { select: true, focus: true, expand: true })
+      favouriteProvider.onDidExpandElement((args) => {
+        console.log(args)
+        configMgr.tree.reveal(args, { select: true, focus: true, expand: true })
+      })
+      favouriteProvider.getParent(resource)
+      // configMgr.tree.reveal(resource, { select: true, focus: true, expand: true })
     }
   })
 }
