@@ -1,7 +1,6 @@
 import * as vscode from 'vscode'
 import * as fs from 'fs'
 import * as path from 'path'
-import * as os from 'os'
 
 import { getCurrentResources, isMultiRoots, pathResolve, getSingleRootPath } from '../helper/util'
 import configMgr from '../helper/configMgr'
@@ -14,32 +13,47 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
 
   // Use for detecting doubleclick
   public lastOpened: { uri: vscode.Uri; date: Date }
+  public itemMap: Map<string, {value: Resource, resource: Resource[]}> = new Map();
 
   refresh(): void {
     this._onDidChangeTreeData.fire()
   }
 
   getParent(element: Resource): Resource  {
-    let ele = element.value
-    const idx = ele.lastIndexOf('\\')
-    const currentGroup = configMgr.get('currentGroup')
-    const resources = (configMgr.get('resources') as Array<ItemInSettingsJson>) || []
-    const index = resources.findIndex(item => item.group == currentGroup && ele == item.filePath)
-    if (index != -1) {
-      return undefined
-    } else if (index == -1 && idx != -1) {
-      ele = ele.substring(0, idx)
-    }
-    const contextValue = 'resource'
-    
-    if (index != -1 && idx != -1 ) {
-      const openFilePath = resources[index].filePath
-      const pUri = vscode.Uri.file(pathResolve(openFilePath))
-      const resource = new Resource(path.basename(pathResolve(openFilePath)), vscode.TreeItemCollapsibleState.Expanded, resources[index].filePath, null)
-      return resource
+    let filePath = element.value
+    const parentPath = element.parentPath
+    if (filePath === parentPath) return null
+    if (this.itemMap.has(filePath) && this.itemMap.has(parentPath)) {
+      return this.itemMap.get(parentPath).value
     } else {
-      return undefined
+      return this.getNode(filePath, parentPath)
     }
+  }
+
+  private getNode(filePath: string, parentPath: string): Resource {
+    if (this.itemMap.has(filePath)) {
+      return this.itemMap.get(filePath).value
+    }
+    const idx = filePath.lastIndexOf('\\')
+    let parentKey = null
+    if (idx != -1) {
+      parentKey = filePath.substring(0, idx)
+    } else {
+      return null
+    }
+
+    if (parentKey == parentPath) return
+
+    if (this.itemMap.has(parentKey)) {
+      const resource = this.itemMap.get(parentKey).resource.find(item => item.value === filePath)
+      this.itemMap.set(resource?.value, {value: resource, resource: []})
+      return this.itemMap.get(parentKey).value
+    }
+    const uri = vscode.Uri.file(pathResolve(parentKey));
+    const element = new Resource(path.basename(pathResolve(parentKey)), vscode.TreeItemCollapsibleState.Collapsed, parentKey, 'resourceChild.dir', undefined, uri)
+    this.getChildren(element)
+    // this.getNode(filePath, parentPath)
+    return null
   }
 
   getTreeItem(element: Resource): vscode.TreeItem {
@@ -56,19 +70,18 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
       if (!element) {
         return Promise.all(resources.map((r) => this.getResourceStat(r)))
           .then((data: Array<Item>) => {
-            return data.filter((i) => i.stat !== FileStat.NEITHER)
+            const filterData = data.filter((i) => i.stat !== FileStat.NEITHER && i.group === currentGroup)
+            const rootResources = this.data2Resource(filterData, 'resource')
+            this.itemMap.set(element?.value, {value: null, resource: rootResources})
+            return rootResources
           })
-          .then((data: Array<Item>) => {
-            return data.filter((i) => i.group === currentGroup)
-          })
-          .then((data: Array<Item>) => this.data2Resource(data, 'resource'))
       }
 
-      return this.getChildrenResources({ filePath: element.value, group: currentGroup })
+      return this.getChildrenResources({ filePath: element.value, group: currentGroup }, element)
     })
   }
 
-  private getChildrenResources(item: ItemInSettingsJson): Thenable<Array<Resource>> {
+  private getChildrenResources(item: ItemInSettingsJson, element: Resource): Thenable<Array<Resource>> {
     const sort = configMgr.get('sortOrder') as string
 
     if (item.filePath.match(/^[A-Za-z][A-Za-z0-9+-.]*:\/\//)) {
@@ -83,7 +96,11 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
             sort === 'MANUAL' ? 'ASC' : sort
           )
         )
-        .then((items) => this.data2Resource(items, 'resourceChild'))
+        .then((items) => {
+          const childResources = this.data2Resource(items, 'resourceChild')
+          this.itemMap.set(element?.value, {value: element, resource: childResources})
+          return childResources
+        })
     }
 
     // Not a uri string
@@ -98,8 +115,9 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
           sort === 'MANUAL' ? 'ASC' : sort
         )
           .then((data) => {
-            const data2 = this.data2Resource(data, 'resourceChild')
-            return data2;
+            const childResources = this.data2Resource(data, 'resourceChild')
+            this.itemMap.set(element?.value, {value: element, resource: childResources})
+            return childResources;
           })
           .then(resolve)
       })
@@ -279,6 +297,7 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
 
 export class Resource extends vscode.TreeItem {
   public resourceUri: vscode.Uri
+  public parentPath?: string
 
   constructor(
     public label: string,

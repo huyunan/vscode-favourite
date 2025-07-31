@@ -38,9 +38,10 @@ export function reveal(favouriteProvider: FavouriteProvider) {
     const resources = (configMgr.get('resources') as Array<ItemInSettingsJson>) || []
     const index = resources.findIndex(item => item.group == currentGroup && filePath.startsWith(item.filePath))
     if (index != -1) {
-      const openFilePath = resources[index].filePath
-      const pUri = vscode.Uri.file(pathResolve(openFilePath))
-      const resource = new Resource(null, vscode.TreeItemCollapsibleState.Expanded, resources[index].filePath, null)
+      const parentPath = resources[index].filePath
+      const pUri = vscode.Uri.file(pathResolve(parentPath))
+      const resource = new Resource(null, vscode.TreeItemCollapsibleState.Expanded, filePath, null)
+      resource.parentPath = parentPath
       await configMgr.tree.reveal(resource, { select: true, focus: true, expand: true })
     }
   })
