@@ -6,6 +6,7 @@ import { getCurrentResources, isMultiRoots, pathResolve, getSingleRootPath } fro
 import configMgr from '../helper/configMgr'
 import { DEFAULT_GROUP, FileStat } from '../enum'
 import { Item, ItemInSettingsJson } from '../model'
+import { nextTick } from 'process'
 
 export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
   private _onDidChangeTreeData = new vscode.EventEmitter<Resource | void>()
@@ -40,7 +41,7 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
     return this.itemMap.get(parentKey)?.value
   }
 
-  getExpandElement({ filePath, parentPath }) {
+  async getExpandElement({ filePath, parentPath }) {
     if (this.itemMap.has(filePath)) {
       this.setExpanded(this.itemMap.get(filePath).value, true)
       return
@@ -64,7 +65,7 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
       if (!this.itemMap.has(parentKey)) {
         const uri = vscode.Uri.file(pathResolve(parentKey));
         const element = new Resource(path.basename(pathResolve(parentKey)), vscode.TreeItemCollapsibleState.Collapsed, parentKey, 'resourceChild.dir', undefined, uri)
-        this.getChildren(element) //需要改成同步
+        await this.getChildren(element) //需要改成同步
       }
       filePathForWhile = parentKey
     }
@@ -320,7 +321,6 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
 
 export class Resource extends vscode.TreeItem {
   public resourceUri: vscode.Uri
-  public parentPath?: string
 
   constructor(
     public label: string,

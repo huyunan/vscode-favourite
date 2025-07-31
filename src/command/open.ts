@@ -23,6 +23,9 @@ export function open(favouriteProvider: FavouriteProvider) {
 
 //  and treating the second of these as a non-preview open.
 export function reveal(favouriteProvider: FavouriteProvider) {
+  favouriteProvider.onDidExpandElement((args) => {
+    configMgr.tree.reveal(args, { select: true, focus: true, expand: true })
+  })
   return vscode.commands.registerCommand('favourite.file.reveal', async function () {
     const fileUri = vscode.window.activeTextEditor?.document.uri
     const fileName = fileUri.fsPath
@@ -39,15 +42,7 @@ export function reveal(favouriteProvider: FavouriteProvider) {
     const index = resources.findIndex(item => item.group == currentGroup && filePath.startsWith(item.filePath))
     if (index != -1) {
       const parentPath = resources[index].filePath
-      const pUri = vscode.Uri.file(pathResolve(parentPath))
-      const resource = new Resource(undefined, vscode.TreeItemCollapsibleState.Collapsed, filePath, undefined)
-      resource.parentPath = parentPath
-      favouriteProvider.onDidExpandElement((args) => {
-        console.log(args)
-        configMgr.tree.reveal(args, { select: true, focus: true, expand: true })
-      })
       favouriteProvider.getExpandElement({ filePath, parentPath })
-      // configMgr.tree.reveal(resource, { select: true, focus: true, expand: true })
     }
   })
 }
