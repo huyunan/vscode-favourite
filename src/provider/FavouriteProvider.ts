@@ -33,11 +33,10 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
 	}
   getParent(element: Resource): Resource  {
     let filePath = element.value
-    const idx = filePath.lastIndexOf('\\')
-    if (idx == -1) {
+    const parentKey = path.dirname(filePath)
+    if (parentKey == '.') {
       return undefined
     }
-    const parentKey = filePath.substring(0, idx)
     return this.itemMap.get(parentKey)?.value
   }
 
@@ -51,16 +50,15 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
     let flag = true
     let filePathForWhile = filePath
     while(flag) {
-      const idx = filePathForWhile.lastIndexOf('\\')
+      const parentKey = path.dirname(filePathForWhile)
       // 查不到就是根目录下的
-      if (idx == -1 || filePathForWhile === parentPath) {
+      if (parentKey == '.' || filePathForWhile === parentPath) {
         const resource = this.itemMap.get(undefined)?.resource.find(item => item.value === filePathForWhile)
         if (!resource?.value) break
         this.itemMap.set(resource?.value, {value: resource, resource: []})
         flag = false
         break
       }
-      const parentKey = filePathForWhile.substring(0, idx)
       // 如果没有 parentPath 肯定不能展开目录，去获取数据
       if (!this.itemMap.has(parentKey)) {
         const uri = vscode.Uri.file(pathResolve(parentKey));
@@ -69,12 +67,11 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
       }
       filePathForWhile = parentKey
     }
-    const index = filePath.lastIndexOf('\\')
-    if (index == -1 || this.itemMap.has(filePath)) {
+    const parent = path.dirname(filePath)
+    if (parent == '.' || this.itemMap.has(filePath)) {
       this.setExpanded(this.itemMap.get(filePath).value, true)
       return
     }
-    const parent = filePath.substring(0, index)
     const resource = this.itemMap.get(parent)?.resource.find(item => item.value === filePath)
     this.itemMap.set(resource?.value, {value: resource, resource: []})
     this.setExpanded(this.itemMap.get(filePath).value, true)
