@@ -6,7 +6,6 @@ import { getCurrentResources, isMultiRoots, pathResolve, getSingleRootPath } fro
 import configMgr from '../helper/configMgr'
 import { DEFAULT_GROUP, FileStat } from '../enum'
 import { Item, ItemInSettingsJson } from '../model'
-import { nextTick } from 'process'
 
 export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
   private _onDidChangeTreeData = new vscode.EventEmitter<Resource | void>()
