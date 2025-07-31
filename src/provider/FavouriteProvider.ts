@@ -54,7 +54,7 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
       const idx = filePathForWhile.lastIndexOf('\\')
       // 查不到就是根目录下的
       if (idx == -1 || filePathForWhile === parentPath) {
-        const resource = this.itemMap.get(undefined).resource.find(item => item.value === filePathForWhile)
+        const resource = this.itemMap.get(undefined)?.resource.find(item => item.value === filePathForWhile)
         if (!resource?.value) break
         this.itemMap.set(resource?.value, {value: resource, resource: []})
         flag = false
@@ -65,17 +65,17 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
       if (!this.itemMap.has(parentKey)) {
         const uri = vscode.Uri.file(pathResolve(parentKey));
         const element = new Resource(path.basename(pathResolve(parentKey)), vscode.TreeItemCollapsibleState.Collapsed, parentKey, 'resourceChild.dir', undefined, uri)
-        await this.getChildren(element) //需要改成同步
+        await this.getChildren(element, true) //需要改成同步
       }
       filePathForWhile = parentKey
     }
     const index = filePath.lastIndexOf('\\')
-    if (index == -1) {
+    if (index == -1 || this.itemMap.has(filePath)) {
       this.setExpanded(this.itemMap.get(filePath).value, true)
       return
     }
     const parent = filePath.substring(0, index)
-    const resource = this.itemMap.get(parent).resource.find(item => item.value === filePath)
+    const resource = this.itemMap.get(parent)?.resource.find(item => item.value === filePath)
     this.itemMap.set(resource?.value, {value: resource, resource: []})
     this.setExpanded(this.itemMap.get(filePath).value, true)
   }
@@ -84,7 +84,7 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
     return element
   }
 
-  getChildren(element?: Resource): Thenable<Resource[]> {
+  getChildren(element?: Resource, expandFlg?: boolean): Thenable<Resource[]> {
     return this.getSortedFavouriteResources().then((resources) => {
       if (!resources || !resources.length) {
         return []
@@ -92,6 +92,8 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
       const currentGroup = (configMgr.get('currentGroup') as string) || DEFAULT_GROUP
 
       if (!element) {
+        // 初始化，清空 itemMap
+        if (!expandFlg) this.itemMap = new Map()
         return Promise.all(resources.map((r) => this.getResourceStat(r)))
           .then((data: Array<Item>) => {
             const filterData = data.filter((i) => i.stat !== FileStat.NEITHER && i.group === currentGroup)
