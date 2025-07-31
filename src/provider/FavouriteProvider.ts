@@ -58,6 +58,13 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
         flag = false
         break
       }
+      if (parentKey == parentPath) {
+        const resource = this.itemMap.get(undefined)?.resource.find(item => item.value === parentKey)
+        if (!resource?.value) break
+        this.itemMap.set(resource?.value, {value: resource, resource: []})
+        flag = false
+        break
+      }
       // 如果没有 parentPath 肯定不能展开目录，去获取数据
       if (!this.itemMap.has(parentKey)) {
         const uri = vscode.Uri.file(pathResolve(parentKey));
