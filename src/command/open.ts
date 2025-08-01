@@ -31,9 +31,9 @@ export function reveal(favouriteProvider: FavouriteProvider) {
       configMgr.explorerTree.reveal(args, { select: true, focus: true, expand: true })
     }
   })
-  return vscode.commands.registerCommand('favourite.file.reveal', async function (...args: any) {
-    console.log(args)
+  return vscode.commands.registerCommand('favourite.file.reveal', async function () {
     const fileUri = vscode.window.activeTextEditor?.document.uri
+    if (!fileUri) return
     const fileName = fileUri.fsPath
     // Store the stringified uri for any resource that isn't a file
     const filePath =
