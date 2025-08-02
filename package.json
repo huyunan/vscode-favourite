@@ -106,24 +106,24 @@
         {
           "command": "favourite.addToFavourite",
           "when": "resourcePath not in ext:favorite.filePaths",
-          "group": "favourite"
+          "group": "1_favourite"
         },
         {
           "command": "favourite.deleteFavourite",
           "when": "resourcePath in ext:favorite.filePaths",
-          "group": "favourite"
+          "group": "1_favourite"
         }
       ],
       "explorer/context": [
         {
           "command": "favourite.addToFavourite",
           "when": "resourcePath not in ext:favorite.filePaths",
-          "group": "favourite"
+          "group": "1_favourite"
         },
         {
           "command": "favourite.deleteFavourite",
           "when": "resourcePath in ext:favorite.filePaths",
-          "group": "favourite"
+          "group": "1_favourite"
         }
       ],
       "view/title": [
