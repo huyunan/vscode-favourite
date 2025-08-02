@@ -2,7 +2,7 @@
   "name": "vscode-favourite",
   "displayName": "%ext.displayName%",
   "description": "%ext.description%",
-  "version": "1.3.1",
+  "version": "2.0.0",
   "publisher": "yunan-hu",
   "engines": {
     "vscode": "^1.68.0"
@@ -128,24 +128,29 @@
       ],
       "view/title": [
         {
+          "command": "favourite.file.reveal",
+          "when": "view in ext:allFavouriteViews",
+          "group": "navigation@1"
+        },
+        {
           "command": "favourite.nav.refresh",
           "when": "view in ext:allFavouriteViews",
-          "group": "navigation"
+          "group": "navigation@4"
         },
         {
           "command": "favourite.nav.sort",
           "when": "view in ext:allFavouriteViews",
-          "group": "navigation"
+          "group": "navigation@5"
         },
         {
           "command": "favourite.group.changeGroup",
           "when": "view in ext:allFavouriteViews",
-          "group": "navigation"
+          "group": "navigation@2"
         },
         {
           "command": "favourite.group.newGroup",
           "when": "view in ext:allFavouriteViews",
-          "group": "navigation"
+          "group": "navigation@3"
         }
       ],
       "view/item/context": [
@@ -201,7 +206,6 @@
         },
         {
           "command": "favourite.deleteAllFavourite",
-          "when": "view in ext:allFavouriteViews && viewItem =~ /resource(\\.dir)?$/",
           "group": "zbottom"
         }
       ],
@@ -253,6 +257,14 @@
       ]
     },
     "commands": [
+      {
+        "command": "favourite.file.reveal",
+        "title": "%command.favourite.file.reveal%",
+        "icon": {
+          "dark": "img/reveal_black.svg",
+          "light": "img/reveal_light.svg"
+        }
+      },
       {
         "command": "favourite.nav.refresh",
         "title": "%command.favourite.refresh%",

@@ -1,6 +1,9 @@
 import * as vscode from 'vscode'
 
-import { Resource, FavouriteProvider } from '../provider/FavouriteProvider'
+import { FavouriteProvider } from '../provider/FavouriteProvider'
+import { isMultiRoots, getSingleRootPath } from '../helper/util'
+import configMgr from '../helper/configMgr'
+import { ItemInSettingsJson } from '../model'
 
 // The favourite.open command is not listed in settings.json as a contribution because it only gets invoked
 //  from the user's click on an item in the FavouriteProvider tree.
@@ -18,6 +21,37 @@ export function open(favouriteProvider: FavouriteProvider) {
   })
 }
 
+//  and treating the second of these as a non-preview open.
+export function reveal(favouriteProvider: FavouriteProvider) {
+  favouriteProvider.onDidExpandElement((args) => {
+    const treeVisible = configMgr.tree.visible
+    if (treeVisible) {
+      configMgr.tree.reveal(args, { select: true, focus: true, expand: true })
+    } else {
+      configMgr.explorerTree.reveal(args, { select: true, focus: true, expand: true })
+    }
+  })
+  return vscode.commands.registerCommand('favourite.file.reveal', async function () {
+    const fileUri = vscode.window.activeTextEditor?.document.uri
+    if (!fileUri) return
+    const fileName = fileUri.fsPath
+    // Store the stringified uri for any resource that isn't a file
+    const filePath =
+      fileUri.scheme !== 'file'
+        ? fileUri.toString()
+        : isMultiRoots()
+        ? fileName
+        : fileName.substr(getSingleRootPath().length + 1)
+
+    const currentGroup = configMgr.get('currentGroup')
+    const resources = (configMgr.get('resources') as Array<ItemInSettingsJson>) || []
+    const index = resources.findIndex(item => item.group == currentGroup && filePath.startsWith(item.filePath))
+    if (index != -1) {
+      const parentPath = resources[index].filePath
+      favouriteProvider.getExpandElement({ filePath, parentPath })
+    }
+  })
+}
 
 // Return true if previously called with the same arguments within the past 0.5 seconds
 function wasDoubleClick(uri: vscode.Uri, favouriteProvider: FavouriteProvider): boolean {

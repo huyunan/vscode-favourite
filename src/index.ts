@@ -26,6 +26,7 @@ import {
   revealInSideBar,
   openToSide,
   open,
+  reveal,
 } from './command'
 
 // this method is called when your extension is activated
@@ -39,11 +40,13 @@ export function activate(context: vscode.ExtensionContext) {
   changeWindowState()
   const favouriteProvider = new FavouriteProvider()
 
-  vscode.window.createTreeView('favourite', { treeDataProvider: favouriteProvider, showCollapseAll: true })
+  const explorerTree = vscode.window.createTreeView('favourite', { treeDataProvider: favouriteProvider, showCollapseAll: true })
   const tree = vscode.window.createTreeView('favourite-full-view', {
     treeDataProvider: favouriteProvider,
     showCollapseAll: true,
   })
+  configMgr.explorerTree = explorerTree
+  configMgr.tree = tree
 
   const currentGroup = configMgr.get('currentGroup')
   tree.message = `${localize('ext.current.group')}${currentGroup}`
@@ -98,6 +101,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(revealInSideBar())
   context.subscriptions.push(openToSide())
   context.subscriptions.push(open(favouriteProvider))
+  context.subscriptions.push(reveal(favouriteProvider))
   context.subscriptions.push(moveUp(favouriteProvider))
   context.subscriptions.push(moveDown(favouriteProvider))
   context.subscriptions.push(moveToTop(favouriteProvider))
