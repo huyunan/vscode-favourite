@@ -110,21 +110,26 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
 
   private getChildrenResources(item: ItemInSettingsJson, element: Resource): Array<Resource> {
     const sort = configMgr.get('sortOrder') as string
-    try {
-      const files = fs.readdirSync(pathResolve(item.filePath))
-      const data = this.sortResources(
-        files.map((f) => ({ filePath: path.join(item.filePath, f), group: '' })),
-        sort === 'MANUAL' ? 'ASC' : sort
-      )
-      
-      const childResources = this.data2Resource(data, 'resourceChild')
-      this.itemMap.set(element?.value, {value: element, resource: childResources})
-      return childResources;
-    } catch (error) {
-      console.log(error)
-      this.itemMap.set(element?.value, {value: element, resource: []})
-      return []
+    const childrenStat = this.getResourceStat(item)
+    if (childrenStat.stat == FileStat.DIRECTORY) {
+      try {
+        const files = fs.readdirSync(pathResolve(item.filePath))
+        const data = this.sortResources(
+          files.map((f) => ({ filePath: path.join(item.filePath, f), group: '' })),
+          sort === 'MANUAL' ? 'ASC' : sort
+        )
+        
+        const childResources = this.data2Resource(data, 'resourceChild')
+        this.itemMap.set(element?.value, {value: element, resource: childResources})
+        return childResources;
+      } catch (error) {
+        console.log(error)
+        this.itemMap.set(element?.value, {value: element, resource: []})
+        return []
+      }
     }
+    this.itemMap.set(element?.value, {value: element, resource: []})
+    return []
   }
 
   private getSortedFavouriteResources(): Array<ItemInSettingsJson> {
