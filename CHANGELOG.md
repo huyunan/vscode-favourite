@@ -3,6 +3,11 @@
 
 1. Support reveal in favorite (by [@huyunan](https://github.com/huyunan/vscode-favourite))
 
+### 2025-07-21
+1. Adding to favorites and deleting from favorites are displayed normally now (by [@huyunan](https://github.com/huyunan/vscode-favourite))
+
+2. After vscode starts, it calls "activate" (by [@huyunan](https://github.com/huyunan/vscode-favourite))
+
 ### 2025-07-06
 
 1. Support wsl and delete group (by [@huyunan](https://github.com/huyunan/vscode-favourite))
