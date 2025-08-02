@@ -2,7 +2,7 @@
   "name": "vscode-favourite",
   "displayName": "%ext.displayName%",
   "description": "%ext.description%",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "publisher": "yunan-hu",
   "engines": {
     "vscode": "^1.68.0"
@@ -106,24 +106,24 @@
         {
           "command": "favourite.addToFavourite",
           "when": "resourcePath not in ext:favorite.filePaths",
-          "group": "1_favourite"
+          "group": "5_favourite"
         },
         {
           "command": "favourite.deleteFavourite",
           "when": "resourcePath in ext:favorite.filePaths",
-          "group": "1_favourite"
+          "group": "5_favourite"
         }
       ],
       "explorer/context": [
         {
           "command": "favourite.addToFavourite",
           "when": "resourcePath not in ext:favorite.filePaths",
-          "group": "1_favourite"
+          "group": "5_favourite"
         },
         {
           "command": "favourite.deleteFavourite",
           "when": "resourcePath in ext:favorite.filePaths",
-          "group": "1_favourite"
+          "group": "5_favourite"
         }
       ],
       "view/title": [
