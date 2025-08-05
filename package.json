@@ -2,7 +2,7 @@
   "name": "vscode-favourite",
   "displayName": "%ext.displayName%",
   "description": "%ext.description%",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "publisher": "yunan-hu",
   "engines": {
     "vscode": "^1.68.0"
@@ -206,6 +206,7 @@
         },
         {
           "command": "favourite.deleteAllFavourite",
+          "when": "view in ext:allFavouriteViews",
           "group": "zbottom"
         }
       ],
