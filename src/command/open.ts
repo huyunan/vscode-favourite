@@ -32,8 +32,13 @@ export function reveal(favouriteProvider: FavouriteProvider) {
     }
   })
   return vscode.commands.registerCommand('favourite.file.reveal', async function () {
-    const fileUri = vscode.window.activeTextEditor?.document.uri
-    if (!fileUri) return
+    let fileUri = vscode.window.activeTextEditor?.document.uri
+    if (!fileUri) {
+      await vscode.commands.executeCommand('copyFilePath');
+      const copyFilePath = await vscode.env.clipboard.readText()
+      if (!copyFilePath) return
+      fileUri = vscode.Uri.file(copyFilePath)
+    }
     const fileName = fileUri.fsPath
     // Store the stringified uri for any resource that isn't a file
     const filePath =
