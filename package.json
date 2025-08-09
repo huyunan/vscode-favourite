@@ -2,7 +2,7 @@
   "name": "vscode-favourite",
   "displayName": "%ext.displayName%",
   "description": "%ext.description%",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "publisher": "yunan-hu",
   "engines": {
     "vscode": "^1.68.0"

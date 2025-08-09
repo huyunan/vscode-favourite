@@ -1,3 +1,4 @@
+import { resolve } from 'path';
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode'
@@ -7,6 +8,7 @@ import configMgr from './helper/configMgr'
 import localize from './helper/localize'
 import { pathResolve } from './helper/util'
 import * as fs from 'fs'
+const readline = require('readline');
 
 import {
   addToFavourite,
@@ -50,6 +52,8 @@ export function activate(context: vscode.ExtensionContext) {
 
   const currentGroup = configMgr.get('currentGroup')
   tree.message = `${localize('ext.current.group')}${currentGroup}`
+  
+  checkGitIgnore()
 
   vscode.workspace.onDidChangeConfiguration(
     () => {
@@ -91,6 +95,44 @@ export function activate(context: vscode.ExtensionContext) {
     tree.message = `${localize('ext.current.group')}${currentGroup}`
     changeWindowState()
     favouriteProvider.refresh()
+  }
+  
+  // 查看是否将 .vsfavorite 添加到 .git/info/exclude .ginignore 中
+  function checkGitIgnore() {
+    try {
+      const folders = vscode.workspace.workspaceFolders
+      if (!(folders && folders.length == 1)) return
+      const rootPath = folders[0].uri.fsPath
+      fs.stat(resolve(rootPath, '.git'), (err, stats) => {
+        if (err) console.log(err);
+        if (stats.isDirectory()) {
+          const readline = require('readline');
+          const excludeFile = resolve(rootPath, '.git/info/exclude')
+          const rule = '/' + localize('ext.setting.file.name')
+          const stream = fs.createReadStream(excludeFile);
+          let exitFlg = false;
+          const rl = readline.createInterface({
+              input: stream,
+              crlfDelay: Infinity // 识别所有的换行符，包括 '\n' 和 '\r\n'
+          });
+          rl.on('line', (line) => {
+              if (rule == line.trim()) {
+                exitFlg = true;
+              }
+          });
+          rl.on('close', () => {
+            //  Finished reading the file.
+            if (!exitFlg) {
+              fs.appendFile(excludeFile, '\n' + rule, (err) => {
+                if (err) console.log(err);
+              });
+            }
+          });
+        }
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   context.subscriptions.push(addToFavourite())
