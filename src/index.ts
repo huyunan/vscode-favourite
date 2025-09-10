@@ -12,6 +12,9 @@ const readline = require('readline');
 
 import {
   addToFavourite,
+  addToBookmark,
+  addToNameBookmark,
+  deleteBookmark,
   addNewGroup,
   deleteFavourite,
   moveUp,
@@ -138,6 +141,9 @@ export function activate(context: vscode.ExtensionContext) {
   }
 
   context.subscriptions.push(addToFavourite())
+  context.subscriptions.push(addToBookmark())
+  context.subscriptions.push(addToNameBookmark())
+  context.subscriptions.push(deleteBookmark())
   context.subscriptions.push(deleteFavourite())
   context.subscriptions.push(revealInOS_mac())
   context.subscriptions.push(revealInOS_windows())

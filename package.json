@@ -114,6 +114,23 @@
           "group": "5_favourite"
         }
       ],
+      "editor/lineNumber/context": [
+        {
+          "command": "favourite.addToBookmark",
+          "when": "resourcePath not in ext:favorite.filePaths",
+          "group": "5_favourite"
+        },
+        {
+          "command": "favourite.addToNameBookmark",
+          "when": "resourcePath not in ext:favorite.filePaths",
+          "group": "5_favourite"
+        },
+        {
+          "command": "favourite.deleteBookmarks",
+          "when": "resourcePath in ext:favorite.filePaths",
+          "group": "5_favourite"
+        }
+      ], 
       "explorer/context": [
         {
           "command": "favourite.addToFavourite",
@@ -324,6 +341,18 @@
       {
         "command": "favourite.addToFavourite",
         "title": "%command.favourite.addtofavourite%"
+      },
+      {
+        "command": "favourite.addToBookmark",
+        "title": "%command.favourite.addToBookmark%"
+      },
+      {
+        "command": "favourite.deleteBookmarks",
+        "title": "%command.favourite.deleteBookmarks%"
+      },
+      {
+        "command": "favourite.addToNameBookmark",
+        "title": "%command.favourite.addToNameBookmark%"
       },
       {
         "command": "favourite.deleteFavourite",

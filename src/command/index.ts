@@ -1,4 +1,6 @@
 export { addToFavourite } from './addToFavourite'
+export { addToBookmark, addToNameBookmark } from './addToBookmark'
+export { deleteBookmark } from './deleteBookmark'
 export { deleteFavourite } from './deleteFavourite'
 export { moveUp } from './moveUp'
 export { moveDown } from './moveDown'
