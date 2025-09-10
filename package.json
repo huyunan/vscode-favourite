@@ -205,6 +205,16 @@
           "group": "sort@4"
         },
         {
+          "command": "favourite.copyFilePath",
+          "when": "view in ext:allFavouriteViews",
+          "group": "t-copy@1"
+        },
+        {
+          "command": "favourite.copyRelativeFilePath",
+          "when": "view in ext:allFavouriteViews",
+          "group": "t-copy@2"
+        },
+        {
           "command": "favourite.deleteAllFavourite",
           "when": "view in ext:allFavouriteViews",
           "group": "zbottom"
@@ -249,6 +259,14 @@
         },
         {
           "command": "favourite.moveDown",
+          "when": "false"
+        },
+        {
+          "command": "favourite.copyFilePath",
+          "when": "false"
+        },
+        {
+          "command": "favourite.copyRelativeFilePath",
           "when": "false"
         },
         {
@@ -321,6 +339,14 @@
       {
         "command": "favourite.moveToBottom",
         "title": "%command.favourite.movetobottom%"
+      },
+      {
+        "command": "favourite.copyFilePath",
+        "title": "%command.favourite.copyFilePath%"
+      },
+      {
+        "command": "favourite.copyRelativeFilePath",
+        "title": "%command.favourite.copyRelativeFilePath%"
       },
       {
         "command": "favourite.deleteAllFavourite",

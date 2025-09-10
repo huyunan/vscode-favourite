@@ -6,6 +6,8 @@
   "command.favourite.movedown": "Move Down",
   "command.favourite.movetotop": "Move to Top",
   "command.favourite.movetobottom": "Move to Bottom",
+  "command.favourite.copyFilePath": "Copy Path",
+  "command.favourite.copyRelativeFilePath": "Copy Relative Path",
   "command.favourite.file.reveal": "Reveal in Favorite",
   "command.favourite.refresh": "Refresh",
   "command.favourite.sort": "Toggle Sort",

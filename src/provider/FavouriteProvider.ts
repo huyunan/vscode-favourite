@@ -199,13 +199,6 @@ export class FavouriteProvider implements vscode.TreeDataProvider<Resource> {
   }
 
   private data2Resource(data: Array<Item>, contextValue: string): Array<Resource> {
-    const enablePreview = <boolean>vscode.workspace.getConfiguration('workbench.editor').get('enablePreview')
-
-    // contextValue set on Resource gets a 'uri.' prefix if the favourite is specified as a uri,
-    //   and a '.dir' suffix if it represents a directory rather than a file.
-    // The when-clauses on our contributions to the 'view/item/context' menu use these modifiers
-    //   to be smarter about which commands to offer.
-
     return data.map((i) => {
       const uri = vscode.Uri.file(pathResolve(i.filePath));
       // let uri = vscode.Uri.parse(`file://${pathResolve(i.filePath)}`)

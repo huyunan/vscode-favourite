@@ -6,6 +6,8 @@
   "command.favourite.movedown": "下移",
   "command.favourite.movetotop": "上移至顶",
   "command.favourite.movetobottom": "下移至底",
+  "command.favourite.copyFilePath": "复制路径",
+  "command.favourite.copyRelativeFilePath": "复制相对路径",
   "command.favourite.file.reveal": "在收藏夹中显示",
   "command.favourite.refresh": "刷新",
   "command.favourite.sort": "切换排序",

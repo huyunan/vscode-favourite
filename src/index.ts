@@ -18,6 +18,8 @@ import {
   moveDown,
   moveToTop,
   moveToBottom,
+  copyFilePath,
+  copyRelativeFilePath,
   deleteAllFavourite,
   refresh,
   toggleSort,
@@ -148,6 +150,8 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(moveDown(favouriteProvider))
   context.subscriptions.push(moveToTop(favouriteProvider))
   context.subscriptions.push(moveToBottom(favouriteProvider))
+  context.subscriptions.push(copyFilePath())
+  context.subscriptions.push(copyRelativeFilePath())
   context.subscriptions.push(deleteAllFavourite())
   context.subscriptions.push(refresh(favouriteProvider))
   context.subscriptions.push(toggleSort(favouriteProvider))
