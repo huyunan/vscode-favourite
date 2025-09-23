@@ -109,7 +109,10 @@ export function activate(context: vscode.ExtensionContext) {
       if (!(folders && folders.length == 1)) return
       const rootPath = folders[0].uri.fsPath
       fs.stat(resolve(rootPath, '.git'), (err, stats) => {
-        if (err) console.log(err);
+        if (err) {
+          console.log(err?.message);
+          return
+        }
         if (stats.isDirectory()) {
           const readline = require('readline');
           const excludeFile = resolve(rootPath, '.git/info/exclude')
@@ -129,14 +132,14 @@ export function activate(context: vscode.ExtensionContext) {
             //  Finished reading the file.
             if (!exitFlg) {
               fs.appendFile(excludeFile, '\n' + rule, (err) => {
-                if (err) console.log(err);
+                if (err) console.log(err?.message);
               });
             }
           });
         }
       })
     } catch (error) {
-      console.log(error)
+      console.log(error?.message)
     }
   }
 
