@@ -27,8 +27,6 @@ export function reveal(favouriteProvider: FavouriteProvider) {
     const treeVisible = configMgr.tree.visible
     if (treeVisible) {
       configMgr.tree.reveal(args, { select: true, focus: true, expand: true })
-    } else {
-      configMgr.explorerTree.reveal(args, { select: true, focus: true, expand: true })
     }
   })
   return vscode.commands.registerCommand('favourite.file.reveal', async function () {

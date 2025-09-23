@@ -2,7 +2,7 @@
   "name": "vscode-favourite",
   "displayName": "%ext.displayName%",
   "description": "%ext.description%",
-  "version": "2.2.1",
+  "version": "2.4.0",
   "publisher": "yunan-hu",
   "engines": {
     "vscode": "^1.68.0"
@@ -91,12 +91,6 @@
       "favourite-explorer": [
         {
           "id": "favourite-full-view",
-          "name": "%view.favourite.title%"
-        }
-      ],
-      "explorer": [
-        {
-          "id": "favourite",
           "name": "%view.favourite.title%"
         }
       ]

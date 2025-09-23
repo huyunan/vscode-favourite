@@ -44,16 +44,14 @@ export function activate(context: vscode.ExtensionContext) {
   // This line of code will only be executed once when your extension is activated
   console.log('Congratulations, your extension "favourite" is now active!')
 
-  vscode.commands.executeCommand('setContext', 'ext:allFavouriteViews', ['favourite', 'favourite-full-view'])
+  vscode.commands.executeCommand('setContext', 'ext:allFavouriteViews', ['favourite-full-view'])
   changeWindowState()
   const favouriteProvider = new FavouriteProvider()
 
-  const explorerTree = vscode.window.createTreeView('favourite', { treeDataProvider: favouriteProvider, showCollapseAll: true })
   const tree = vscode.window.createTreeView('favourite-full-view', {
     treeDataProvider: favouriteProvider,
     showCollapseAll: true,
   })
-  configMgr.explorerTree = explorerTree
   configMgr.tree = tree
 
   const currentGroup = configMgr.get('currentGroup')
