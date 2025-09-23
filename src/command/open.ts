@@ -24,10 +24,7 @@ export function open(favouriteProvider: FavouriteProvider) {
 //  and treating the second of these as a non-preview open.
 export function reveal(favouriteProvider: FavouriteProvider) {
   favouriteProvider.onDidExpandElement((args) => {
-    const treeVisible = configMgr.tree.visible
-    if (treeVisible) {
-      configMgr.tree.reveal(args, { select: true, focus: true, expand: true })
-    }
+    configMgr.tree.reveal(args, { select: true, focus: true, expand: true })
   })
   return vscode.commands.registerCommand('favourite.file.reveal', async function () {
     let fileUri = vscode.window.activeTextEditor?.document.uri

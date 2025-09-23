@@ -21,68 +21,6 @@ export class FavouriteMarkProvider implements vscode.TreeDataProvider<Resource> 
     this._onDidChangeTreeData.fire()
   }
 
-  setExpanded(element: Resource, expanded: boolean): void {
-		if (element) {
-			if (expanded) {
-				this._onDidExpandElement.fire(element);
-			} else {
-				// this._onDidCollapseElement.fire(Object.freeze({ element }));
-			}
-		}
-	}
-  getParent(element: Resource): Resource  {
-    let filePath = element.value
-    const parentKey = path.dirname(filePath)
-    if (parentKey == '.') {
-      return undefined
-    }
-    return this.itemMap.get(parentKey)?.value
-  }
-
-  getExpandElement({ filePath, parentPath }) {
-    if (this.itemMap.has(filePath)) {
-      this.setExpanded(this.itemMap.get(filePath).value, true)
-      return
-    }
-
-    // 结束循环用
-    let flag = true
-    let filePathForWhile = filePath
-    while(flag) {
-      const parentKey = path.dirname(filePathForWhile)
-      // 查不到就是根目录下的
-      if (parentKey == '.' || filePathForWhile === parentPath) {
-        const resource = this.itemMap.get(undefined)?.resource.find(item => item.value === filePathForWhile)
-        if (!resource?.value) break
-        this.getChildren(resource, true)
-        flag = false
-        break
-      }
-      if (parentKey == parentPath) {
-        const resource = this.itemMap.get(undefined)?.resource.find(item => item.value === parentKey)
-        if (!resource?.value) break
-        this.getChildren(resource, true)
-        flag = false
-        break
-      }
-      // 如果没有 parentPath 肯定不能展开目录，去获取数据
-      if (!this.itemMap.has(parentKey)) {
-        const uri = vscode.Uri.file(pathResolve(parentKey));
-        const element = new Resource(path.basename(pathResolve(parentKey)), vscode.TreeItemCollapsibleState.Collapsed, parentKey, 'resourceChild.dir', undefined, uri)
-        this.getChildren(element, true)
-      }
-      filePathForWhile = parentKey
-    }
-    const parent = path.dirname(filePath)
-    if (parent == '.' || this.itemMap.has(filePath)) {
-      this.setExpanded(this.itemMap.get(filePath).value, true)
-      return
-    }
-    const resource = this.itemMap.get(parent)?.resource.find(item => item.value === filePath)
-    this.getChildren(resource, true)
-    this.setExpanded(this.itemMap.get(filePath).value, true)
-  }
-
   getTreeItem(element: Resource): vscode.TreeItem {
     return element
   }
