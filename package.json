@@ -117,7 +117,6 @@
       "editor/lineNumber/context": [
         {
           "command": "favourite.addToBookmark",
-          "when": "resourcePath not in ext:favorite.filePaths",
           "group": "5_favourite"
         },
         {
