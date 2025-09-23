@@ -3,6 +3,7 @@ import { resolve } from 'path';
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode'
 import { FavouriteProvider } from './provider/FavouriteProvider'
+import { FavouriteMarkProvider } from './provider/FavouriteMarkProvider'
 import { ItemInSettingsJson } from './model'
 import configMgr from './helper/configMgr'
 import localize from './helper/localize'
@@ -44,18 +45,29 @@ export function activate(context: vscode.ExtensionContext) {
   // This line of code will only be executed once when your extension is activated
   console.log('Congratulations, your extension "favourite" is now active!')
 
-  vscode.commands.executeCommand('setContext', 'ext:allFavouriteViews', ['favourite-full-view'])
+  vscode.commands.executeCommand('setContext', 'ext:allFavouriteViews', ['favourite-dir-view', 'favourite-mark-view'])
+  vscode.commands.executeCommand('setContext', 'ext:favourite-mark-view', false)
   changeWindowState()
   const favouriteProvider = new FavouriteProvider()
 
-  const tree = vscode.window.createTreeView('favourite-full-view', {
+  const tree = vscode.window.createTreeView('favourite-dir-view', {
     treeDataProvider: favouriteProvider,
     showCollapseAll: true,
   })
   configMgr.tree = tree
+  
+  const favouriteMarkProvider = new FavouriteMarkProvider()
+
+  const marktree = vscode.window.createTreeView('favourite-mark-view', {
+    treeDataProvider: favouriteMarkProvider,
+    showCollapseAll: true,
+  })
+  configMgr.marktree = marktree
 
   const currentGroup = configMgr.get('currentGroup')
   tree.message = `${localize('ext.current.group')}${currentGroup}`
+  // marktree.message = `${localize('ext.current.group')}${currentGroup}`
+  marktree.message = `test`
   
   checkGitIgnore()
 
@@ -163,7 +175,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(copyRelativeFilePath())
   context.subscriptions.push(deleteAllFavourite())
   context.subscriptions.push(refresh(favouriteProvider))
-  context.subscriptions.push(toggleView(favouriteProvider))
+  context.subscriptions.push(toggleView(favouriteProvider, favouriteMarkProvider))
   context.subscriptions.push(changeGroup(favouriteProvider))
   context.subscriptions.push(addNewGroup(favouriteProvider))
 }

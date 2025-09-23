@@ -8,6 +8,7 @@ import { ItemInSettingsJson } from '../model'
 
 class ConfigMgr {
   public tree: vscode.TreeView<any>;
+  public marktree: vscode.TreeView<any>;
 
   get(key): Array<ItemInSettingsJson | string> | string {
     const config = vscode.workspace.getConfiguration('favourite')

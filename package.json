@@ -40,8 +40,7 @@
   },
   "activationEvents": [
     "onCommand:favourite.addToFavourite",
-    "onView:favourite",
-    "onView:favourite-full-view",
+    "onView:favourite-dir-view",
     "onStartupFinished"
   ],
   "license": "GPL-3.0",
@@ -90,8 +89,14 @@
     "views": {
       "favourite-explorer": [
         {
-          "id": "favourite-full-view",
-          "name": "%view.favourite.title%"
+          "id": "favourite-dir-view",
+          "name": "%view.favourite.title%",
+          "when": "!ext:favourite-mark-view"
+        },
+        {
+          "id": "favourite-mark-view",
+          "name": "%view.favourite.title%",
+          "when": "ext:favourite-mark-view"
         }
       ]
     },
