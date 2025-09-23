@@ -154,7 +154,7 @@
           "group": "navigation@4"
         },
         {
-          "command": "favourite.nav.sort",
+          "command": "favourite.nav.toggleView",
           "when": "view in ext:allFavouriteViews",
           "group": "navigation@5"
         },
@@ -221,6 +221,11 @@
           "group": "sort@4"
         },
         {
+          "command": "favourite.sort",
+          "when": "view in ext:allFavouriteViews",
+          "group": "sort@5"
+        },
+        {
           "command": "favourite.copyFilePath",
           "when": "view in ext:allFavouriteViews",
           "group": "t-copy@1"
@@ -247,7 +252,7 @@
           "when": "false"
         },
         {
-          "command": "favourite.nav.sort",
+          "command": "favourite.nav.toggleView",
           "when": "false"
         },
         {
@@ -293,6 +298,10 @@
         {
           "command": "favourite.moveToBottom",
           "when": "false"
+        },
+        {
+          "command": "favourite.sort",
+          "when": "false"
         }
       ]
     },
@@ -314,11 +323,11 @@
         }
       },
       {
-        "command": "favourite.nav.sort",
-        "title": "%command.favourite.sort%",
+        "command": "favourite.nav.toggleView",
+        "title": "%command.favourite.toggleView%",
         "icon": {
-          "dark": "img/sort_black.svg",
-          "light": "img/sort_light.svg"
+          "dark": "img/toggle_view_black.svg",
+          "light": "img/toggle_view_light.svg"
         }
       },
       {
@@ -371,11 +380,15 @@
       },
       {
         "command": "favourite.moveToTop",
-        "title": "%command.favourite.movetotop%"
+        "title": "%command.favourite.moveToTop%"
       },
       {
         "command": "favourite.moveToBottom",
-        "title": "%command.favourite.movetobottom%"
+        "title": "%command.favourite.moveToBottom%"
+      },
+      {
+        "command": "favourite.sort",
+        "title": "%command.favourite.sort%"
       },
       {
         "command": "favourite.copyFilePath",

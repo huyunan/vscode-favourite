@@ -6,7 +6,7 @@ import localize from '../helper/localize'
 import { ItemInSettingsJson } from '../model'
 
 export function deleteBookmark() {
-  return vscode.commands.registerCommand('favourite.addToBookmark', async ({ lineNumber, uri }: { lineNumber: number, uri?: vscode.Uri }) => {
+  return vscode.commands.registerCommand('favourite.deleteBookmark', async ({ lineNumber, uri }: { lineNumber: number, uri?: vscode.Uri }) => {
     console.log(lineNumber, uri)
   })
 }
