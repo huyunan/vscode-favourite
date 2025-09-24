@@ -116,17 +116,17 @@
       "editor/lineNumber/context": [
         {
           "command": "favourite.addToBookmark",
-          "when": "resourcePath not in ext:favorite.markFilePaths || !ext:favorite.markLineNumberMap || editorLineNumber not in ext:favorite.markLineNumberMap[resourcePath]",
+          "when": "resourcePath in ext:favorite.markPath && editorLineNumber not in ext:favorite.markLineNumber",
           "group": "5_favourite"
         },
         {
           "command": "favourite.addToNameBookmark",
-"when": "editorLineNumber not in ext:favorite.markLineNumberMap[resourcePath]",
+          "when": "resourcePath in ext:favorite.markPath && editorLineNumber not in ext:favorite.markLineNumber",
           "group": "5_favourite"
         },
         {
           "command": "favourite.deleteBookmark",
-          "when": "resourcePath in ext:favorite.markFilePaths && ext:favorite.markLineNumberMap && editorLineNumber not in ext:favorite.markLineNumberMap[resourcePath]",
+          "when": "resourcePath in ext:favorite.markPath && editorLineNumber in ext:favorite.markLineNumber",
           "group": "5_favourite"
         }
       ], 

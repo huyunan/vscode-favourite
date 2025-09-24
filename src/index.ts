@@ -7,7 +7,7 @@ import { FavouriteMarkProvider } from './provider/FavouriteMarkProvider'
 import { ItemInSettingsJson, ItemMarkJson } from './model'
 import configMgr from './helper/configMgr'
 import localize from './helper/localize'
-import { pathResolve } from './helper/util'
+import { getAllBookmarks, getSingleRootPath, isMultiRoots, pathResolve } from './helper/util'
 import * as fs from 'fs'
 const readline = require('readline');
 
@@ -38,6 +38,7 @@ import {
   open,
   reveal,
 } from './command'
+import { DEFAULT_GROUP } from './enum';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -100,23 +101,26 @@ export function activate(context: vscode.ExtensionContext) {
   }
 
   function changeWindowState() {
-    const currentGroup = configMgr.get('currentGroup')
+    const currentGroup = (configMgr.get('currentGroup') as string) || DEFAULT_GROUP
     const resources = (configMgr.get('resources') as Array<ItemInSettingsJson>) || []
     const currentResources: Array<ItemInSettingsJson> = resources.filter(item => item.group == currentGroup)
     const filePaths = currentResources.map(item => pathResolve(item.filePath))
     vscode.commands.executeCommand('setContext', 'ext:favorite.filePaths', filePaths);
     
     // bookmarks
-    const bookmarks = (configMgr.get('bookmarks') as Array<ItemMarkJson>) || []
-    const currentBookmarks: Array<ItemMarkJson> = bookmarks.filter(item => item.group == currentGroup)
-    const markFilePaths = []
-    const markLineNumberMap = {}
-    currentBookmarks.forEach(item => {
-      markFilePaths.push(pathResolve(item.filePath))
-      markLineNumberMap[pathResolve(item.filePath)] = item.lineNumber
-    })
-    vscode.commands.executeCommand('setContext', 'ext:favorite.markFilePaths', markFilePaths);
-    vscode.commands.executeCommand('setContext', 'ext:favorite.markLineNumberMap', markLineNumberMap);
+    const activeEditor = vscode.window.activeTextEditor
+    if (!activeEditor) return
+    const fileName = activeEditor.document.uri.fsPath
+    const allBookmarks = getAllBookmarks()
+    const markPath = isMultiRoots() ? fileName : fileName.substr(getSingleRootPath().length + 1)
+    const item = allBookmarks.find(b => b.filePath === markPath && b.group === currentGroup)
+    let markLineNumber = []
+    if (item && item.lineNumber && item.lineNumber.length > 0) {
+      markLineNumber = item.lineNumber
+    }
+    // 记录当前文件路径，只是为了防止有些文件比如图片 activeEditor 为 Undefined 情况下不显示菜单
+    vscode.commands.executeCommand('setContext', 'ext:favorite.markPath', [pathResolve(markPath)]);
+    vscode.commands.executeCommand('setContext', 'ext:favorite.markLineNumber', markLineNumber);
   }
   
   function onFileChange(favouriteProvider: FavouriteProvider) {
