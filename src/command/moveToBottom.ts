@@ -6,6 +6,9 @@ import { getCurrentResources } from '../helper/util'
 
 export function moveToBottom(favouriteProvider: FavouriteProvider) {
   return vscode.commands.registerCommand('favourite.moveToBottom', async function (value: Resource) {
+    if (configMgr.marktree.visible) {
+      return
+    }
     const currentGroup = configMgr.get('currentGroup') as string
 
     const items = await getCurrentResources()

@@ -47,7 +47,7 @@ export class FavouriteMarkProvider implements vscode.TreeDataProvider<Resource> 
   }
 
   private getChildrenResources(item: ItemInSettingsJson, element: Resource): Array<Resource> {
-    const sort = configMgr.get('sortOrder') as string
+    const sort = configMgr.get('markSortOrder') as string
     const childrenStat = this.getResourceStat(item)
     if (childrenStat.stat == FileStat.DIRECTORY) {
       try {

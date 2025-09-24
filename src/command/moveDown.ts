@@ -6,6 +6,9 @@ import { getCurrentResources, replaceArrayElements } from '../helper/util'
 
 export function moveDown(favouriteProvider: FavouriteProvider) {
   return vscode.commands.registerCommand('favourite.moveDown', async function (value: Resource) {
+    if (configMgr.marktree.visible) {
+      return
+    }
     const currentGroup = configMgr.get('currentGroup') as string
 
     const items = await getCurrentResources()

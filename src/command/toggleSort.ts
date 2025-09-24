@@ -6,6 +6,9 @@ import configMgr from '../helper/configMgr'
 export function toggleSort(favouriteProvider: FavouriteProvider) {
   return vscode.commands.registerCommand('favourite.sort', async function(value: Resource) {
     const sort = configMgr.get('sortOrder')
+    if (configMgr.marktree.visible) {
+      return
+    }
 
     if (sort === 'MANUAL') {
       configMgr.save([{key: 'sortOrder', value: 'ASC'}])

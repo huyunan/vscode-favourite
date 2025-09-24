@@ -3,55 +3,55 @@ import { isMultiRoots, getSingleRootPath, getAllBookmarks } from '../helper/util
 import configMgr from '../helper/configMgr'
 import { DEFAULT_GROUP } from '../enum'
 
-const deco = vscode.window.createTextEditorDecorationType(
-  {
-    gutterIconPath: vscode.Uri.parse('data:image/svg+xml;base64,PHN2ZyB0PSIxNzU4NjE1NzM4NzgxIiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjMzNDYxIiB3aWR0aD0iMTYiIGhlaWdodD0iMTYiPjxwYXRoIGQ9Ik03MzYuOSA4OTIuNmMtMTAuOSAwLTIxLjgtMi42LTMxLjktNy45TDUxMC43IDc4Mi41IDMxNi40IDg4NC43Yy0yMy4zIDEyLjItNTAuOSAxMC4xLTcyLjEtNS4yLTIxLjItMTUuNC0zMS42LTQxLTI3LjItNjYuOWwzNy4xLTIxNi40TDk3LjEgNDQzLjFjLTE4LjgtMTguMy0yNS40LTQ1LjItMTcuMy03MC4xIDguMS0yNC45IDI5LjMtNDIuOCA1NS4yLTQ2LjZsMjE3LjItMzEuNkw0NDkuMyA5OGMxMS42LTIzLjUgMzUuMS0zOC4yIDYxLjQtMzguMiAyNi4yIDAgNDkuNyAxNC42IDYxLjMgMzguMWw5Ny4xIDE5Ni44IDIxNy4yIDMxLjVjMjYgMy44IDQ3LjIgMjEuNyA1NS4yIDQ2LjYgOC4xIDI0LjkgMS41IDUxLjgtMTcuMyA3MC4xTDc2Ny4xIDU5Ni4zbDM3LjEgMjE2LjRjNC40IDI1LjgtNiA1MS41LTI3LjIgNjYuOS0xMiA4LjYtMjYuMSAxMy00MC4xIDEzek0xNjYuOCA0MDEuMkwzMTMgNTQzLjdjMTYuMiAxNS43IDIzLjUgMzguNSAxOS43IDYwLjZsLTM0LjUgMjAxLjIgMTgwLjctOTVjMjAtMTAuNSA0My43LTEwLjUgNjMuNi0wLjFsMTgwLjcgOTUtMzQuNS0yMDEuMmMtMy45LTIyLjIgMy41LTQ0LjggMTkuNi02MC42bDE0Ni4yLTE0Mi41LTIwMi0yOS4zYy0yMi4zLTMuMy00MS42LTE3LjMtNTEuNS0zNy41bC05MC4zLTE4My05MC4zIDE4My4xYy05LjkgMjAuMi0yOS4yIDM0LjItNTEuNSAzNy40bC0yMDIuMSAyOS40eiBtMzM0LjctMjY4LjR6IiBmaWxsPSIjM0Y4NUZGIiBwLWlkPSIzMzQ2MiI+PC9wYXRoPjxwYXRoIGQ9Ik0zNzEuNSA0ODkuM2MtMTkuMiAwLTM2LTE0LjEtMzguOS0zMy43LTMuMS0yMS41IDExLjgtNDEuNCAzMy4zLTQ0LjZsNzUuNC0xMSAzMy43LTY4LjRjOS42LTE5LjUgMzMuMi0yNy41IDUyLjctMTcuOSAxOS41IDkuNiAyNy41IDMzLjIgMTcuOSA1Mi43bC00MC4yIDgxLjRjLTcuNCAxNS4xLTIxLjggMjUuNi0zOC41IDI3LjlsLTg5LjcgMTMuMWMtMiAwLjMtMy44IDAuNS01LjcgMC41eiIgZmlsbD0iI0E0QkVFQyIgcC1pZD0iMzM0NjMiPjwvcGF0aD48L3N2Zz4=')
-  }
-)
-
 export function addToBookmark() {
   return vscode.commands.registerCommand('favourite.addToBookmark', async ({ lineNumber, uri }: { lineNumber: number, uri?: vscode.Uri }) => {
     const activeEditor = vscode.window.activeTextEditor
     if (!activeEditor) return
-    addBookmark(activeEditor, lineNumber, uri)
+    const start = new vscode.Position(lineNumber - 1, 0);
+    const end = new vscode.Position(lineNumber - 1, 50);
+    const range = new vscode.Range(start, end)
+    // todo 以后要做修改，把一些单词挑选出来
+    const content = activeEditor.document.getText(range)
+    addBookmark(lineNumber, uri, content.trim().substring(0, 25))
   })
 }
 
 export function addToNameBookmark() {
-  return vscode.commands.registerCommand('favourite.line.addToNameBookmark', async ({ lineNumber, uri }: { lineNumber: number, uri?: vscode.Uri }) => {
+  return vscode.commands.registerCommand('favourite.addToNameBookmark', async ({ lineNumber, uri }: { lineNumber: number, uri?: vscode.Uri }) => {
     const activeEditor = vscode.window.activeTextEditor
     if (!activeEditor) return
-    addBookmark(activeEditor, lineNumber, uri)
+    const start = new vscode.Position(lineNumber - 1, 0);
+    const end = new vscode.Position(lineNumber - 1, 50);
+    const range = new vscode.Range(start, end)
+    const content = activeEditor.document.getText(range)
+    addBookmark(lineNumber, uri, content.trim().substring(0, 25))
   })
 }
 
-async function addBookmark(activeEditor: vscode.TextEditor | undefined, lineNumber: number, uri?: vscode.Uri) {
-    const start = new vscode.Position(lineNumber - 1, 0);
-    const end = new vscode.Position(lineNumber - 1, 0);
-    const range = new vscode.Range(start, end)
-    activeEditor.setDecorations(deco, [range])
-    
+async function addBookmark(lineNumber: number, uri: vscode.Uri, content: string) {
     const fileName = uri.fsPath
     const allBookmarks = getAllBookmarks()
     const markPath = isMultiRoots() ? fileName : fileName.substr(getSingleRootPath().length + 1)
     const currentGroup = (configMgr.get('currentGroup') as string) || DEFAULT_GROUP
     const item = allBookmarks.find(b => b.filePath === markPath && b.group === currentGroup)
     if (item) {
-      if (!item.lineNumber || item.lineNumber.length == 0) {
-        item.lineNumber = [lineNumber]
-      } else {
+      if (item.lineNumber && item.lineNumber.length > 0) {
         item.lineNumber.push(lineNumber)
+        item.content.push(content)
+      } else {
+        item.lineNumber = [lineNumber]
+        item.content = [content]
       }
     } else {
       allBookmarks.push({
         filePath: markPath,
         lineNumber: [lineNumber],
+        content: [content],
         group: currentGroup
       })
     }
 
     await configMgr.save([{key: 'bookmarks', value: allBookmarks}]).catch(console.warn)
-
     if (configMgr.get('groups') == undefined || configMgr.get('groups').length == 0) {
       configMgr.save([{key: 'groups', value: [DEFAULT_GROUP]}]).catch(console.warn);
     }
@@ -70,8 +70,10 @@ export function setBookmark(activeEditor: vscode.TextEditor | undefined) {
         const range = new vscode.Range(start, end)
         return range
       })
-      activeEditor.setDecorations(deco, ranges)
+      configMgr.disposeDeco(markPath)
+      activeEditor.setDecorations(configMgr.getDeco(markPath), ranges)
     } else {
-      activeEditor.setDecorations(deco, [])
+      configMgr.disposeDeco(markPath)
+      configMgr.decoMap.delete(markPath)
     }
 }
