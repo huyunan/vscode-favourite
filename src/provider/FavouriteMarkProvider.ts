@@ -71,9 +71,9 @@ export class FavouriteMarkProvider implements vscode.TreeDataProvider<MarkResour
           i.filePath,
           contextValue,
           {
-            command: 'favourite.open',
+            command: 'favourite.markOpen',
             title: '',
-            arguments: [uri],
+            arguments: [uri, bb.lineNumber],
           },
           uri
         )

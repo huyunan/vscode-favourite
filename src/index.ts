@@ -33,6 +33,7 @@ import {
   revealInSideBar,
   openToSide,
   open,
+  markOpen,
   reveal,
 } from './command'
 import { DEFAULT_GROUP } from './enum';
@@ -60,8 +61,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   const currentGroup = configMgr.get('currentGroup')
   tree.message = `${localize('ext.current.group')}${currentGroup}`
-  // marktree.message = `${localize('ext.current.group')}${currentGroup}`
-  marktree.message = `test`
+  marktree.message = `${localize('ext.current.group')}${currentGroup} | 书签视图`
   
   checkGitIgnore()
 
@@ -133,6 +133,7 @@ export function activate(context: vscode.ExtensionContext) {
     tree.message = `${localize('ext.current.group')}${currentGroup}`
     changeWindowState()
     favouriteProvider.refresh()
+    favouriteMarkProvider.refresh()
   }
   
   // 查看是否将 .vsfavorite 添加到 .git/info/exclude .ginignore 中
@@ -202,6 +203,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(revealInSideBar())
   context.subscriptions.push(openToSide())
   context.subscriptions.push(open(favouriteProvider))
+  context.subscriptions.push(markOpen(favouriteProvider))
   context.subscriptions.push(reveal(favouriteProvider))
   context.subscriptions.push(moveUp(favouriteProvider))
   context.subscriptions.push(moveDown(favouriteProvider))
