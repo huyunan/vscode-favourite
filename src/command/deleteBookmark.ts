@@ -12,10 +12,10 @@ export function deleteBookmark() {
     const markPath = isMultiRoots() ? fileName : fileName.substr(getSingleRootPath().length + 1)
     const currentGroup = (configMgr.get('currentGroup') as string) || DEFAULT_GROUP
     const item = allBookmarks.find(b => b.filePath === markPath && b.group === currentGroup)
-    if (item && item.lineNumber && item.lineNumber.length > 0) {
-      item.lineNumber = item.lineNumber.filter(line => line !== lineNumber)
+    if (item && item.bookmarks && item.bookmarks.length > 0) {
+      item.bookmarks = item.bookmarks.filter(line => line.lineNumber !== lineNumber)
     }
-    if (!item.lineNumber || item.lineNumber.length == 0) {
+    if (!item.bookmarks || item.bookmarks.length == 0) {
       const idx = allBookmarks.findIndex(b => b.filePath === markPath && b.group === currentGroup)
       allBookmarks.splice(idx, 1)
     }
@@ -25,4 +25,14 @@ export function deleteBookmark() {
       configMgr.save([{key: 'groups', value: [DEFAULT_GROUP]}]).catch(console.warn);
     }
   })
+}
+
+function handleBookmarks(bookmarks, bookmark) {
+  if (!bookmarks) {
+    return [bookmark]
+  } else if (bookmarks.find(b => b.lineNumber === bookmark.lineNumber)) {
+    return bookmarks
+  } else {
+    bookmarks.push(bookmark)
+  }
 }

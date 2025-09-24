@@ -15,7 +15,9 @@ export interface ItemInSettingsJson {
 
 export interface ItemMarkJson {
     filePath:string;
-    lineNumber:number[];
-    content:string[];
+    bookmarks: {
+        lineNumber: number,
+        content: string
+    }[],
     group:string;
 }

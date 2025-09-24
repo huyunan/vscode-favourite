@@ -34,19 +34,16 @@ async function addBookmark(lineNumber: number, uri: vscode.Uri, content: string)
     const markPath = isMultiRoots() ? fileName : fileName.substr(getSingleRootPath().length + 1)
     const currentGroup = (configMgr.get('currentGroup') as string) || DEFAULT_GROUP
     const item = allBookmarks.find(b => b.filePath === markPath && b.group === currentGroup)
+    const bookmark = {
+      lineNumber,
+      content
+    }
     if (item) {
-      if (item.lineNumber && item.lineNumber.length > 0) {
-        item.lineNumber.push(lineNumber)
-        item.content.push(content)
-      } else {
-        item.lineNumber = [lineNumber]
-        item.content = [content]
-      }
+      item.bookmarks = handleBookmarks(item.bookmarks, bookmark)
     } else {
       allBookmarks.push({
         filePath: markPath,
-        lineNumber: [lineNumber],
-        content: [content],
+        bookmarks: [bookmark],
         group: currentGroup
       })
     }
@@ -57,18 +54,30 @@ async function addBookmark(lineNumber: number, uri: vscode.Uri, content: string)
     }
 }
 
+function handleBookmarks(bookmarks, bookmark) {
+  if (!bookmarks) {
+    return [bookmark]
+  } else if (bookmarks.find(b => b.lineNumber === bookmark.lineNumber)) {
+    return bookmarks
+  } else {
+    bookmarks.push(bookmark)
+    return bookmarks
+  }
+}
+
 export function setBookmark(activeEditor: vscode.TextEditor | undefined) {
     const fileName = activeEditor.document.uri.fsPath
     const allBookmarks = getAllBookmarks()
     const markPath = isMultiRoots() ? fileName : fileName.substr(getSingleRootPath().length + 1)
     const currentGroup = (configMgr.get('currentGroup') as string) || DEFAULT_GROUP
     const item = allBookmarks.find(b => b.filePath === markPath && b.group === currentGroup)
-    if (item && item.lineNumber && item.lineNumber.length > 0) {
-      const ranges = item.lineNumber.map((lineNumber: number) => {
-        const start = new vscode.Position(lineNumber - 1, 0);
-        const end = new vscode.Position(lineNumber - 1, 0);
+    if (item && item.bookmarks && item.bookmarks.length > 0) {
+      const ranges = []
+      item.bookmarks.forEach(bb => {
+        const start = new vscode.Position(bb.lineNumber - 1, 0);
+        const end = new vscode.Position(bb.lineNumber - 1, 0);
         const range = new vscode.Range(start, end)
-        return range
+        ranges.push(range)
       })
       configMgr.disposeDeco(markPath)
       activeEditor.setDecorations(configMgr.getDeco(markPath), ranges)

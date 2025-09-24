@@ -110,13 +110,14 @@ export function activate(context: vscode.ExtensionContext) {
     const markPath = isMultiRoots() ? fileName : fileName.substr(getSingleRootPath().length + 1)
     const item = allBookmarks.find(b => b.filePath === markPath && b.group === currentGroup)
     let markLineNumber = []
-    if (item && item.lineNumber && item.lineNumber.length > 0) {
-      markLineNumber = item.lineNumber
-      const ranges = item.lineNumber.map((lineNumber: number) => {
-        const start = new vscode.Position(lineNumber - 1, 0);
-        const end = new vscode.Position(lineNumber - 1, 0);
+    if (item && item.bookmarks && item.bookmarks.length > 0) {
+      const ranges = []
+      item.bookmarks.forEach(bb => {
+        markLineNumber.push(bb.lineNumber)
+        const start = new vscode.Position(bb.lineNumber - 1, 0);
+        const end = new vscode.Position(bb.lineNumber - 1, 0);
         const range = new vscode.Range(start, end)
-        return range
+        ranges.push(range)
       })
       configMgr.disposeDeco(markPath)
       activeEditor.setDecorations(configMgr.getDeco(markPath), ranges)
@@ -126,7 +127,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
     vscode.commands.executeCommand('setContext', 'ext:favorite.markLineNumber', markLineNumber);
   }
-  
+
   function onFileChange(favouriteProvider: FavouriteProvider) {
     const currentGroup = configMgr.get('currentGroup')
     tree.message = `${localize('ext.current.group')}${currentGroup}`
