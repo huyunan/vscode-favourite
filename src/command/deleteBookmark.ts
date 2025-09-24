@@ -5,9 +5,7 @@ import { DEFAULT_GROUP } from '../enum'
 
 export function deleteBookmark() {
   return vscode.commands.registerCommand('favourite.deleteBookmark', async ({ lineNumber, uri }: { lineNumber: number, uri?: vscode.Uri }) => {
-    const activeEditor = vscode.window.activeTextEditor
-    if (!activeEditor) return
-    const fileName = activeEditor.document.uri.fsPath
+    const fileName = uri.fsPath
     const allBookmarks = getAllBookmarks()
     const markPath = isMultiRoots() ? fileName : fileName.substr(getSingleRootPath().length + 1)
     const currentGroup = (configMgr.get('currentGroup') as string) || DEFAULT_GROUP
@@ -25,14 +23,4 @@ export function deleteBookmark() {
       configMgr.save([{key: 'groups', value: [DEFAULT_GROUP]}]).catch(console.warn);
     }
   })
-}
-
-function handleBookmarks(bookmarks, bookmark) {
-  if (!bookmarks) {
-    return [bookmark]
-  } else if (bookmarks.find(b => b.lineNumber === bookmark.lineNumber)) {
-    return bookmarks
-  } else {
-    bookmarks.push(bookmark)
-  }
 }

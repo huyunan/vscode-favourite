@@ -252,6 +252,11 @@
           "group": "inline@1"
         },
         {
+          "command": "favourite.deleteBookmark",
+          "when": "view in ext:allFavouriteViews && ext:favourite-mark-view",
+          "group": "inline@1"
+        },
+        {
           "command": "favourite.copyRelativeFilePath",
           "when": "view in ext:allFavouriteViews",
           "group": "t-copy@2"
@@ -372,7 +377,11 @@
       },
       {
         "command": "favourite.deleteBookmark",
-        "title": "%command.favourite.deleteBookmark%"
+        "title": "%command.favourite.deleteBookmark%",
+        "icon": {
+          "dark": "img/item_del_black.svg",
+          "light": "img/item_del_light.svg"
+        }
       },
       {
         "command": "favourite.addToNameBookmark",

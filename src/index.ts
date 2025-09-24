@@ -99,7 +99,11 @@ export function activate(context: vscode.ExtensionContext) {
     const filePaths = currentResources.map(item => pathResolve(item.filePath))
     vscode.commands.executeCommand('setContext', 'ext:favorite.filePaths', filePaths);
     
-    // bookmarks
+    changeBookmarksState()
+  }
+  
+  function changeBookmarksState() {
+    const currentGroup = (configMgr.get('currentGroup') as string) || DEFAULT_GROUP
     const activeEditor = vscode.window.activeTextEditor
     if (!activeEditor) return
     const fileName = activeEditor.document.uri.fsPath
@@ -186,6 +190,7 @@ export function activate(context: vscode.ExtensionContext) {
         const activeEditor = vscode.window.activeTextEditor
         if (!activeEditor) return
         setBookmark(activeEditor)
+        changeBookmarksState()
       }
     })
   )
@@ -193,6 +198,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.window.onDidChangeActiveTextEditor(activeEditor => {
       if (!activeEditor) return
       setBookmark(activeEditor)
+      changeBookmarksState()
     })
   )
   context.subscriptions.push(deleteBookmark())

@@ -75,7 +75,8 @@ export class FavouriteMarkProvider implements vscode.TreeDataProvider<MarkResour
             title: '',
             arguments: [uri, bb.lineNumber],
           },
-          uri
+          uri,
+          bb.lineNumber
         )
         allResource.push(markResource)
       })
@@ -92,7 +93,8 @@ export class MarkResource extends vscode.TreeItem {
     public value: string,
     public contextValue: string,
     public command?: vscode.Command,
-    public uri?: vscode.Uri
+    public uri?: vscode.Uri,
+    public lineNumber?: number
   ) {
     super(label)
 
