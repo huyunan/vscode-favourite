@@ -41,6 +41,7 @@
   "activationEvents": [
     "onCommand:favourite.addToFavourite",
     "onView:favourite-dir-view",
+    "onView:favourite-mark-view",
     "onStartupFinished"
   ],
   "license": "GPL-3.0",
