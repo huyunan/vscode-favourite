@@ -125,7 +125,7 @@
           "group": "5_favourite"
         },
         {
-          "command": "favourite.deleteBookmarks",
+          "command": "favourite.deleteBookmark",
           "when": "resourcePath in ext:favorite.markFilePaths && ext:favorite.markLineNumberMap && editorLineNumber not in ext:favorite.markLineNumberMap[resourcePath]",
           "group": "5_favourite"
         }
@@ -355,8 +355,8 @@
         "title": "%command.favourite.addToBookmark%"
       },
       {
-        "command": "favourite.deleteBookmarks",
-        "title": "%command.favourite.deleteBookmarks%"
+        "command": "favourite.deleteBookmark",
+        "title": "%command.favourite.deleteBookmark%"
       },
       {
         "command": "favourite.addToNameBookmark",

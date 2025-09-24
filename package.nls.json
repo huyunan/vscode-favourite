@@ -2,7 +2,7 @@
   "command.favourite.addtofavourite": "Add to Favorite",
   "command.favourite.addToBookmark": "Add to Favorite Bookmarks",
   "command.favourite.addToNameBookmark": "Add to Favorite Name Bookmarks",
-  "command.favourite.deleteBookmarks": "Remove Bookmarks from Favorite",
+  "command.favourite.deleteBookmark": "Remove Bookmarks from Favorite",
   "command.favourite.deletefavourite": "Remove from Favorite",
   "command.favourite.deleteAllFavourite": "Clear the Favorite",
   "command.favourite.moveup": "Move Up",
