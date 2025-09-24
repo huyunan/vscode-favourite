@@ -12,3 +12,9 @@ export interface ItemInSettingsJson {
     filePath:string;
     group:string;
 }
+
+export interface ItemMarkJson {
+    filePath:string;
+    lineNumber:number[];
+    group:string;
+}

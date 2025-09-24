@@ -4,7 +4,7 @@ import { resolve } from 'path';
 import * as vscode from 'vscode'
 import { FavouriteProvider } from './provider/FavouriteProvider'
 import { FavouriteMarkProvider } from './provider/FavouriteMarkProvider'
-import { ItemInSettingsJson } from './model'
+import { ItemInSettingsJson, ItemMarkJson } from './model'
 import configMgr from './helper/configMgr'
 import localize from './helper/localize'
 import { pathResolve } from './helper/util'
@@ -15,6 +15,7 @@ import {
   addToFavourite,
   addToBookmark,
   addToNameBookmark,
+  setBookmark,
   deleteBookmark,
   addNewGroup,
   deleteFavourite,
@@ -104,6 +105,18 @@ export function activate(context: vscode.ExtensionContext) {
     const currentResources: Array<ItemInSettingsJson> = resources.filter(item => item.group == currentGroup)
     const filePaths = currentResources.map(item => pathResolve(item.filePath))
     vscode.commands.executeCommand('setContext', 'ext:favorite.filePaths', filePaths);
+    
+    // bookmarks
+    const bookmarks = (configMgr.get('bookmarks') as Array<ItemMarkJson>) || []
+    const currentBookmarks: Array<ItemMarkJson> = bookmarks.filter(item => item.group == currentGroup)
+    const markFilePaths = []
+    const markLineNumberMap = {}
+    currentBookmarks.forEach(item => {
+      markFilePaths.push(pathResolve(item.filePath))
+      markLineNumberMap[pathResolve(item.filePath)] = item.lineNumber
+    })
+    vscode.commands.executeCommand('setContext', 'ext:favorite.markFilePaths', markFilePaths);
+    vscode.commands.executeCommand('setContext', 'ext:favorite.markLineNumberMap', markLineNumberMap);
   }
   
   function onFileChange(favouriteProvider: FavouriteProvider) {
@@ -157,6 +170,21 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(addToFavourite())
   context.subscriptions.push(addToBookmark())
   context.subscriptions.push(addToNameBookmark())
+  context.subscriptions.push(
+    vscode.window.onDidChangeWindowState(state => {
+      if (state.focused) {
+        const activeEditor = vscode.window.activeTextEditor
+        if (!activeEditor) return
+        setBookmark(activeEditor)
+      }
+    })
+  )
+  context.subscriptions.push(
+    vscode.window.onDidChangeActiveTextEditor(activeEditor => {
+      if (!activeEditor) return
+      setBookmark(activeEditor)
+    })
+  )
   context.subscriptions.push(deleteBookmark())
   context.subscriptions.push(deleteFavourite())
   context.subscriptions.push(revealInOS_mac())
