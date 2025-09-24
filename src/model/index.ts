@@ -12,3 +12,12 @@ export interface ItemInSettingsJson {
     filePath:string;
     group:string;
 }
+
+export interface ItemMarkJson {
+    filePath:string;
+    bookmarks: {
+        lineNumber: number,
+        content: string
+    }[],
+    group:string;
+}

@@ -7,6 +7,9 @@ import { getCurrentResources } from '../helper/util'
 export function moveToTop(favouriteProvider: FavouriteProvider) {
   return vscode.commands.registerCommand('favourite.moveToTop', async function (value: Resource) {
     const currentGroup = configMgr.get('currentGroup') as string
+    if (configMgr.marktree.visible) {
+      return
+    }
 
     const items = await getCurrentResources()
     const filteredArray: {

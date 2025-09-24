@@ -2,7 +2,7 @@
   "name": "vscode-favourite",
   "displayName": "%ext.displayName%",
   "description": "%ext.description%",
-  "version": "2.2.2",
+  "version": "3.0.0",
   "publisher": "yunan-hu",
   "engines": {
     "vscode": "^1.68.0"
@@ -40,8 +40,8 @@
   },
   "activationEvents": [
     "onCommand:favourite.addToFavourite",
-    "onView:favourite",
-    "onView:favourite-full-view",
+    "onView:favourite-dir-view",
+    "onView:favourite-mark-view",
     "onStartupFinished"
   ],
   "license": "GPL-3.0",
@@ -56,6 +56,11 @@
           "default": [],
           "description": "%ext.resources.description%"
         },
+        "favourite.bookmarks": {
+          "type": "array",
+          "default": [],
+          "description": "%ext.bookmarks.description%"
+        },
         "favourite.sortOrder": {
           "type": "string",
           "enum": [
@@ -65,6 +70,16 @@
           ],
           "default": "ASC",
           "description": "%ext.sortOrder.description%"
+        },
+        "favourite.markSortOrder": {
+          "type": "string",
+          "enum": [
+            "ASC",
+            "DESC",
+            "MANUAL"
+          ],
+          "default": "ASC",
+          "description": "%ext.markSortOrder.description%"
         },
         "favourite.currentGroup": {
           "type": "string",
@@ -90,14 +105,14 @@
     "views": {
       "favourite-explorer": [
         {
-          "id": "favourite-full-view",
-          "name": "%view.favourite.title%"
-        }
-      ],
-      "explorer": [
+          "id": "favourite-dir-view",
+          "name": "%view.favourite.title%",
+          "when": "!ext:favourite-mark-view"
+        },
         {
-          "id": "favourite",
-          "name": "%view.favourite.title%"
+          "id": "favourite-mark-view",
+          "name": "%view.favourite.title%",
+          "when": "ext:favourite-mark-view"
         }
       ]
     },
@@ -114,6 +129,23 @@
           "group": "5_favourite"
         }
       ],
+      "editor/lineNumber/context": [
+        {
+          "command": "favourite.addToBookmark",
+          "when": "editorLineNumber not in ext:favorite.markLineNumber",
+          "group": "5_favourite"
+        },
+        {
+          "command": "favourite.addToNameBookmark",
+          "when": "editorLineNumber not in ext:favorite.markLineNumber",
+          "group": "5_favourite"
+        },
+        {
+          "command": "favourite.deleteBookmark",
+          "when": "resourcePath in ext:favorite.markFilePaths && editorLineNumber in ext:favorite.markLineNumber",
+          "group": "5_favourite"
+        }
+      ], 
       "explorer/context": [
         {
           "command": "favourite.addToFavourite",
@@ -129,7 +161,7 @@
       "view/title": [
         {
           "command": "favourite.file.reveal",
-          "when": "view in ext:allFavouriteViews",
+          "when": "view in ext:allFavouriteViews && !ext:favourite-mark-view",
           "group": "navigation@1"
         },
         {
@@ -138,7 +170,7 @@
           "group": "navigation@4"
         },
         {
-          "command": "favourite.nav.sort",
+          "command": "favourite.nav.toggleView",
           "when": "view in ext:allFavouriteViews",
           "group": "navigation@5"
         },
@@ -205,6 +237,11 @@
           "group": "sort@4"
         },
         {
+          "command": "favourite.sort",
+          "when": "view in ext:allFavouriteViews",
+          "group": "sort@5"
+        },
+        {
           "command": "favourite.copyFilePath",
           "when": "view in ext:allFavouriteViews",
           "group": "t-copy@1"
@@ -231,7 +268,7 @@
           "when": "false"
         },
         {
-          "command": "favourite.nav.sort",
+          "command": "favourite.nav.toggleView",
           "when": "false"
         },
         {
@@ -277,6 +314,10 @@
         {
           "command": "favourite.moveToBottom",
           "when": "false"
+        },
+        {
+          "command": "favourite.sort",
+          "when": "false"
         }
       ]
     },
@@ -298,11 +339,11 @@
         }
       },
       {
-        "command": "favourite.nav.sort",
-        "title": "%command.favourite.sort%",
+        "command": "favourite.nav.toggleView",
+        "title": "%command.favourite.toggleView%",
         "icon": {
-          "dark": "img/sort_black.svg",
-          "light": "img/sort_light.svg"
+          "dark": "img/toggle_view_black.svg",
+          "light": "img/toggle_view_light.svg"
         }
       },
       {
@@ -326,6 +367,18 @@
         "title": "%command.favourite.addtofavourite%"
       },
       {
+        "command": "favourite.addToBookmark",
+        "title": "%command.favourite.addToBookmark%"
+      },
+      {
+        "command": "favourite.deleteBookmark",
+        "title": "%command.favourite.deleteBookmark%"
+      },
+      {
+        "command": "favourite.addToNameBookmark",
+        "title": "%command.favourite.addToNameBookmark%"
+      },
+      {
         "command": "favourite.deleteFavourite",
         "title": "%command.favourite.deletefavourite%",
         "icon": {
@@ -343,11 +396,15 @@
       },
       {
         "command": "favourite.moveToTop",
-        "title": "%command.favourite.movetotop%"
+        "title": "%command.favourite.moveToTop%"
       },
       {
         "command": "favourite.moveToBottom",
-        "title": "%command.favourite.movetobottom%"
+        "title": "%command.favourite.moveToBottom%"
+      },
+      {
+        "command": "favourite.sort",
+        "title": "%command.favourite.sort%"
       },
       {
         "command": "favourite.copyFilePath",

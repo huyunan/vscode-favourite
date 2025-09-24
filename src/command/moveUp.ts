@@ -7,6 +7,9 @@ import { getCurrentResources, replaceArrayElements } from '../helper/util'
 export function moveUp(favouriteProvider: FavouriteProvider) {
   return vscode.commands.registerCommand('favourite.moveUp', async function(value: Resource) {
     const currentGroup = configMgr.get('currentGroup') as string
+    if (configMgr.marktree.visible) {
+      return
+    }
 
     const items = await getCurrentResources()
     const filteredArray: {

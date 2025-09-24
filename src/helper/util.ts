@@ -1,6 +1,6 @@
 import * as vscode from 'vscode'
 import * as path from 'path'
-import { ItemInSettingsJson } from '../model'
+import { ItemInSettingsJson, ItemMarkJson } from '../model'
 import { DEFAULT_GROUP } from '../enum'
 import configMgr from './configMgr'
 import type { GitExtension, Repository, API } from '../git'
@@ -34,6 +34,11 @@ export function getCurrentResources(): Array<ItemInSettingsJson> {
     }
   })
   return newResources
+}
+
+export function getAllBookmarks(): Array<ItemMarkJson> {
+  const bookmarks = (configMgr.get('bookmarks') as Array<ItemMarkJson>) || []
+  return bookmarks
 }
 
 export function replaceArrayElements<T>(array: Array<T>, targetId: number, sourceId: number): Array<T> {

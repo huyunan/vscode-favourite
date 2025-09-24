@@ -5,10 +5,6 @@ import { isMultiRoots, getSingleRootPath } from '../helper/util'
 import configMgr from '../helper/configMgr'
 import { ItemInSettingsJson } from '../model'
 
-// The favourite.open command is not listed in settings.json as a contribution because it only gets invoked
-//  from the user's click on an item in the FavouriteProvider tree.
-// It serves as a proxy for the vscode.open command, detecting two opens of the same item in quick succession
-//  and treating the second of these as a non-preview open.
 export function open(favouriteProvider: FavouriteProvider) {
   return vscode.commands.registerCommand('favourite.open', async function (uri: vscode.Uri) {
     let usePreview = <boolean>vscode.workspace.getConfiguration('workbench.editor').get('enablePreview')
@@ -21,15 +17,28 @@ export function open(favouriteProvider: FavouriteProvider) {
   })
 }
 
+export function markOpen(favouriteProvider: FavouriteProvider) {
+  return vscode.commands.registerCommand('favourite.markOpen', async function (uri: vscode.Uri, lineNumber: number) {
+    let usePreview = <boolean>vscode.workspace.getConfiguration('workbench.editor').get('enablePreview')
+
+    if (usePreview) {
+      usePreview = !wasDoubleClick(uri, favouriteProvider)
+    }
+
+    await vscode.commands.executeCommand('vscode.open', uri, { preview: usePreview })
+    const editor = vscode.window.activeTextEditor;
+    if (editor) {
+        const position = new vscode.Position(lineNumber - 1, 0); // 行号从0开始计数
+        editor.selection = new vscode.Selection(position, position);
+        editor.revealRange(new vscode.Range(position, position));
+    }
+  })
+}
+
 //  and treating the second of these as a non-preview open.
 export function reveal(favouriteProvider: FavouriteProvider) {
   favouriteProvider.onDidExpandElement((args) => {
-    const treeVisible = configMgr.tree.visible
-    if (treeVisible) {
-      configMgr.tree.reveal(args, { select: true, focus: true, expand: true })
-    } else {
-      configMgr.explorerTree.reveal(args, { select: true, focus: true, expand: true })
-    }
+    configMgr.tree.reveal(args, { select: true, focus: true, expand: true })
   })
   return vscode.commands.registerCommand('favourite.file.reveal', async function () {
     let fileUri = vscode.window.activeTextEditor?.document.uri
