@@ -1,4 +1,8 @@
 <!--Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.-->
+### 2025-09-24
+
+1. add Bookmarks View (by [@huyunan](https://github.com/huyunan/vscode-favourite))
+
 ### 2025-08-00
 
 1. Support reveal in favorite (by [@huyunan](https://github.com/huyunan/vscode-favourite))
