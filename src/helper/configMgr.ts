@@ -58,7 +58,7 @@ class ConfigMgr {
     let nconfValue  = nconf.get(key)
 
     if ((['groups', 'resources', 'bookmarks'].includes(key) && nconfValue && Array.isArray(nconfValue) && nconfValue.length == 0)
-      || (['sortOrder', 'markSortOrder', 'refreshTime', 'currentGroup'].includes(key) && !nconfValue)) {
+      || (['sortOrder', 'refreshTime', 'currentGroup'].includes(key) && !nconfValue)) {
       nconfValue = configValue
     }
     return nconfValue

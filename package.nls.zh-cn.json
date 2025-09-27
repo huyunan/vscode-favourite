@@ -33,7 +33,6 @@
   "ext.resources.description": "资源文件添加到收藏夹",
   "ext.bookmarks.description": "书签添加到收藏夹",
   "ext.sortOrder.description": "为所有收藏指定一个顺序",
-  "ext.markSortOrder.description": "为所有收藏书签指定一个顺序",
   "ext.currentGroup.description": "当前分组的名称",
   "ext.groups.description": "工作区中所有分组的名称",
   "ext.refreshTime.description": "配置文件刷新时间",

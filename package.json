@@ -71,16 +71,6 @@
           "default": "ASC",
           "description": "%ext.sortOrder.description%"
         },
-        "favourite.markSortOrder": {
-          "type": "string",
-          "enum": [
-            "ASC",
-            "DESC",
-            "MANUAL"
-          ],
-          "default": "ASC",
-          "description": "%ext.markSortOrder.description%"
-        },
         "favourite.currentGroup": {
           "type": "string",
           "default": null,
@@ -188,63 +178,53 @@
       "view/item/context": [
         {
           "command": "favourite.revealInOS.mac",
-          "when": "isMac && view in ext:allFavouriteViews && viewItem =~ /^resource/",
+          "when": "isMac && (view in ext:allFavouriteViews && viewItem =~ /^resource/ || ext:favourite-mark-view)",
           "group": "navigation"
         },
         {
           "command": "favourite.revealInOS.windows",
-          "when": "isWindows && view in ext:allFavouriteViews && viewItem =~ /^resource/",
+          "when": "isWindows && (view in ext:allFavouriteViews && viewItem =~ /^resource/ || ext:favourite-mark-view)",
           "group": "navigation"
         },
         {
           "command": "favourite.revealInOS.other",
-          "when": "!isMac && !isWindows && view in ext:allFavouriteViews && viewItem =~ /^resource/",
+          "when": "!isMac && !isWindows && (view in ext:allFavouriteViews && viewItem =~ /^resource/ || ext:favourite-mark-view)",
           "group": "navigation"
         },
         {
           "command": "favourite.revealInSideBar",
-          "when": "view in ext:allFavouriteViews",
+          "when": "view in ext:allFavouriteViews || ext:favourite-mark-view",
           "group": "navigation"
         },
         {
           "command": "favourite.openToSide",
-          "when": "view in ext:allFavouriteViews && viewItem =~ /^resource(Child)?$|^uri\\.resource(Child)?$/",
+          "when": "(view in ext:allFavouriteViews && viewItem =~ /^resource(Child)?$|^uri\\.resource(Child)?$/ || ext:favourite-mark-view)",
           "group": "navigation"
         },
         {
-          "command": "favourite.deleteFavourite",
-          "when": "view in ext:allFavouriteViews && viewItem =~ /resource(\\.dir)?$/",
-          "group": "operation"
-        },
-        {
           "command": "favourite.moveToTop",
-          "when": "view in ext:allFavouriteViews && viewItem =~ /resource(\\.dir)?$/",
+          "when": "(view in ext:allFavouriteViews && viewItem =~ /resource(\\.dir)?$/ || ext:favourite-mark-view)",
           "group": "sort@1"
         },
         {
           "command": "favourite.moveUp",
-          "when": "view in ext:allFavouriteViews && viewItem =~ /resource(\\.dir)?$/",
+          "when": "(view in ext:allFavouriteViews && viewItem =~ /resource(\\.dir)?$/ || ext:favourite-mark-view)",
           "group": "sort@2"
         },
         {
           "command": "favourite.moveDown",
-          "when": "view in ext:allFavouriteViews && viewItem =~ /resource(\\.dir)?$/",
+          "when": "(view in ext:allFavouriteViews && viewItem =~ /resource(\\.dir)?$/ || ext:favourite-mark-view)",
           "group": "sort@3"
         },
         {
           "command": "favourite.moveToBottom",
-          "when": "view in ext:allFavouriteViews && viewItem =~ /resource(\\.dir)?$/",
+          "when": "(view in ext:allFavouriteViews && viewItem =~ /resource(\\.dir)?$/ || ext:favourite-mark-view)",
           "group": "sort@4"
         },
         {
           "command": "favourite.sort",
-          "when": "view in ext:allFavouriteViews",
+          "when": "view in ext:allFavouriteViews && !ext:favourite-mark-view",
           "group": "sort@5"
-        },
-        {
-          "command": "favourite.copyFilePath",
-          "when": "view in ext:allFavouriteViews",
-          "group": "t-copy@1"
         },
         {
           "command": "favourite.deleteFavourite",
@@ -257,8 +237,13 @@
           "group": "inline@1"
         },
         {
+          "command": "favourite.copyFilePath",
+          "when": "view in ext:allFavouriteViews && !ext:favourite-mark-view",
+          "group": "t-copy@1"
+        },
+        {
           "command": "favourite.copyRelativeFilePath",
-          "when": "view in ext:allFavouriteViews",
+          "when": "view in ext:allFavouriteViews && !ext:favourite-mark-view",
           "group": "t-copy@2"
         },
         {

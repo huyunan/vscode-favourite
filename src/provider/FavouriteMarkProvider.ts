@@ -1,5 +1,4 @@
 import * as vscode from 'vscode'
-import * as path from 'path'
 
 import { getAllBookmarks, pathResolve } from '../helper/util'
 import configMgr from '../helper/configMgr'
@@ -21,7 +20,7 @@ export class FavouriteMarkProvider implements vscode.TreeDataProvider<MarkResour
   }
 
   getChildren(): MarkResource[] {
-    const bookmarks = this.getSortedFavouriteResources()
+    const bookmarks = getAllBookmarks()
     if (!bookmarks || !bookmarks.length) {
       return []
     }
@@ -30,35 +29,6 @@ export class FavouriteMarkProvider implements vscode.TreeDataProvider<MarkResour
     const filterData = bookmarks.filter((i) => i.group === currentGroup)
     const rootResources = this.data2Resource(filterData, 'mark')
     return rootResources
-  }
-
-  private getSortedFavouriteResources(): Array<ItemMarkJson> {
-    const allBookmarks = getAllBookmarks()
-    const sort = configMgr.get('markSortOrder') as string
-
-    if (sort === 'MANUAL') {
-      return allBookmarks
-    }
-
-    const data = this.sortResources(
-      allBookmarks.map((item) => item),
-      sort
-    )
-    return data
-  }
-
-  private sortResources(bookmarks: Array<ItemMarkJson>, sort: string): Array<ItemMarkJson> {
-    const isAsc = sort === 'ASC'
-    bookmarks.sort(function (a, b) {
-      const aName = path.basename(a.filePath)
-      const bName = path.basename(b.filePath)
-
-      if (aName < bName) {
-        return isAsc ? -1 : 1
-      }
-      return aName === bName ? 0 : isAsc ? 1 : -1
-    })
-    return bookmarks
   }
 
   private data2Resource(data: Array<ItemMarkJson>, contextValue: string): Array<MarkResource> {
@@ -99,6 +69,6 @@ export class MarkResource extends vscode.TreeItem {
     super(label)
 
     this.resourceUri = uri ? uri : vscode.Uri.file(value)
-    this.tooltip = value
+    this.tooltip = value + `（Ln ${this.lineNumber}）`
   }
 }

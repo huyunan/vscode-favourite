@@ -33,7 +33,6 @@
   "ext.resources.description": "Resources marked as favorite",
   "ext.bookmarks.description": "Bookmarks marked as favorite",
   "ext.sortOrder.description": "Specify an order for all favorite",
-  "ext.markSortOrder.description": "Specify an order for all favorite bookmarks",
   "ext.currentGroup.description": "The name of current group",
   "ext.groups.description": "The names of all groups in the workspace",
   "ext.refreshTime.description": "Refresh time of the configuration file",

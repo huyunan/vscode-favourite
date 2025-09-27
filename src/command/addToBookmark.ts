@@ -61,7 +61,7 @@ function handleBookmarks(bookmarks, bookmark) {
     return bookmarks
   } else {
     bookmarks.push(bookmark)
-    return bookmarks
+    return bookmarks.sort((a, b) => a.lineNumber - b.lineNumber)
   }
 }
 

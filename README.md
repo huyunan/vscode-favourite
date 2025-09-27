@@ -30,7 +30,6 @@ Your favourite are listed in a separate view and can be quickly accessed from th
     "resources": [], // resources path you prefer to mark
     "bookmarks": [], // bookmarks you prefer to mark
     "sortOrder": "ASC", // DESC, MANUAL
-    "markSortOrder": "ASC", // DESC, MANUAL
     "groups": ["Default"], // the groups you have created
     "currentGroup": "Default" // determine the current using group
 }

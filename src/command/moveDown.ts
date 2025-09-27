@@ -2,11 +2,18 @@ import * as vscode from 'vscode'
 
 import { Resource, FavouriteProvider } from '../provider/FavouriteProvider'
 import configMgr from '../helper/configMgr'
-import { getCurrentResources, replaceArrayElements } from '../helper/util'
+import { getAllBookmarks, getCurrentResources, replaceArrayElements } from '../helper/util'
 
 export function moveDown(favouriteProvider: FavouriteProvider) {
   return vscode.commands.registerCommand('favourite.moveDown', async function (value: Resource) {
     if (configMgr.marktree.visible) {
+      const allBookmarks = getAllBookmarks()
+      const index = allBookmarks.findIndex(b => b.filePath === value.value)
+      if (index === allBookmarks.length - 1) return
+      const tmp = allBookmarks[index + 1]
+      allBookmarks[index + 1] = allBookmarks[index]
+      allBookmarks[index] = tmp
+      await configMgr.save([{key: 'bookmarks', value: allBookmarks}]).catch(console.warn)
       return
     }
     const currentGroup = configMgr.get('currentGroup') as string

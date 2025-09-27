@@ -2,12 +2,19 @@ import * as vscode from 'vscode'
 
 import { Resource, FavouriteProvider } from '../provider/FavouriteProvider'
 import configMgr from '../helper/configMgr'
-import { getCurrentResources } from '../helper/util'
+import { getAllBookmarks, getCurrentResources } from '../helper/util'
 
 export function moveToTop(favouriteProvider: FavouriteProvider) {
   return vscode.commands.registerCommand('favourite.moveToTop', async function (value: Resource) {
     const currentGroup = configMgr.get('currentGroup') as string
     if (configMgr.marktree.visible) {
+      const allBookmarks = getAllBookmarks()
+      const index = allBookmarks.findIndex(b => b.filePath === value.value)
+      if (index === 0) return
+      const tmp = allBookmarks[index]
+      allBookmarks.splice(index, 1)
+      allBookmarks.unshift(tmp)
+      await configMgr.save([{key: 'bookmarks', value: allBookmarks}]).catch(console.warn)
       return
     }
 
