@@ -50,6 +50,7 @@ export function activate(context: vscode.ExtensionContext) {
     showCollapseAll: true,
   })
   configMgr.tree = tree
+  configMgr.tree.title = localize('ext.current.view.title')
   
   const favouriteMarkProvider = new FavouriteMarkProvider()
 
@@ -58,10 +59,11 @@ export function activate(context: vscode.ExtensionContext) {
     showCollapseAll: true,
   })
   configMgr.marktree = marktree
+  configMgr.marktree.title = localize('ext.current.view.mark.title')
 
   const currentGroup = configMgr.get('currentGroup')
   tree.message = `${localize('ext.current.group')}${currentGroup}`
-  marktree.message = `${localize('ext.current.group')}${currentGroup} | ${localize('ext.current.view.label')}`
+  marktree.message = `${localize('ext.current.group')}${currentGroup}}`
   
   checkGitIgnore()
 
@@ -135,7 +137,9 @@ export function activate(context: vscode.ExtensionContext) {
   function onFileChange(favouriteProvider: FavouriteProvider) {
     const currentGroup = configMgr.get('currentGroup')
     tree.message = `${localize('ext.current.group')}${currentGroup}`
-    marktree.message = `${localize('ext.current.group')}${currentGroup} | ${localize('ext.current.view.mark.label')}`
+    tree.title = localize('ext.current.view.title')
+    marktree.message = `${localize('ext.current.group')}${currentGroup}`
+    marktree.title = localize('ext.current.view.mark.title')
     changeWindowState()
     favouriteProvider.refresh()
     favouriteMarkProvider.refresh()
