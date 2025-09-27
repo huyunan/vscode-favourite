@@ -4,8 +4,8 @@ import { Resource, FavouriteProvider } from '../provider/FavouriteProvider'
 import configMgr from '../helper/configMgr'
 import { DEFAULT_GROUP } from '../enum'
 import localize from '../helper/localize'
-import { getFirstGitRepository, getGitBranchName } from '../helper/util'
-import { ItemInSettingsJson } from '../model'
+import { getAllBookmarks, getFirstGitRepository, getGitBranchName } from '../helper/util'
+import { ItemInSettingsJson, ItemMarkJson } from '../model'
 
 export function addNewGroup(favouriteProvider: FavouriteProvider) {
   return vscode.commands.registerCommand('favourite.group.newGroup', async function (value: Resource) {
@@ -42,14 +42,16 @@ export function addNewGroup(favouriteProvider: FavouriteProvider) {
 }
 
 function deleteCurrentGroup(previousGroups) {
-  const currentGroup = configMgr.get('currentGroup')
-  const resources = (configMgr.get('resources') as Array<ItemInSettingsJson>) || []
+  const currentGroup = (configMgr.get('currentGroup') as string) || DEFAULT_GROUP
   const index = previousGroups.indexOf(currentGroup)
   if (currentGroup === localize('ext.default')) {
     vscode.window.showErrorMessage(localize('msg.delete.default.group'));
   } else if (index !== -1) {
     previousGroups.splice(index, 1)
+    const resources = (configMgr.get('resources') as Array<ItemInSettingsJson>) || []
     const newResources: Array<ItemInSettingsJson> = resources.filter(item => item.group != currentGroup)
+    const allBookmarks = getAllBookmarks()
+    const newBookmarks: Array<ItemMarkJson> = allBookmarks.filter(item => item.group != currentGroup)
     let newCurrentGroup = previousGroups[index - 1]
     if (previousGroups.length > index) {
       newCurrentGroup = previousGroups[index]
@@ -57,7 +59,8 @@ function deleteCurrentGroup(previousGroups) {
     const saveItems = [
       {key: 'groups', value: previousGroups},
       {key: 'currentGroup', value: newCurrentGroup},
-      {key: 'resources', value: newResources}
+      {key: 'resources', value: newResources},
+      {key: 'bookmarks', value: newBookmarks}
     ]
     configMgr.save(saveItems);
   } else {
