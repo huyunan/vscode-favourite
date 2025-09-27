@@ -63,7 +63,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   const currentGroup = configMgr.get('currentGroup')
   tree.message = `${localize('ext.current.group')}${currentGroup}`
-  marktree.message = `${localize('ext.current.group')}${currentGroup}}`
+  marktree.message = `${localize('ext.current.group')}${currentGroup}`
   
   checkGitIgnore()
 

@@ -5,7 +5,7 @@
 ![][rate-url]
 ![][license-url]
 
-An extension that lets the developer mark resources (files or folders) as favourite, so they can be easily accessed.
+An extension that lets the developer mark resources (files or folders) as favourite and Bookmarks.
 
 ![](https://i-blog.csdnimg.cn/direct/00028da8f17645a8bdc78fba7f61aeb7.gif)
 
