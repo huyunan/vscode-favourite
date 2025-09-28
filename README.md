@@ -7,7 +7,7 @@
 
 An extension that lets the developer mark resources (files or folders) as favourite and Bookmarks.
 
-![](https://i-blog.csdnimg.cn/direct/00028da8f17645a8bdc78fba7f61aeb7.gif)
+![](https://i-blog.csdnimg.cn/direct/2f1bdaa7ea044fe3ba7f6b120ec9b678.gif)
 
 ## Install
 
