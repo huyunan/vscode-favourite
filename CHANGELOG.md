@@ -1,5 +1,9 @@
 <!--Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.-->
 
+### 2025-09-28
+
+1. Bookmarks View complete (by [@huyunan](https://github.com/huyunan/vscode-favourite))
+
 ### 2025-09-24
 
 1. add Bookmarks View (by [@huyunan](https://github.com/huyunan/vscode-favourite))

@@ -49,4 +49,4 @@ Your favourite are listed in a separate view and can be quickly accessed from th
 [vs-image]: https://img.shields.io/visual-studio-marketplace/v/yunan-hu.vscode-favourite
 [install-url]: https://img.shields.io/visual-studio-marketplace/i/yunan-hu.vscode-favourite
 [rate-url]: https://img.shields.io/visual-studio-marketplace/r/yunan-hu.vscode-favourite
-[license-url]: https://img.shields.io/github/license/leftstick/favourite
+[license-url]: https://img.shields.io/github/license/huyunan/vscode-favourite
