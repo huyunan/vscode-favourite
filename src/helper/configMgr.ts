@@ -7,6 +7,7 @@ import { isMultiRoots, getSingleRootPath } from './util'
 import { ItemInSettingsJson } from '../model'
 
 class ConfigMgr {
+  public context: vscode.ExtensionContext;
   public tree: vscode.TreeView<any>;
   public marktree: vscode.TreeView<any>;
   public decoMap: Map<string, vscode.TextEditorDecorationType> = new Map();

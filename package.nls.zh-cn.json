@@ -1,8 +1,9 @@
 {
   "command.favourite.addtofavourite": "添加到收藏夹",
-  "command.favourite.addToBookmark": "添加到收藏夹书签",
-  "command.favourite.addToNameBookmark": "添加到收藏夹标签书签",
-  "command.favourite.deleteBookmark": "从收藏夹中删除书签",
+  "command.favourite.addToBookmark": "添加书签 - 收藏夹",
+  "command.favourite.addToNameBookmark": "添加标签书签 - 收藏夹",
+  "command.favourite.editBookmark": "编辑书签 - 收藏夹",
+  "command.favourite.deleteBookmark": "删除书签 - 收藏夹",
   "command.favourite.deletefavourite": "从收藏夹中删除",
   "command.favourite.deleteAllFavourite": "清空收藏夹",
   "command.favourite.moveup": "上移",
@@ -49,7 +50,10 @@
   "msg.add.choose.require": "您必须先选择一个资源文件",
   "msg.workspace.no.folder": "没有打开任何工作区，因此无法写入 工作区设置。请先打开一个工作区，然后重试。",
   "msg.access.deny.chmod": "，favorite 没有生成 .vsfavorite 文件权限，请执行 sudo chmod 77 folder 赋予文件夹权限。",
+  "msg.mark.edit.find.not": "找不到操作的书签",
   "title.choose.switch.group": "选择要切换到的分组",
   "title.choose.one.option": "请选择一个选项",
-  "title.new.group.name": "输入新分组的名称"
+  "title.new.group.name": "输入新分组的名称",
+  "title.mark.edit.placeHolder": "为您的书签输入一个标签",
+  "title.mark.edit.prompt": "书签标签"
 }

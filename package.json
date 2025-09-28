@@ -2,7 +2,7 @@
   "name": "vscode-favourite",
   "displayName": "%ext.displayName%",
   "description": "%ext.description%",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "publisher": "yunan-hu",
   "engines": {
     "vscode": "^1.68.0"
@@ -232,9 +232,14 @@
           "group": "inline@1"
         },
         {
-          "command": "favourite.deleteBookmark",
+          "command": "favourite.editBookmark",
           "when": "view in ext:allFavouriteViews && ext:favourite-mark-view",
           "group": "inline@1"
+        },
+        {
+          "command": "favourite.deleteBookmark",
+          "when": "view in ext:allFavouriteViews && ext:favourite-mark-view",
+          "group": "inline@2"
         },
         {
           "command": "favourite.copyFilePath",
@@ -361,16 +366,24 @@
         "title": "%command.favourite.addToBookmark%"
       },
       {
+        "command": "favourite.addToNameBookmark",
+        "title": "%command.favourite.addToNameBookmark%"
+      },
+      {
+        "command": "favourite.editBookmark",
+        "title": "%command.favourite.editBookmark%",
+        "icon": {
+          "dark": "img/mark_edit_black.svg",
+          "light": "img/mark_edit_light.svg"
+        }
+      },
+      {
         "command": "favourite.deleteBookmark",
         "title": "%command.favourite.deleteBookmark%",
         "icon": {
           "dark": "img/item_del_black.svg",
           "light": "img/item_del_light.svg"
         }
-      },
-      {
-        "command": "favourite.addToNameBookmark",
-        "title": "%command.favourite.addToNameBookmark%"
       },
       {
         "command": "favourite.deleteFavourite",

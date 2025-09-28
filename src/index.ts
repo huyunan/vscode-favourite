@@ -13,6 +13,7 @@ import {
   addToBookmark,
   addToNameBookmark,
   setBookmark,
+  editBookmark,
   deleteBookmark,
   addNewGroup,
   deleteFavourite,
@@ -42,6 +43,7 @@ export function activate(context: vscode.ExtensionContext) {
   console.log('Congratulations, your extension "favourite" is now active!')
   vscode.commands.executeCommand('setContext', 'ext:allFavouriteViews', ['favourite-dir-view', 'favourite-mark-view'])
   vscode.commands.executeCommand('setContext', 'ext:favourite-mark-view', false)
+  configMgr.context = context
   changeWindowState()
   const favouriteProvider = new FavouriteProvider()
 
@@ -206,6 +208,7 @@ export function activate(context: vscode.ExtensionContext) {
       changeBookmarksState()
     })
   )
+  context.subscriptions.push(editBookmark())
   context.subscriptions.push(deleteBookmark())
   context.subscriptions.push(deleteFavourite())
   context.subscriptions.push(revealInOS_mac())
