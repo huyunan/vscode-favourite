@@ -1,5 +1,9 @@
 <!--Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.-->
 
+### 2025-10-12
+
+1. Real-time update and modification of bookmark line numbers (by [@huyunan](https://github.com/huyunan/vscode-favourite))
+
 ### 2025-09-28
 
 1. Bookmarks View complete (by [@huyunan](https://github.com/huyunan/vscode-favourite))

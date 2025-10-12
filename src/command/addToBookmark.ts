@@ -114,3 +114,34 @@ export function setBookmark(activeEditor: vscode.TextEditor | undefined) {
       configMgr.decoMap.delete(markPath)
     }
 }
+
+export async function updateBookmark(activeEditor: vscode.TextEditor | undefined, contentChanges: readonly vscode.TextDocumentContentChangeEvent[]) {
+    const fileName = activeEditor.document.uri.fsPath
+    const allBookmarks = getAllBookmarks()
+    const markPath = isMultiRoots() ? fileName : fileName.substr(getSingleRootPath().length + 1)
+    const currentGroup = (configMgr.get('currentGroup') as string) || DEFAULT_GROUP
+    const item = allBookmarks.find(b => b.filePath === markPath && b.group === currentGroup)
+    if (!item || !item.bookmarks || item.bookmarks.length == 0) return
+    for (const change of contentChanges) {
+      // 变更内容，以后可能遇到，非标签书签需要更新
+      // const character = change.range.start.character
+      const startLine = change.range.start.line;
+        const endLine = change.range.end.line;
+        const linesInRange = endLine - startLine;
+        const linesInserted = change.text.split("\n").length - 1;
+        const diff = linesInserted - linesInRange;
+      if (diff === 0)
+        continue;
+      item.bookmarks.forEach(bb => {
+        if (diff > 0 && bb.lineNumber - 1 >= startLine) {
+          bb.lineNumber += diff
+        } else if (diff < 0 && bb.lineNumber - 1 >= endLine) {
+          bb.lineNumber += diff
+        }
+      })
+    }
+    await configMgr.save([{key: 'bookmarks', value: allBookmarks}]).catch(console.warn)
+    if (configMgr.get('groups') == undefined || configMgr.get('groups').length == 0) {
+      configMgr.save([{key: 'groups', value: [DEFAULT_GROUP]}]).catch(console.warn);
+    }
+}

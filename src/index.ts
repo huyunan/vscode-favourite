@@ -13,6 +13,7 @@ import {
   addToBookmark,
   addToNameBookmark,
   setBookmark,
+  updateBookmark,
   editBookmark,
   deleteBookmark,
   addNewGroup,
@@ -206,6 +207,13 @@ export function activate(context: vscode.ExtensionContext) {
       if (!activeEditor) return
       setBookmark(activeEditor)
       changeBookmarksState()
+    })
+  )
+  context.subscriptions.push(
+    vscode.workspace.onDidChangeTextDocument(async (e: vscode.TextDocumentChangeEvent) => {
+      const activeEditor = vscode.window.visibleTextEditors.find((editor) => editor.document.uri === e.document.uri);
+      if (!activeEditor || !e.contentChanges || e.contentChanges.length == 0) return
+      await updateBookmark(activeEditor, e.contentChanges)
     })
   )
   context.subscriptions.push(editBookmark())

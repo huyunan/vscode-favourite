@@ -71,5 +71,6 @@ export class MarkResource extends vscode.TreeItem {
     this.iconPath = vscode.Uri.joinPath(configMgr.context.extensionUri, 'img/favourite.png')
     this.resourceUri = uri ? uri : vscode.Uri.file(value)
     this.tooltip = value + `（Ln ${this.lineNumber}）`
+    this.label = this.label + `（Ln ${this.lineNumber}）`
   }
 }
