@@ -30,7 +30,7 @@ export function markOpen(favouriteProvider: FavouriteProvider) {
     if (editor) {
         const position = new vscode.Position(lineNumber - 1, 0); // 行号从0开始计数
         editor.selection = new vscode.Selection(position, position);
-        editor.revealRange(new vscode.Range(position, position));
+        editor.revealRange(new vscode.Range(position, position), vscode.TextEditorRevealType.InCenterIfOutsideViewport);
     }
   })
 }
