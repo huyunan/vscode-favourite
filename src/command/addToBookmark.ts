@@ -28,8 +28,9 @@ export function addToNameBookmark() {
 }
 
 export function editBookmark() {
-  return vscode.commands.registerCommand('favourite.editBookmark', async ({ lineNumber, uri }: { lineNumber: number, uri?: vscode.Uri }) => {
-    vscode.window.showInputBox({ placeHolder: localize('title.mark.edit.placeHolder'), prompt: localize('title.mark.edit.prompt') }).then(async (input) => {
+  return vscode.commands.registerCommand('favourite.editBookmark', async ({ lineNumber, uri, label }: { lineNumber: number, uri?: vscode.Uri, label: string }) => {
+    const truelabel = label.replace(`（Ln ${lineNumber}）`, '');
+    vscode.window.showInputBox({ placeHolder: localize('title.mark.edit.placeHolder'), value: truelabel, prompt: localize('title.mark.edit.prompt') }).then(async (input) => {
       if (input) {
         const fileName = uri.fsPath
         const allBookmarks = getAllBookmarks()
